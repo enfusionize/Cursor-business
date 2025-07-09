@@ -25,10 +25,10 @@ const CursorAssistant = ({ modeSwitch, tools, theme }: any) => (
       </div>
     </div>
     <div className="bg-gray-800 p-3 rounded border text-sm">
-      💡 Ask me anything: "Generate P&L for Q4" or "Create ClickUp task for new campaign"
+      💡 Ask me anything: "Generate M.A.P.P.™ report for lead ID 12345" or "Show funnel analytics for last 30 days"
     </div>
     <div className="mt-3 text-xs text-gray-400">
-      Connected tools: {tools?.join(', ') || 'xero, clickup, ghl, firecrawl, perplexity'}
+      Connected tools: {tools?.join(', ') || 'xero, clickup, ghl, firecrawl, perplexity, mapp-ai-insights, fastapi'}
     </div>
   </div>
 );
@@ -59,6 +59,16 @@ export default function Dashboard() {
     clients: '12',
     projects: '8',
     roi: '247%'
+  });
+
+  const [mappMetrics, setMappMetrics] = useState({
+    totalLeads: '127',
+    freeReports: '89',
+    premiumSales: '23',
+    dashboardUsers: '12',
+    conversionRate: '18.1%',
+    avgDealValue: '$347',
+    totalMRR: '$4,164'
   });
 
   useEffect(() => {
@@ -142,6 +152,127 @@ export default function Dashboard() {
             />
           </div>
 
+          {/* M.A.P.P.™ Launch Funnel Section */}
+          <div className="mb-8">
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg p-6 text-white mb-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">M.A.P.P.™ Launch Funnel</h2>
+                  <p className="text-purple-100">Marketing Automation Process & Plan - Revenue Engine</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold">{mappMetrics.totalMRR}</div>
+                  <div className="text-purple-200 text-sm">Monthly Recurring Revenue</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Total Leads</p>
+                    <p className="text-xl font-bold text-gray-900">{mappMetrics.totalLeads}</p>
+                    <p className="text-sm text-green-600">+12 today</p>
+                  </div>
+                  <div className="p-2 rounded-full bg-blue-100">
+                    <Users className="h-4 w-4 text-blue-600" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Free Reports</p>
+                    <p className="text-xl font-bold text-gray-900">{mappMetrics.freeReports}</p>
+                    <p className="text-sm text-blue-600">70% conversion</p>
+                  </div>
+                  <div className="p-2 rounded-full bg-green-100">
+                    <BarChart3 className="h-4 w-4 text-green-600" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Premium Sales</p>
+                    <p className="text-xl font-bold text-gray-900">{mappMetrics.premiumSales}</p>
+                    <p className="text-sm text-purple-600">{mappMetrics.conversionRate} rate</p>
+                  </div>
+                  <div className="p-2 rounded-full bg-purple-100">
+                    <TrendingUp className="h-4 w-4 text-purple-600" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Dashboard Users</p>
+                    <p className="text-xl font-bold text-gray-900">{mappMetrics.dashboardUsers}</p>
+                    <p className="text-sm text-orange-600">{mappMetrics.avgDealValue} AVG</p>
+                  </div>
+                  <div className="p-2 rounded-full bg-orange-100">
+                    <Target className="h-4 w-4 text-orange-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">M.A.P.P.™ Quick Actions</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <button className="flex items-center justify-center p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors text-sm">
+                    <Zap className="h-4 w-4 mr-2" />
+                    Generate Report
+                  </button>
+                  <button className="flex items-center justify-center p-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors text-sm">
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Funnel Analytics
+                  </button>
+                  <button className="flex items-center justify-center p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors text-sm">
+                    <Users className="h-4 w-4 mr-2" />
+                    Lead Scoring
+                  </button>
+                  <button className="flex items-center justify-center p-3 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors text-sm">
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    AI Insights
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent M.A.P.P.™ Activity</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center p-2 bg-green-50 rounded-lg">
+                    <div className="h-2 w-2 bg-green-400 rounded-full mr-3"></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">Premium report purchased</p>
+                      <p className="text-xs text-gray-600">TechCorp Industries • $297</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center p-2 bg-blue-50 rounded-lg">
+                    <div className="h-2 w-2 bg-blue-400 rounded-full mr-3"></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">New dashboard user activated</p>
+                      <p className="text-xs text-gray-600">StartupXYZ • Standard plan</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center p-2 bg-purple-50 rounded-lg">
+                    <div className="h-2 w-2 bg-purple-400 rounded-full mr-3"></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">AI insight report generated</p>
+                      <p className="text-xs text-gray-600">RetailCo • Free snapshot</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column */}
@@ -157,6 +288,10 @@ export default function Dashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <button className="flex items-center justify-center p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors">
+                    <Zap className="h-5 w-5 mr-2" />
+                    M.A.P.P.™ Report
+                  </button>
                   <button className="flex items-center justify-center p-4 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
                     <DollarSign className="h-5 w-5 mr-2" />
                     Generate Invoice
@@ -165,13 +300,9 @@ export default function Dashboard() {
                     <Users className="h-5 w-5 mr-2" />
                     New Project
                   </button>
-                  <button className="flex items-center justify-center p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors">
-                    <BarChart3 className="h-5 w-5 mr-2" />
-                    Analytics Report
-                  </button>
                   <button className="flex items-center justify-center p-4 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors">
-                    <Zap className="h-5 w-5 mr-2" />
-                    Run Automation
+                    <BarChart3 className="h-5 w-5 mr-2" />
+                    Funnel Analytics
                   </button>
                   <button className="flex items-center justify-center p-4 bg-pink-50 text-pink-700 rounded-lg hover:bg-pink-100 transition-colors">
                     <MessageSquare className="h-5 w-5 mr-2" />

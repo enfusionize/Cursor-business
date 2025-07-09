@@ -6,6 +6,7 @@
 
 This workspace implements our complete agency operations stack inside Cursor, providing a unified interface for:
 
+- **M.A.P.P.™ Launch Funnel** (AI-powered lead-to-revenue automation)
 - **Finance & Administration** (Xero + Stripe)
 - **Project & Task Management** (ClickUp)
 - **Design & Creative** (Figma + Framer)
@@ -59,8 +60,8 @@ agency-ops/
 
 ## Documentation
 
+- [M.A.P.P.™ Launch Funnel Guide](docs/MAPP-LAUNCH-FUNNEL.md)
 - [Unified Operations SOP](docs/UNIFIED-OPS-SOP.md)
-- [Cursor Implementation Guide](docs/CURSOR-IMPLEMENTATION.md)
 - [Team Onboarding](docs/ONBOARDING.md)
 
 ---

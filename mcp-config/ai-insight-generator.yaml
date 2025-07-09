@@ -1,0 +1,123 @@
+name: ai_insight_generator
+description: "AI Insight Generator - Automated report generation and analysis"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-ai-insights"]
+  env:
+    AI_INSIGHTS_API_KEY: "${AI_INSIGHTS_API_KEY}"
+    AI_INSIGHTS_BASE_URL: "${AI_INSIGHTS_BASE_URL}"
+
+tools:
+  - name: "generateReport"
+    description: "Generate AI-powered insight reports"
+    parameters:
+      leadData:
+        type: "object"
+        description: "Lead intake data for analysis"
+      reportType:
+        type: "string"
+        enum: ["free_snapshot", "premium_deep_dive"]
+        description: "Type of report to generate"
+      customizations:
+        type: "object"
+        description: "Report customization options"
+        properties:
+          includeVisuals:
+            type: "boolean"
+            default: true
+          focusAreas:
+            type: "array"
+            items:
+              type: "string"
+              enum: ["conversion_optimization", "traffic_growth", "revenue_scaling", "automation_opportunities"]
+          industryBenchmarks:
+            type: "boolean"
+            default: true
+
+  - name: "getFreeReportTemplate"
+    description: "Get template structure for free reports"
+    parameters:
+      industry:
+        type: "string"
+        description: "Industry vertical for template"
+      
+  - name: "getPremiumReportTemplate"
+    description: "Get template structure for premium reports"
+    parameters:
+      industry:
+        type: "string"
+        description: "Industry vertical for template"
+      complexity:
+        type: "string"
+        enum: ["standard", "advanced", "enterprise"]
+        description: "Report complexity level"
+
+  - name: "analyzeBusinessData"
+    description: "Analyze business data for insights"
+    parameters:
+      businessMetrics:
+        type: "object"
+        description: "Current business metrics"
+        properties:
+          monthlyRevenue:
+            type: "number"
+          trafficSources:
+            type: "array"
+            items:
+              type: "object"
+          conversionRates:
+            type: "object"
+          customerAcquisitionCost:
+            type: "number"
+          lifetimeValue:
+            type: "number"
+
+  - name: "generateRecommendations"
+    description: "Generate prioritized action recommendations"
+    parameters:
+      analysisResults:
+        type: "object"
+        description: "Analysis results from business data"
+      goals:
+        type: "array"
+        items:
+          type: "string"
+        description: "Business goals and objectives"
+      resourceConstraints:
+        type: "object"
+        description: "Available resources and constraints"
+
+  - name: "createVisualAssets"
+    description: "Generate visual assets for reports"
+    parameters:
+      dataPoints:
+        type: "array"
+        description: "Data points to visualize"
+      chartType:
+        type: "string"
+        enum: ["funnel", "trend", "comparison", "heatmap", "3d_model"]
+        description: "Type of visualization"
+      brandColors:
+        type: "array"
+        items:
+          type: "string"
+        description: "Brand color palette"
+
+  - name: "scheduleReportDelivery"
+    description: "Schedule automated report delivery"
+    parameters:
+      reportId:
+        type: "string"
+        description: "Generated report identifier"
+      deliveryMethod:
+        type: "string"
+        enum: ["email", "dashboard", "api_webhook"]
+        description: "How to deliver the report"
+      recipient:
+        type: "string"
+        description: "Recipient email or endpoint"
+      timing:
+        type: "string"
+        description: "When to deliver (immediate, scheduled)"

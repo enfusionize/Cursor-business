@@ -196,7 +196,41 @@ claude: commit -m "feat: add comparison page template"
 
 On successful deploy Claude returns preview and production URLs.
 
-### 7.7 AUTOMATED COST MANAGEMENT
+### 7.7 M.A.P.P.™ LAUNCH FUNNEL MANAGEMENT
+
+**Objective**: Automate lead-to-revenue conversion through AI-powered insights
+
+**Core Workflows**:
+
+a) **Lead Intake Processing**
+```
+use fastapi_mcp submit intake form with business_data="{{form_data}}"
+trigger lead scoring and validation workflow
+generate free report automatically
+```
+
+b) **AI Insight Generation**
+```
+use ai_insight_generator create report for lead_id="12345" type="free_snapshot"
+use ai_insight_generator create report for lead_id="67890" type="premium_deep_dive"
+schedule automated delivery via email
+```
+
+c) **Funnel Analytics & Optimization**
+```
+use fastapi_mcp get funnel analytics timeframe="30d"
+analyze conversion rates by stage
+identify bottlenecks and optimization opportunities
+```
+
+d) **Revenue Tracking**
+```
+show mapp revenue metrics: leads, conversions, mrr, avg_deal_value
+track premium report sales and dashboard subscriptions
+monitor 3D Miro board funnel visualization
+```
+
+### 7.8 AUTOMATED COST MANAGEMENT
 
 **Every Monday at 09:00 run**:
 ```
