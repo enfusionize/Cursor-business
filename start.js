@@ -56,6 +56,16 @@ class MCPLauncher {
         description: 'Sync designs between Figma and code'
       },
       {
+        name: '🧠 Knowledge Base Engine',
+        value: 'knowledge-engine',
+        description: 'Manage dynamic learning and optimization'
+      },
+      {
+        name: '🤖 Automated Learning Daemon',
+        value: 'learning-daemon',
+        description: 'Continuous background learning system'
+      },
+      {
         name: '🎯 Quick Demo',
         value: 'demo',
         description: 'Run through basic functionality demo'
@@ -114,6 +124,12 @@ class MCPLauncher {
         break;
       case 'figma-sync':
         await this.runFigmaSync();
+        break;
+      case 'knowledge-engine':
+        await this.runKnowledgeEngine();
+        break;
+      case 'learning-daemon':
+        await this.runLearningDaemon();
         break;
       case 'demo':
         await this.runDemo();
@@ -477,6 +493,122 @@ class MCPLauncher {
         } catch (error) {
           console.log(chalk.yellow('Could not open file automatically.'));
           console.log(chalk.gray('File: advanced-ai-model-testing-workflow.md'));
+        }
+        break;
+    }
+
+    await this.promptReturn();
+  }
+
+  async runKnowledgeEngine() {
+    console.log(chalk.yellow('\n🧠 Knowledge Base Engine\n'));
+    
+    const engineChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'engineAction',
+        message: 'Knowledge Base Engine - What would you like to do?',
+        choices: [
+          { name: '🔄 Process New Information', value: 'process' },
+          { name: '📊 Analyze Performance Trends', value: 'trends' },
+          { name: '🎯 Generate Optimizations', value: 'optimize' },
+          { name: '📈 View System Status', value: 'status' },
+          { name: '🔧 Run Maintenance', value: 'maintenance' },
+          { name: '📡 Sync to MCP Pipeline', value: 'sync' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (engineChoice.engineAction === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    try {
+      execSync('npm run knowledge-engine', { stdio: 'inherit' });
+    } catch (error) {
+      console.log(chalk.red('❌ Knowledge Base Engine failed. Check configuration.'));
+    }
+
+    await this.promptReturn();
+  }
+
+  async runLearningDaemon() {
+    console.log(chalk.yellow('\n🤖 Automated Learning Daemon\n'));
+    
+    const daemonChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'daemonAction',
+        message: 'Learning Daemon - What would you like to do?',
+        choices: [
+          { name: '🚀 Start Daemon (Background Learning)', value: 'start' },
+          { name: '🛑 Stop Daemon', value: 'stop' },
+          { name: '📊 View Daemon Status', value: 'status' },
+          { name: '🔄 Restart Daemon', value: 'restart' },
+          { name: '⚙️ Configure Learning Settings', value: 'configure' },
+          { name: '📈 View Learning Analytics', value: 'analytics' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (daemonChoice.daemonAction === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    switch (daemonChoice.daemonAction) {
+      case 'start':
+        try {
+          console.log(chalk.blue('\n🚀 Starting Automated Learning Daemon...'));
+          console.log(chalk.yellow('💡 The daemon will run in the background and continuously optimize your system.'));
+          console.log(chalk.gray('Press Ctrl+C to stop the daemon when needed.\n'));
+          execSync('npm run start-daemon', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to start daemon. Check configuration.'));
+        }
+        break;
+      case 'stop':
+        try {
+          execSync('npm run stop-daemon', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to stop daemon.'));
+        }
+        break;
+      case 'status':
+        try {
+          execSync('npm run daemon-status', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to get daemon status.'));
+        }
+        break;
+      case 'restart':
+        try {
+          console.log(chalk.blue('🔄 Restarting Learning Daemon...'));
+          execSync('npm run stop-daemon', { stdio: 'pipe' });
+          setTimeout(() => {
+            execSync('npm run start-daemon', { stdio: 'inherit' });
+          }, 2000);
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to restart daemon.'));
+        }
+        break;
+      case 'configure':
+        console.log(chalk.blue('\n⚙️ Daemon Configuration:'));
+        console.log(chalk.gray('Edit the following environment variables in your .env file:'));
+        console.log(chalk.yellow('• LEARNING_PERFORMANCE_INTERVAL - How often to monitor performance'));
+        console.log(chalk.yellow('• LEARNING_KNOWLEDGE_INTERVAL - How often to process knowledge'));
+        console.log(chalk.yellow('• ENABLE_AUTO_OPTIMIZATION - Enable automatic optimizations'));
+        console.log(chalk.yellow('• ENABLE_PREDICTIVE_ANALYSIS - Enable predictive analytics'));
+        console.log(chalk.gray('\nSee .env.example for all available configuration options.'));
+        break;
+      case 'analytics':
+        try {
+          execSync('npm run performance-analytics', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to load analytics.'));
         }
         break;
     }

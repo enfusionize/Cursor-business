@@ -24,7 +24,12 @@
     "configure-figma-webhooks": "node scripts/configure-figma-webhooks.js",
     "sync-figma-design": "node scripts/sync-figma-design.js",
     "multi-model-test": "node scripts/multi-model-test.js",
-    "performance-analytics": "node scripts/performance-analytics.js"
+    "performance-analytics": "node scripts/performance-analytics.js",
+    "knowledge-engine": "node scripts/knowledge-base-engine.js",
+    "learning-daemon": "node scripts/automated-learning-daemon.js",
+    "start-daemon": "node scripts/automated-learning-daemon.js start",
+    "stop-daemon": "node scripts/automated-learning-daemon.js stop",
+    "daemon-status": "node scripts/automated-learning-daemon.js status"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -70,7 +75,8 @@
     "inquirer": "^9.2.0",
     "chalk": "^5.3.0",
     "ora": "^7.0.0",
-    "figlet": "^1.7.0"
+    "figlet": "^1.7.0",
+    "node-cron": "^3.0.3"
   },
   "keywords": [
     "cursor",
