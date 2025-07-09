@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "description": "Browser automation for screenshots, testing, and UX analysis"
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "your-firecrawl-api-key-here"
+      },
+      "description": "Web scraping and content extraction"
+    },
+    "perplexity": {
+      "command": "npx",
+      "args": ["-y", "perplexity-mcp"],
+      "env": {
+        "PERPLEXITY_API_KEY": "your-perplexity-api-key-here"
+      },
+      "description": "AI-powered research and search"
+    },
+    "xero": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-xero"],
+      "env": {
+        "XERO_CLIENT_ID": "your-xero-client-id",
+        "XERO_CLIENT_SECRET": "your-xero-client-secret",
+        "XERO_REDIRECT_URI": "your-xero-redirect-uri"
+      },
+      "description": "Accounting and financial data from Xero"
+    }
+  }
+}
