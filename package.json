@@ -1,0 +1,71 @@
+{
+  "name": "cursor-mcp-business-environment",
+  "version": "1.0.0",
+  "description": "Complete MCP business operations environment for Cursor with automated setup",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start.js",
+    "setup": "node scripts/setup.js",
+    "install-mcps": "node scripts/install-mcps.js",
+    "validate-setup": "node scripts/validate-setup.js",
+    "start-dev": "node scripts/start-dev.js",
+    "claude": "claude",
+    "deploy": "vercel --prod",
+    "build": "next build",
+    "dev": "next dev",
+    "test-mcps": "node scripts/test-mcps.js",
+    "backup-config": "node scripts/backup-config.js",
+    "restore-config": "node scripts/restore-config.js"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "lucide-react": "^0.294.0",
+    "framer-motion": "^10.16.0",
+    "recharts": "^2.8.0"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-dev": "^1.0.0",
+    "@playwright/mcp": "latest",
+    "firecrawl-mcp": "latest",
+    "perplexity-mcp": "latest",
+    "dataforseo-mcp": "latest",
+    "mcp-server-xero": "latest",
+    "vercel": "^32.0.0",
+    "playwright": "^1.40.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.0",
+    "dotenv": "^16.3.0",
+    "inquirer": "^9.2.0",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.0",
+    "figlet": "^1.7.0"
+  },
+  "keywords": [
+    "cursor",
+    "mcp",
+    "business-automation",
+    "claude-code",
+    "programmatic-seo",
+    "ai-development"
+  ],
+  "author": "MCP Business Operations",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/cursor-mcp-business-environment.git"
+  }
+}
