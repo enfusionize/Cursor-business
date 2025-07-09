@@ -5,11 +5,16 @@ This repository contains everything you need to replicate Amir's workflow from t
 ## 🎯 What You'll Achieve
 
 Transform Cursor into your business operations hub for:
+- **Programmatic SEO**: Build thousands of targeted pages for organic traffic (10,000+ monthly visits)
+- **Complete Development Pipeline**: Research to production deployment in under 60 minutes
 - **Finance**: Automated accounting reports, invoice management, P&L analysis (Xero integration)
 - **UX Analysis**: Website screenshots, user flow testing, conversion optimization (Playwright)
 - **Marketing**: Competitive research, content strategy, SEO analysis (Firecrawl + Perplexity)
+- **Keyword Research**: Real search volume data and competition analysis (DataForSEO)
 - **Sales**: Lead research, email templates, market intelligence
 - **Analytics**: Business intelligence reports, trend analysis
+
+**New**: Learn James's (The Boring Marketer) proven workflow that enables non-technical people to become developers in 3 weeks, building apps that get thousands of monthly visitors.
 
 ## 📋 Quick Start (Choose Your Path)
 
@@ -18,6 +23,13 @@ Transform Cursor into your business operations hub for:
 - Minimal setup with immediate results
 - Works without API keys initially
 - Test with Playwright MCP first
+
+### 🎯 I Want to Build Production Apps Like James (Advanced)
+→ **[Advanced Claude Code Workflow](advanced-claude-code-workflow.md)**
+- Complete research-to-deploy pipeline in under 60 minutes
+- Cursor Agent + Claude Code methodology
+- Build programmatic SEO sites targeting 10,000+ monthly visits
+- Non-technical to developer transformation
 
 ### 📚 I Want the Complete Setup (1-2 hours)
 → **[Complete Setup Guide](cursor-mcp-business-setup-guide.md)**
@@ -37,13 +49,20 @@ Transform Cursor into your business operations hub for:
 - Copy-paste into Cursor Composer
 - See immediate results
 
+### 💰 I Want to Understand Costs & ROI
+→ **[Cost Analysis & ROI Guide](cost-analysis-and-roi.md)**
+- Real usage costs (James spent ~$20 per app)
+- ROI calculations and break-even analysis
+- Business case examples and scaling projections
+
 ## 🔧 What's Included
 
-### Core MCP Servers (from the transcript)
+### Core MCP Servers (from the transcripts)
 1. **Playwright MCP** - Browser automation, screenshots, testing
 2. **Firecrawl MCP** - Web scraping, content extraction
 3. **Perplexity MCP** - AI-powered research and search
-4. **Xero MCP** - Accounting and financial operations
+4. **DataForSEO MCP** - Keyword research, search volume validation
+5. **Xero MCP** - Accounting and financial operations
 
 ### Business Workflow Templates
 - Daily financial check routines
@@ -82,9 +101,12 @@ The transcript showed these key capabilities:
 
 - **Cursor version 0.45.6+** (for MCP support)
 - **Node.js** (for running MCP servers)
+- **Claude Code** (for advanced development workflows)
+- **Vercel account** (for production deployment - free tier available)
 - **API Keys** (for full functionality):
   - Firecrawl API key (free tier available)
   - Perplexity API key (for research)
+  - DataForSEO credentials (for keyword research)
   - Xero developer credentials (for accounting)
 
 ## 📁 File Structure
@@ -94,8 +116,10 @@ cursor-mcp-business-operations/
 ├── README.md                           # This overview
 ├── quick-start-mcp-setup.md            # 15-minute setup guide
 ├── cursor-mcp-business-setup-guide.md  # Complete setup guide
+├── advanced-claude-code-workflow.md    # Advanced development pipeline (NEW)
 ├── mcp-config-template.json            # Ready-to-use MCP configuration
 ├── example-prompts.md                  # Business workflow prompts
+├── cost-analysis-and-roi.md            # Transparent cost breakdown & ROI (NEW)
 └── examples/
     ├── finance-workflows.md
     ├── ux-analysis-workflows.md

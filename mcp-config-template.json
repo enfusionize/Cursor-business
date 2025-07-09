@@ -30,6 +30,15 @@
         "XERO_REDIRECT_URI": "your-xero-redirect-uri"
       },
       "description": "Accounting and financial data from Xero"
+    },
+    "dataforseo": {
+      "command": "npx",
+      "args": ["-y", "dataforseo-mcp"],
+      "env": {
+        "DATAFORSEO_LOGIN": "your-dataforseo-login-here",
+        "DATAFORSEO_PASSWORD": "your-dataforseo-password-here"
+      },
+      "description": "SEO keyword research and validation with real search volume data"
     }
   }
 }

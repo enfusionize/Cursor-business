@@ -2,6 +2,78 @@
 
 Copy and paste these prompts into Cursor Composer (Cmd/Ctrl + L, switch to Agent mode) to see the power of MCPs in action.
 
+## 🚀 Advanced Programmatic SEO Workflow (James's Method)
+
+### Complete Research-to-Deploy Pipeline
+**Phase 1 - Research & Strategy (Cursor Agent):**
+```
+Step 1: Use FireCrawl MCP to scrape [your-website.com] and create a comprehensive markdown summary
+
+Step 2: Use Perplexity MCP to find relevant programmatic keyword ideas for my business, focusing on [your-industry] tool comparisons
+
+Step 3: Use DataForSEO MCP to research these keywords and provide search volume data and traffic potential estimates
+
+Step 4: Create a PRD (Product Requirements Document) that prioritizes:
+- Tool comparisons relevant to my business
+- High-priority keywords with commercial intent
+- Success metrics (target: 10,000 organic visits/month within 90 days)
+- Technical requirements and content strategy
+
+Include user personas, intent analysis, and implementation roadmap.
+```
+
+**Phase 2 - Implementation (Switch to Claude Code in Terminal):**
+```bash
+# Type in Claude Code terminal:
+claude
+
+# Then tell Claude Code:
+We have a new project for [your-website.com] production website. Find the programmatic SEO comparison PRD file in our environment - that is our project.
+
+Integrate this into my existing production site and build:
+1. Interactive comparison page templates
+2. Pricing calculators and feature comparison tables  
+3. Community review sections for user-generated content
+4. Proper schema markup and internal linking structure
+5. FAQ sections with relevant schema
+6. Deploy to Vercel when complete
+
+Target: Complete build and deployment in under 60 minutes.
+```
+
+### Programmatic SEO Scaling
+```
+Using the successful template from Claude Code:
+
+1. Use Perplexity MCP to find 50+ related tool comparison keywords
+2. Use DataForSEO MCP to validate search volumes and prioritize by opportunity
+3. Create a scaling strategy document that identifies:
+   - High-volume, low-competition keyword clusters
+   - Content templates that can be systematically repeated
+   - Internal linking strategies between comparison pages
+   - Monetization opportunities (affiliate programs, lead capture)
+
+Then take this to Claude Code for bulk page generation.
+```
+
+### Post-Deployment SEO Optimization
+```
+After pages are live, use FireCrawl MCP to:
+
+1. Crawl your complete website and identify:
+   - Technical SEO errors that need fixing
+   - Missing meta descriptions or title tags
+   - Internal linking opportunities between comparison pages
+   - Page speed issues or accessibility problems
+
+2. Create a technical SEO audit report with:
+   - Priority fixes (High/Medium/Low)
+   - Specific implementation instructions for Claude Code
+   - Performance optimization recommendations
+
+3. Provide all fixes to Claude Code for automated implementation
+```
+
 ## 🎯 UX Analysis & Testing (Playwright MCP)
 
 ### Homepage Analysis
