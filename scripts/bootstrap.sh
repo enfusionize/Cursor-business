@@ -26,7 +26,7 @@ fi
 
 # Install core dependencies
 echo "📦 Installing core dependencies..."
-$INSTALL_CMD node git
+$INSTALL_CMD nodejs npm git
 
 # Install global npm packages
 echo "📦 Installing global npm packages..."
