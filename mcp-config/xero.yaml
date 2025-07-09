@@ -1,0 +1,53 @@
+name: xero
+description: "Finance Bot - Xero accounting and invoicing automation"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-xero"]
+  env:
+    XERO_CLIENT_ID: "${XERO_CLIENT_ID}"
+    XERO_CLIENT_SECRET: "${XERO_CLIENT_SECRET}"
+
+tools:
+  - name: "profitLoss"
+    description: "Generate profit & loss reports for specified periods"
+    parameters:
+      period:
+        type: "string"
+        description: "Report period (e.g., 'Last Month', 'Last 30 Days', 'Q1 2025')"
+  
+  - name: "createInvoice"
+    description: "Create and send invoices with Stripe payment links"
+    parameters:
+      contactName:
+        type: "string"
+        description: "Client or contact name"
+      description:
+        type: "string"
+        description: "Invoice description or milestone"
+      amount:
+        type: "number"
+        description: "Invoice amount"
+      dueDate:
+        type: "string"
+        description: "Due date (YYYY-MM-DD or {{today+7}})"
+      stripePayLink:
+        type: "boolean"
+        description: "Include Stripe payment link"
+
+  - name: "listContacts"
+    description: "List all contacts and clients"
+    
+  - name: "createQuote"
+    description: "Generate quotes for services"
+    parameters:
+      service:
+        type: "string"
+        description: "Service type (e.g., 'UX services', 'Marketing automation')"
+      client:
+        type: "string"
+        description: "Client name"
+      amount:
+        type: "number"
+        description: "Quote amount"

@@ -1,0 +1,155 @@
+{
+  "name": "Lead Intake Automation",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-intake",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "lead-intake-webhook"
+    },
+    {
+      "parameters": {
+        "channel": "#sales",
+        "text": "🎯 New Lead Alert!\n\nName: {{$node[\"Webhook\"].json[\"name\"]}}\nEmail: {{$node[\"Webhook\"].json[\"email\"]}}\nSource: {{$node[\"Webhook\"].json[\"source\"]}}\nInterest: {{$node[\"Webhook\"].json[\"interest\"]}}\n\nTime to follow up! 🚀",
+        "username": "Lead Bot"
+      },
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [460, 200],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Follow up with {{$node[\"Webhook\"].json[\"name\"]}}",
+        "description": "New lead from {{$node[\"Webhook\"].json[\"source\"]}}\\n\\nEmail: {{$node[\"Webhook\"].json[\"email\"]}}\\nInterest: {{$node[\"Webhook\"].json[\"interest\"]}}\\n\\nNext steps:\\n- Qualify lead\\n- Schedule discovery call\\n- Send welcome sequence",
+        "assignees": ["sales-team"],
+        "priority": "high",
+        "dueDate": "{{DateTime.now().plus({days: 1}).toISO()}}"
+      },
+      "name": "Create ClickUp Task",
+      "type": "n8n-nodes-base.clickup",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": {
+        "clickUpApi": {
+          "id": "clickup-credentials", 
+          "name": "ClickUp API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contactEmail": "={{$node[\"Webhook\"].json[\"email\"]}}",
+        "contactName": "={{$node[\"Webhook\"].json[\"name\"]}}",
+        "tags": ["lead", "new", "{{$node[\"Webhook\"].json[\"source\"]}}"],
+        "customFields": {
+          "lead_source": "={{$node[\"Webhook\"].json[\"source\"]}}",
+          "interest_area": "={{$node[\"Webhook\"].json[\"interest\"]}}",
+          "lead_score": "75"
+        }
+      },
+      "name": "Add to GHL CRM",
+      "type": "n8n-nodes-base.goHighLevel",
+      "typeVersion": 1,
+      "position": [460, 400],
+      "credentials": {
+        "goHighLevelApi": {
+          "id": "ghl-credentials",
+          "name": "GoHighLevel API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Webhook\"].json[\"interest\"]}}",
+              "operation": "contains",
+              "value2": "enterprise"
+            }
+          ]
+        }
+      },
+      "name": "High Value Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "text": "🔥 HIGH VALUE LEAD ALERT! 🔥\\n\\nName: {{$node[\"Webhook\"].json[\"name\"]}}\\nEmail: {{$node[\"Webhook\"].json[\"email\"]}}\\nInterest: {{$node[\"Webhook\"].json[\"interest\"]}}\\n\\n@channel - Enterprise lead needs immediate attention!",
+        "channel": "#leadership"
+      },
+      "name": "Leadership Alert",
+      "type": "n8n-nodes-base.slack", 
+      "typeVersion": 1,
+      "position": [900, 200],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack Credentials"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create ClickUp Task", 
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add to GHL CRM",
+            "type": "main", 
+            "index": 0
+          },
+          {
+            "node": "High Value Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Value Lead?": {
+      "main": [
+        [
+          {
+            "node": "Leadership Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": ["leads", "automation", "sales"],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-09T00:00:00.000Z",
+  "versionId": "1"
+}

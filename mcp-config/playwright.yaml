@@ -1,0 +1,67 @@
+name: playwright
+description: "UX Bot - Screenshots, testing, and browser automation"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-playwright"]
+  env:
+    PLAYWRIGHT_BROWSERS_PATH: "0"
+
+tools:
+  - name: "screenshot"
+    description: "Capture screenshots for UX analysis"
+    parameters:
+      url:
+        type: "string"
+        description: "URL to screenshot"
+      viewport:
+        type: "object"
+        description: "Viewport dimensions"
+        properties:
+          width:
+            type: "number"
+            default: 1920
+          height:
+            type: "number"
+            default: 1080
+      device:
+        type: "string"
+        description: "Device to emulate"
+        enum: ["desktop", "mobile", "tablet"]
+        
+  - name: "uxAnalysis"
+    description: "Perform heuristic UX analysis and suggest A/B tests"
+    parameters:
+      url:
+        type: "string"
+        description: "URL to analyze"
+      focus:
+        type: "string"
+        description: "Analysis focus area"
+        enum: ["conversion", "engagement", "accessibility", "mobile"]
+        
+  - name: "runTests"
+    description: "Execute test plans and return results"
+    parameters:
+      testFile:
+        type: "string"
+        description: "Path to test file (e.g., tests/plan.yaml)"
+      retries:
+        type: "number"
+        description: "Number of retries for flaky tests"
+        default: 3
+        
+  - name: "fillForm"
+    description: "Automate form filling for testing"
+    parameters:
+      url:
+        type: "string"
+        description: "URL with form"
+      formData:
+        type: "object"
+        description: "Form data to fill"
+      submit:
+        type: "boolean"
+        description: "Whether to submit the form"
+        default: false

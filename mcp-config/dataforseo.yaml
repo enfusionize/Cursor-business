@@ -1,0 +1,65 @@
+name: dataforseo
+description: "SEO keyword research and SERP analysis"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-dataforseo"]
+  env:
+    DATAFORSEO_API_KEY: "${DATAFORSEO_API_KEY}"
+
+tools:
+  - name: "keywordResearch"
+    description: "Get keyword volume, difficulty, and related terms"
+    parameters:
+      keywords:
+        type: "array"
+        description: "List of keywords to research"
+        items:
+          type: "string"
+      location:
+        type: "string"
+        description: "Geographic location for results"
+        default: "United States"
+      language:
+        type: "string"
+        description: "Language for results"
+        default: "English"
+        
+  - name: "serpAnalysis"
+    description: "Analyze search engine results pages"
+    parameters:
+      keyword:
+        type: "string"
+        description: "Keyword to analyze"
+      location:
+        type: "string"
+        description: "Geographic location"
+        default: "United States"
+      device:
+        type: "string"
+        enum: ["desktop", "mobile"]
+        default: "desktop"
+        
+  - name: "competitorKeywords"
+    description: "Find keywords that competitors rank for"
+    parameters:
+      domain:
+        type: "string"
+        description: "Competitor domain to analyze"
+      limit:
+        type: "number"
+        description: "Number of keywords to return"
+        default: 100
+        
+  - name: "contentGaps"
+    description: "Find keyword opportunities and content gaps"
+    parameters:
+      yourDomain:
+        type: "string"
+        description: "Your domain"
+      competitors:
+        type: "array"
+        description: "Competitor domains"
+        items:
+          type: "string"

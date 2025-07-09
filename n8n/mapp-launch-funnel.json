@@ -1,0 +1,391 @@
+{
+  "name": "M.A.P.P.™ Launch Funnel Automation",
+  "active": true,
+  "tags": ["mapp", "funnel", "ai-insights", "revenue"],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mapp-intake",
+        "responseMode": "onReceived"
+      },
+      "name": "Intake Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "mapp-intake-webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Validate and score incoming lead data\nconst formData = items[0].json;\n\n// Calculate lead score based on business size, urgency, fit\nlet leadScore = 0;\n\n// Revenue scoring\nif (formData.currentRevenue) {\n  const revenue = parseInt(formData.currentRevenue.replace(/\\D/g, ''));\n  if (revenue > 1000000) leadScore += 30;\n  else if (revenue > 100000) leadScore += 20;\n  else if (revenue > 10000) leadScore += 10;\n}\n\n// Challenge urgency scoring\nif (formData.mainChallenges?.includes('revenue_declining')) leadScore += 25;\nif (formData.mainChallenges?.includes('scaling_issues')) leadScore += 20;\nif (formData.mainChallenges?.includes('automation_needed')) leadScore += 15;\n\n// Goal alignment scoring\nif (formData.marketingGoals?.includes('increase_conversions')) leadScore += 15;\nif (formData.marketingGoals?.includes('automate_marketing')) leadScore += 20;\n\n// Determine lead tier\nlet leadTier = 'standard';\nif (leadScore >= 70) leadTier = 'premium';\nelse if (leadScore >= 50) leadTier = 'qualified';\n\nreturn [{\n  json: {\n    ...formData,\n    leadScore,\n    leadTier,\n    processedAt: new Date().toISOString(),\n    funnelStage: 'intake_submitted'\n  }\n}];"
+      },
+      "name": "Lead Scoring & Validation",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$node[\"Lead Scoring & Validation\"].json[\"leadScore\"]}}",
+              "operation": "larger",
+              "value2": 50
+            }
+          ]
+        }
+      },
+      "name": "High Value Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "leadData": "={{$node[\"Lead Scoring & Validation\"].json}}",
+        "reportType": "free_snapshot",
+        "customizations": {
+          "includeVisuals": true,
+          "focusAreas": ["conversion_optimization", "automation_opportunities"],
+          "industryBenchmarks": true
+        }
+      },
+      "name": "Generate Free Report",
+      "type": "n8n-nodes-base.ai-insight-generator",
+      "typeVersion": 1,
+      "position": [900, 200],
+      "credentials": {
+        "aiInsightsApi": {
+          "id": "ai-insights-credentials",
+          "name": "AI Insights API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "leadData": "={{$node[\"Lead Scoring & Validation\"].json}}",
+        "reportType": "premium_deep_dive",
+        "customizations": {
+          "includeVisuals": true,
+          "focusAreas": ["conversion_optimization", "traffic_growth", "revenue_scaling", "automation_opportunities"],
+          "industryBenchmarks": true
+        }
+      },
+      "name": "Generate Premium Report Preview",
+      "type": "n8n-nodes-base.ai-insight-generator",
+      "typeVersion": 1,
+      "position": [900, 400],
+      "credentials": {
+        "aiInsightsApi": {
+          "id": "ai-insights-credentials",
+          "name": "AI Insights API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contactEmail": "={{$node[\"Lead Scoring & Validation\"].json.contactInfo.email}}",
+        "contactName": "={{$node[\"Lead Scoring & Validation\"].json.contactInfo.name}}",
+        "tags": ["mapp-funnel", "free-report", "={{$node[\"Lead Scoring & Validation\"].json.leadTier}}"],
+        "customFields": {
+          "lead_score": "={{$node[\"Lead Scoring & Validation\"].json.leadScore}}",
+          "funnel_stage": "free_report_generated",
+          "business_name": "={{$node[\"Lead Scoring & Validation\"].json.businessName}}",
+          "industry": "={{$node[\"Lead Scoring & Validation\"].json.industry}}"
+        }
+      },
+      "name": "Add to GHL CRM",
+      "type": "n8n-nodes-base.goHighLevel",
+      "typeVersion": 1,
+      "position": [1120, 200],
+      "credentials": {
+        "goHighLevelApi": {
+          "id": "ghl-credentials",
+          "name": "GoHighLevel API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "reportId": "={{$node[\"Generate Free Report\"].json.reportId}}",
+        "deliveryMethod": "email",
+        "recipient": "={{$node[\"Lead Scoring & Validation\"].json.contactInfo.email}}",
+        "timing": "immediate"
+      },
+      "name": "Deliver Free Report",
+      "type": "n8n-nodes-base.ai-insight-generator",
+      "typeVersion": 1,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "workflowId": "premium-report-upsell-sequence",
+        "contactEmail": "={{$node[\"Lead Scoring & Validation\"].json.contactInfo.email}}",
+        "customData": {
+          "premiumReportPreview": "={{$node[\"Generate Premium Report Preview\"].json.reportPreview}}",
+          "leadTier": "={{$node[\"Lead Scoring & Validation\"].json.leadTier}}",
+          "businessName": "={{$node[\"Lead Scoring & Validation\"].json.businessName}}"
+        }
+      },
+      "name": "Start Premium Upsell Sequence",
+      "type": "n8n-nodes-base.goHighLevel",
+      "typeVersion": 1,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "channel": "#mapp-alerts",
+        "text": "🎯 New M.A.P.P.™ Lead Alert!\n\n👤 **{{$node[\"Lead Scoring & Validation\"].json.contactInfo.name}}** from **{{$node[\"Lead Scoring & Validation\"].json.businessName}}**\n\n📊 **Lead Score:** {{$node[\"Lead Scoring & Validation\"].json.leadScore}}/100\n🏆 **Tier:** {{$node[\"Lead Scoring & Validation\"].json.leadTier}}\n🏭 **Industry:** {{$node[\"Lead Scoring & Validation\"].json.industry}}\n💰 **Revenue:** {{$node[\"Lead Scoring & Validation\"].json.currentRevenue}}\n\n📋 **Main Challenges:**\n{{$node[\"Lead Scoring & Validation\"].json.mainChallenges.join('\\n• ')}}\n\n🎯 **Goals:**\n{{$node[\"Lead Scoring & Validation\"].json.marketingGoals.join('\\n• ')}}\n\n✅ Free report generated and delivered\n💎 Premium report preview created\n🚀 Upsell sequence initiated",
+        "username": "M.A.P.P.™ Bot"
+      },
+      "name": "Team Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [1560, 300],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Follow up with {{$node[\"Lead Scoring & Validation\"].json.contactInfo.name}} - M.A.P.P.™ Funnel",
+        "description": "**M.A.P.P.™ Lead Follow-up**\\n\\n**Business:** {{$node[\"Lead Scoring & Validation\"].json.businessName}}\\n**Contact:** {{$node[\"Lead Scoring & Validation\"].json.contactInfo.name}} ({{$node[\"Lead Scoring & Validation\"].json.contactInfo.email}})\\n**Lead Score:** {{$node[\"Lead Scoring & Validation\"].json.leadScore}}/100\\n**Tier:** {{$node[\"Lead Scoring & Validation\"].json.leadTier}}\\n\\n**Free Report:** ✅ Delivered\\n**Premium Upsell:** 🔄 In Progress\\n\\n**Next Steps:**\\n- Monitor email engagement\\n- Follow up on premium report interest\\n- Schedule discovery call if qualified\\n- Track dashboard conversion",
+        "assignees": ["sales-team"],
+        "priority": "={{$node[\"Lead Scoring & Validation\"].json.leadScore > 70 ? 'urgent' : 'high'}}",
+        "dueDate": "={{DateTime.now().plus({days: 1}).toISO()}}",
+        "tags": ["mapp-funnel", "={{$node[\"Lead Scoring & Validation\"].json.leadTier}}"]
+      },
+      "name": "Create ClickUp Task",
+      "type": "n8n-nodes-base.clickup",
+      "typeVersion": 1,
+      "position": [1560, 500],
+      "credentials": {
+        "clickUpApi": {
+          "id": "clickup-credentials",
+          "name": "ClickUp API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "boardId": "mapp-funnel-3d-board",
+        "updateType": "add_lead",
+        "leadData": "={{$node[\"Lead Scoring & Validation\"].json}}",
+        "funnelPosition": "intake_completed"
+      },
+      "name": "Update Miro Board",
+      "type": "n8n-nodes-base.miro",
+      "typeVersion": 1,
+      "position": [1780, 300],
+      "credentials": {
+        "miroApi": {
+          "id": "miro-credentials",
+          "name": "Miro API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mapp-premium-purchase",
+        "responseMode": "onReceived"
+      },
+      "name": "Premium Purchase Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 600],
+      "webhookId": "mapp-premium-purchase"
+    },
+    {
+      "parameters": {
+        "workflowId": "dashboard-access-onboarding",
+        "contactEmail": "={{$node[\"Premium Purchase Webhook\"].json.customerEmail}}",
+        "customData": {
+          "purchaseType": "premium_report",
+          "nextStep": "dashboard_upsell"
+        }
+      },
+      "name": "Start Dashboard Upsell",
+      "type": "n8n-nodes-base.goHighLevel",
+      "typeVersion": 1,
+      "position": [460, 600]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mapp-dashboard-purchase",
+        "responseMode": "onReceived"
+      },
+      "name": "Dashboard Purchase Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 800],
+      "webhookId": "mapp-dashboard-purchase"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Generate dashboard credentials and setup\nconst purchaseData = items[0].json;\n\n// Generate secure credentials\nconst credentials = {\n  userId: `mapp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\n  tempPassword: Math.random().toString(36).substr(2, 12),\n  dashboardUrl: `https://dashboard.agency.com/mapp/${purchaseData.customerId}`,\n  accessLevel: purchaseData.planTier || 'standard',\n  activatedAt: new Date().toISOString(),\n  welcomeSequence: 'mapp_dashboard_onboarding'\n};\n\nreturn [{\n  json: {\n    ...purchaseData,\n    credentials,\n    funnelStage: 'dashboard_access_granted'\n  }\n}];"
+      },
+      "name": "Generate Dashboard Credentials",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [460, 800]
+    },
+    {
+      "parameters": {
+        "workflowId": "mapp-dashboard-welcome",
+        "contactEmail": "={{$node[\"Dashboard Purchase Webhook\"].json.customerEmail}}",
+        "customData": "={{$node[\"Generate Dashboard Credentials\"].json.credentials}}"
+      },
+      "name": "Send Dashboard Credentials",
+      "type": "n8n-nodes-base.goHighLevel",
+      "typeVersion": 1,
+      "position": [680, 800]
+    }
+  ],
+  "connections": {
+    "Intake Form Webhook": {
+      "main": [
+        [
+          {
+            "node": "Lead Scoring & Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Scoring & Validation": {
+      "main": [
+        [
+          {
+            "node": "High Value Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Value Lead?": {
+      "main": [
+        [
+          {
+            "node": "Generate Free Report",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate Premium Report Preview",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Free Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Free Report": {
+      "main": [
+        [
+          {
+            "node": "Add to GHL CRM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Deliver Free Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Premium Report Preview": {
+      "main": [
+        [
+          {
+            "node": "Start Premium Upsell Sequence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to GHL CRM": {
+      "main": [
+        [
+          {
+            "node": "Team Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create ClickUp Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team Notification": {
+      "main": [
+        [
+          {
+            "node": "Update Miro Board",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Premium Purchase Webhook": {
+      "main": [
+        [
+          {
+            "node": "Start Dashboard Upsell",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dashboard Purchase Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate Dashboard Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Dashboard Credentials": {
+      "main": [
+        [
+          {
+            "node": "Send Dashboard Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "timezone": "America/New_York"
+  },
+  "staticData": {},
+  "triggerCount": 3,
+  "updatedAt": "2025-01-09T00:00:00.000Z",
+  "versionId": "1"
+}

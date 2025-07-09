@@ -1,0 +1,82 @@
+name: fastapi
+description: "FastAPI Backend - M.A.P.P.™ data processing and validation"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-fastapi"]
+  env:
+    FASTAPI_BASE_URL: "${FASTAPI_BASE_URL}"
+    FASTAPI_API_KEY: "${FASTAPI_API_KEY}"
+
+tools:
+  - name: "submitIntakeForm"
+    description: "Process intake form submission for M.A.P.P.™ funnel"
+    parameters:
+      formData:
+        type: "object"
+        description: "Intake form data"
+        properties:
+          businessName:
+            type: "string"
+          industry:
+            type: "string"
+          currentRevenue:
+            type: "string"
+          mainChallenges:
+            type: "array"
+            items:
+              type: "string"
+          marketingGoals:
+            type: "array"
+            items:
+              type: "string"
+          contactInfo:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+              phone:
+                type: "string"
+              name:
+                type: "string"
+
+  - name: "triggerAIInsightGenerator"
+    description: "Trigger AI insight generation for lead"
+    parameters:
+      leadId:
+        type: "string"
+        description: "Lead identifier"
+      reportType:
+        type: "string"
+        enum: ["free", "premium"]
+        description: "Type of report to generate"
+      
+  - name: "getLeadStatus"
+    description: "Get current status of lead in M.A.P.P.™ funnel"
+    parameters:
+      leadId:
+        type: "string"
+        description: "Lead identifier"
+        
+  - name: "updateFunnelStage"
+    description: "Update lead's position in M.A.P.P.™ funnel"
+    parameters:
+      leadId:
+        type: "string"
+        description: "Lead identifier"
+      stage:
+        type: "string"
+        enum: ["intake_submitted", "free_report_sent", "premium_report_purchased", "dashboard_access_granted", "active_user"]
+        description: "New funnel stage"
+
+  - name: "getFunnelAnalytics"
+    description: "Get M.A.P.P.™ funnel performance metrics"
+    parameters:
+      timeframe:
+        type: "string"
+        enum: ["7d", "30d", "90d", "1y"]
+        description: "Analytics timeframe"
+      segment:
+        type: "string"
+        description: "Optional segment filter"

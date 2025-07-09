@@ -1,0 +1,44 @@
+name: perplexity
+description: "AI-powered research and keyword discovery"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-perplexity"]
+  env:
+    PERPLEXITY_API_KEY: "${PERPLEXITY_API_KEY}"
+
+tools:
+  - name: "research"
+    description: "Conduct AI-powered research on any topic"
+    parameters:
+      query:
+        type: "string"
+        description: "Research query or topic"
+      focus:
+        type: "string"
+        description: "Research focus area"
+        enum: ["general", "academic", "news", "writing"]
+        
+  - name: "findKeywords"
+    description: "Discover programmatic keyword opportunities"
+    parameters:
+      business:
+        type: "string"
+        description: "Business type or niche"
+      intent:
+        type: "string"
+        description: "Search intent to target"
+        enum: ["commercial", "informational", "transactional", "navigational"]
+        
+  - name: "competitorAnalysis"
+    description: "Analyze competitors and market gaps"
+    parameters:
+      competitors:
+        type: "array"
+        description: "List of competitor URLs or names"
+        items:
+          type: "string"
+      market:
+        type: "string"
+        description: "Market or industry focus"

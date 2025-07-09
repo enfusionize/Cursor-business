@@ -1,0 +1,62 @@
+name: clickup
+description: "Project and task management automation"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-clickup"]
+  env:
+    CLICKUP_API_TOKEN: "${CLICKUP_API_TOKEN}"
+
+tools:
+  - name: "createTask"
+    description: "Create new tasks with assignments and due dates"
+    parameters:
+      name:
+        type: "string"
+        description: "Task name"
+      description:
+        type: "string"
+        description: "Task description"
+      assignee:
+        type: "string"
+        description: "Team member to assign"
+      dueDate:
+        type: "string"
+        description: "Due date (YYYY-MM-DD or relative like 'Friday')"
+      priority:
+        type: "string"
+        enum: ["urgent", "high", "normal", "low"]
+        
+  - name: "listTasks"
+    description: "Get tasks by status, assignee, or project"
+    parameters:
+      status:
+        type: "string"
+        description: "Task status filter"
+        enum: ["open", "in progress", "review", "done"]
+      assignee:
+        type: "string"
+        description: "Filter by assignee"
+        
+  - name: "updateTaskStatus"
+    description: "Update task status and trigger automations"
+    parameters:
+      taskId:
+        type: "string"
+        description: "Task ID to update"
+      status:
+        type: "string"
+        description: "New status"
+        enum: ["todo", "in progress", "review", "done"]
+        
+  - name: "createProject"
+    description: "Create new project with template"
+    parameters:
+      name:
+        type: "string"
+        description: "Project name"
+      template:
+        type: "string"
+        description: "Project template to use"
+        enum: ["product-launch", "marketing-campaign", "web-development", "branding"]
