@@ -46,6 +46,16 @@ class MCPLauncher {
         description: 'Open Claude Code in terminal'
       },
       {
+        name: '🤖 Multi-Model AI Testing',
+        value: 'ai-testing',
+        description: 'Test and compare multiple AI models'
+      },
+      {
+        name: '🎨 Figma Design Sync',
+        value: 'figma-sync',
+        description: 'Sync designs between Figma and code'
+      },
+      {
         name: '🎯 Quick Demo',
         value: 'demo',
         description: 'Run through basic functionality demo'
@@ -98,6 +108,12 @@ class MCPLauncher {
         break;
       case 'claude':
         await this.startClaude();
+        break;
+      case 'ai-testing':
+        await this.runAITesting();
+        break;
+      case 'figma-sync':
+        await this.runFigmaSync();
         break;
       case 'demo':
         await this.runDemo();
@@ -328,6 +344,144 @@ class MCPLauncher {
       
       await this.promptReturn();
     }
+  }
+
+  async runAITesting() {
+    console.log(chalk.yellow('\n🤖 Multi-Model AI Testing\n'));
+    
+    const testChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'testType',
+        message: 'What would you like to do?',
+        choices: [
+          { name: '🚀 Interactive Model Comparison', value: 'interactive' },
+          { name: '📊 Performance Analytics Dashboard', value: 'analytics' },
+          { name: '🔧 Setup Advanced Models', value: 'setup-models' },
+          { name: '✅ Test All Configured Models', value: 'test-all' },
+          { name: '📚 View Advanced AI Workflow Guide', value: 'guide' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (testChoice.testType === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    switch (testChoice.testType) {
+      case 'interactive':
+        try {
+          execSync('npm run test-ai-models', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ AI testing failed. Make sure to configure API keys first.'));
+        }
+        break;
+      case 'analytics':
+        try {
+          execSync('npm run performance-analytics', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Analytics failed. Run some tests first.'));
+        }
+        break;
+      case 'setup-models':
+        try {
+          execSync('npm run setup-advanced-models', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Setup failed. Check the error above.'));
+        }
+        break;
+      case 'test-all':
+        try {
+          execSync('npm run test-advanced-mcps', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Testing failed. Check configuration.'));
+        }
+        break;
+      case 'guide':
+        console.log(chalk.blue('\nOpening Advanced AI Model Testing guide...\n'));
+        try {
+          const command = process.platform === 'darwin' ? 'open' : 
+                        process.platform === 'win32' ? 'start' : 'xdg-open';
+          execSync(`${command} advanced-ai-model-testing-workflow.md`, { stdio: 'pipe' });
+        } catch (error) {
+          console.log(chalk.yellow('Could not open file automatically.'));
+          console.log(chalk.gray('File: advanced-ai-model-testing-workflow.md'));
+        }
+        break;
+    }
+
+    await this.promptReturn();
+  }
+
+  async runFigmaSync() {
+    console.log(chalk.yellow('\n🎨 Figma Design Sync\n'));
+    
+    const syncChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'syncType',
+        message: 'What would you like to do?',
+        choices: [
+          { name: '📥 Import Design from Figma', value: 'import' },
+          { name: '📤 Export Code to Figma', value: 'export' },
+          { name: '🔄 Setup Bidirectional Sync', value: 'setup' },
+          { name: '🎯 One-Click Design-to-Deployment', value: 'pipeline' },
+          { name: '🔧 Configure Figma Integration', value: 'configure' },
+          { name: '📚 View Figma Integration Guide', value: 'guide' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (syncChoice.syncType === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    // Check if Figma token is configured
+    require('dotenv').config();
+    if (!process.env.FIGMA_ACCESS_TOKEN && syncChoice.syncType !== 'guide' && syncChoice.syncType !== 'configure') {
+      console.log(chalk.red('❌ Figma access token not configured.'));
+      console.log(chalk.yellow('💡 Add FIGMA_ACCESS_TOKEN to your .env file first.'));
+      console.log(chalk.blue('📚 See the Figma Integration Guide for setup instructions.'));
+      await this.promptReturn();
+      return;
+    }
+
+    switch (syncChoice.syncType) {
+      case 'import':
+      case 'export':
+      case 'setup':
+      case 'pipeline':
+        try {
+          execSync('npm run sync-figma-design', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Figma sync failed. Check configuration and try again.'));
+        }
+        break;
+      case 'configure':
+        try {
+          execSync('npm run configure-figma-webhooks', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Configuration failed. Check your Figma API keys.'));
+        }
+        break;
+      case 'guide':
+        console.log(chalk.blue('\nOpening Figma Integration guide...\n'));
+        try {
+          const command = process.platform === 'darwin' ? 'open' : 
+                        process.platform === 'win32' ? 'start' : 'xdg-open';
+          execSync(`${command} advanced-ai-model-testing-workflow.md`, { stdio: 'pipe' });
+        } catch (error) {
+          console.log(chalk.yellow('Could not open file automatically.'));
+          console.log(chalk.gray('File: advanced-ai-model-testing-workflow.md'));
+        }
+        break;
+    }
+
+    await this.promptReturn();
   }
 
   async runDemo() {

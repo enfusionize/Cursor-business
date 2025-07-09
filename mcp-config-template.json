@@ -39,6 +39,74 @@
         "DATAFORSEO_PASSWORD": "your-dataforseo-password-here"
       },
       "description": "SEO keyword research and validation with real search volume data"
+    },
+    "minimax": {
+      "command": "npx",
+      "args": ["-y", "minimax-mcp"],
+      "env": {
+        "MINIMAX_API_KEY": "your-minimax-api-key-here",
+        "MINIMAX_GROUP_ID": "your-minimax-group-id-here"
+      },
+      "description": "Minimax multimodal AI for text and image generation"
+    },
+    "dora": {
+      "command": "npx",
+      "args": ["-y", "dora-ai-mcp"],
+      "env": {
+        "DORA_API_KEY": "your-dora-api-key-here"
+      },
+      "description": "Dora AI for automated web design and prototyping"
+    },
+    "emergent": {
+      "command": "npx",
+      "args": ["-y", "emergent-mind-mcp"],
+      "env": {
+        "EMERGENT_API_KEY": "your-emergent-api-key-here"
+      },
+      "description": "Emergent Mind for advanced reasoning and problem-solving"
+    },
+    "orchids": {
+      "command": "npx",
+      "args": ["-y", "orchids-ai-mcp"],
+      "env": {
+        "ORCHIDS_API_KEY": "your-orchids-api-key-here",
+        "ORCHIDS_WORKSPACE_ID": "your-orchids-workspace-id-here"
+      },
+      "description": "Orchids AI for business intelligence and automation"
+    },
+    "runway": {
+      "command": "npx",
+      "args": ["-y", "runway-mcp"],
+      "env": {
+        "RUNWAY_API_KEY": "your-runway-api-key-here"
+      },
+      "description": "Runway ML for creative AI and video generation"
+    },
+    "midjourney": {
+      "command": "npx",
+      "args": ["-y", "midjourney-mcp"],
+      "env": {
+        "MIDJOURNEY_API_KEY": "your-midjourney-api-key-here",
+        "MIDJOURNEY_DISCORD_TOKEN": "your-midjourney-discord-token-here"
+      },
+      "description": "Midjourney for high-quality image generation"
+    },
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "figma-mcp"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "your-figma-access-token-here",
+        "FIGMA_TEAM_ID": "your-figma-team-id-here"
+      },
+      "description": "Figma integration for design collaboration and asset management"
+    },
+    "stable-diffusion": {
+      "command": "npx",
+      "args": ["-y", "stable-diffusion-mcp"],
+      "env": {
+        "STABILITY_API_KEY": "your-stability-api-key-here"
+      },
+      "description": "Stable Diffusion for open-source image generation"
     }
   }
 }
