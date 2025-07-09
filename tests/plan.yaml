@@ -1,0 +1,62 @@
+name: "Agency Operations Test Suite"
+description: "Automated testing for core workflows"
+
+tests:
+  - name: "Landing Page Conversion Flow"
+    url: "https://example.com/landing"
+    steps:
+      - action: "screenshot"
+        name: "initial_state"
+      - action: "fill"
+        selector: "input[name='email']"
+        value: "test@example.com"
+      - action: "fill"
+        selector: "input[name='name']"
+        value: "Test User"
+      - action: "click"
+        selector: "button[type='submit']"
+      - action: "wait"
+        timeout: 3000
+      - action: "screenshot"
+        name: "after_submit"
+      - action: "assert"
+        selector: ".success-message"
+        expected: "visible"
+
+  - name: "Dashboard Login Flow"
+    url: "https://dashboard.example.com"
+    steps:
+      - action: "fill"
+        selector: "input[name='username']"
+        value: "${TEST_USERNAME}"
+      - action: "fill"
+        selector: "input[name='password']"
+        value: "${TEST_PASSWORD}"
+      - action: "click"
+        selector: "button[type='submit']"
+      - action: "wait"
+        timeout: 5000
+      - action: "assert"
+        selector: ".dashboard-header"
+        expected: "visible"
+
+  - name: "Mobile Responsiveness Check"
+    url: "https://example.com"
+    device: "mobile"
+    steps:
+      - action: "screenshot"
+        name: "mobile_view"
+      - action: "assert"
+        selector: ".mobile-menu"
+        expected: "visible"
+      - action: "click"
+        selector: ".mobile-menu-toggle"
+      - action: "assert"
+        selector: ".mobile-nav"
+        expected: "visible"
+
+settings:
+  retries: 3
+  timeout: 30000
+  headless: true
+  stealth: true

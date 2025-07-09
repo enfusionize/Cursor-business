@@ -1,0 +1,45 @@
+name: firecrawl
+description: "Web scraping and content extraction for marketing research"
+version: "1.0.0"
+
+server:
+  command: "npx"
+  args: ["@modelcontextprotocol/server-firecrawl"]
+  env:
+    FIRECRAWL_API_KEY: "${FIRECRAWL_API_KEY}"
+
+tools:
+  - name: "scrape"
+    description: "Scrape website content and create summaries"
+    parameters:
+      url:
+        type: "string"
+        description: "Website URL to scrape"
+      format:
+        type: "string"
+        description: "Output format (markdown, json, text)"
+        enum: ["markdown", "json", "text"]
+      
+  - name: "crawl"
+    description: "Crawl entire website for comprehensive analysis"
+    parameters:
+      url:
+        type: "string"
+        description: "Base URL to crawl"
+      maxPages:
+        type: "number"
+        description: "Maximum pages to crawl"
+        default: 10
+        
+  - name: "audit"
+    description: "Technical SEO audit of website"
+    parameters:
+      url:
+        type: "string"
+        description: "Website URL to audit"
+      checkTypes:
+        type: "array"
+        description: "Types of checks to perform"
+        items:
+          type: "string"
+          enum: ["seo", "performance", "accessibility", "best-practices"]
