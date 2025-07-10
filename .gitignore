@@ -1,45 +1,15 @@
 # Dependencies
 node_modules/
-/.pnp
-.pnp.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+pnpm-debug.log*
 
 # Runtime data
 pids
 *.pid
 *.seed
 *.pid.lock
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Production build
-/build
-/.next/
-/out/
-/dist/
-
-# Runtime data
-*.tgz
-*.tar.gz
-.npm
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Logs
-logs
-*.log
 
 # Coverage directory used by tools like istanbul
 coverage/
@@ -48,23 +18,20 @@ coverage/
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 jspm_packages/
 
-# TypeScript cache
-*.tsbuildinfo
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -75,40 +42,40 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Next.js build output
-.next
+# Sensitive configuration files
+config/production.json
+config/local.json
+.env.production
+.env.staging
 
-# Nuxt.js build / generate output
-.nuxt
-dist
+# API Keys and secrets
+secrets/
+.secrets
+*.key
+*.pem
+*.p12
+*.pfx
 
-# Gatsby files
-.cache/
-public
+# Logs
+logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
+# Runtime temp directories
+.tmp/
 tmp/
 temp/
-
-# Runtime data
-*.pid
-*.seed
-*.pid.lock
-
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
 
 # OS generated files
 .DS_Store
@@ -119,100 +86,87 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# MCP Business Operations specific
-backups/
-exports/
-screenshots/
-downloads/
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
 
-# API keys and sensitive data
-*.key
-*.pem
-*.p12
-*.env.*
-config/secrets/
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
 
 # Database files
 *.db
 *.sqlite
 *.sqlite3
+database.json
+
+# Automation specific
+automation_logs/
+workflow_cache/
+automation_backups/
+failed_automations/
+
+# MCP specific
+mcp_cache/
+mcp_logs/
+.mcp_config
+server_logs/
 
 # Docker
-.dockerignore
+.docker/
 docker-compose.override.yml
 
-# Vercel
-.vercel
+# Testing
+test-results/
+playwright-report/
+test-output/
 
-# Playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/
-
-# Claude Code temporary files
-.claude/
-claude-temp/
-
-# MCP server logs
-mcp-logs/
-
-# Business data exports
-content/exports/
-workflows/generated/
-templates/output/
+# Certificates and security
+certs/
+ssl/
+*.crt
+*.csr
 
 # Backup files
 *.backup
 *.bak
+*.old
 
-# Lock files (keep package-lock.json for reproducible builds)
-# yarn.lock
-
-# Python (if using Python MCPs)
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-
-# Java (if using Java MCPs)
-*.class
+# Archive files
+*.7z
+*.dmg
+*.gz
+*.iso
 *.jar
-*.war
-*.ear
+*.rar
+*.tar
+*.zip
 
-# macOS
-.AppleDouble
-.LSOverride
+# System files
+.fuse_hidden*
+.Trash-*
+.nfs*
 
-# Windows
-desktop.ini
+# Package lock files (choose one strategy)
+# package-lock.json  # Uncomment if using yarn
+# yarn.lock          # Uncomment if using npm
 
-# Linux
-*~
+# Automation data
+automation_data/
+workflow_exports/
+integration_cache/
 
-# JetBrains IDEs
-.idea/
-*.iml
-*.iws
-
-# Visual Studio Code
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# Cursor IDE
-.cursor/
-
-# MCP configuration backups
-*.settings.json.backup
-
-# Development artifacts
-*.dev
-*.test
-*.local
+# Business intelligence cache
+bi_cache/
+dashboard_cache/
+report_exports/
