@@ -107,6 +107,17 @@
         "STABILITY_API_KEY": "your-stability-api-key-here"
       },
       "description": "Stable Diffusion for open-source image generation"
+    },
+    "clickup": {
+      "command": "node",
+      "args": ["./mcps/clickup-mcp-server.js"],
+      "env": {
+        "CLICKUP_API_KEY": "your-clickup-api-key-here",
+        "CLICKUP_TEAM_ID": "your-clickup-team-id-here",
+        "CLICKUP_WORKSPACE_ID": "your-clickup-workspace-id-here",
+        "CLICKUP_DOCS_PATH": "./project-docs"
+      },
+      "description": "ClickUp integration for task management, document sync, and project automation"
     }
   }
 }

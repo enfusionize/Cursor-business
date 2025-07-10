@@ -66,6 +66,11 @@ class MCPLauncher {
         description: 'Continuous background learning system'
       },
       {
+        name: '📋 ClickUp Integration',
+        value: 'clickup',
+        description: 'Task management, docs sync, and project automation'
+      },
+      {
         name: '🎯 Quick Demo',
         value: 'demo',
         description: 'Run through basic functionality demo'
@@ -130,6 +135,9 @@ class MCPLauncher {
         break;
       case 'learning-daemon':
         await this.runLearningDaemon();
+        break;
+      case 'clickup':
+        await this.runClickUpIntegration();
         break;
       case 'demo':
         await this.runDemo();
@@ -609,6 +617,142 @@ class MCPLauncher {
           execSync('npm run performance-analytics', { stdio: 'inherit' });
         } catch (error) {
           console.log(chalk.red('❌ Failed to load analytics.'));
+        }
+        break;
+    }
+
+    await this.promptReturn();
+  }
+
+  async runClickUpIntegration() {
+    console.log(chalk.yellow('\n📋 ClickUp Integration & Automation\n'));
+    
+    const clickupChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'clickupAction',
+        message: 'ClickUp Integration - What would you like to do?',
+        choices: [
+          { name: '🚀 Start ClickUp Automation Daemon', value: 'start-daemon' },
+          { name: '📊 View ClickUp Status & Analytics', value: 'status' },
+          { name: '🔄 Sync Current Project to ClickUp', value: 'sync-project' },
+          { name: '📥 Import ClickUp Tasks & Docs', value: 'import' },
+          { name: '📤 Export Code Files to ClickUp Docs', value: 'export' },
+          { name: '⚙️ Setup Project Automation Rules', value: 'setup-automation' },
+          { name: '🧪 Test ClickUp API Connection', value: 'test-connection' },
+          { name: '🔧 Configure ClickUp Integration', value: 'configure' },
+          { name: '📚 View ClickUp Integration Guide', value: 'guide' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (clickupChoice.clickupAction === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    // Check if ClickUp API key is configured
+    require('dotenv').config();
+    if (!process.env.CLICKUP_API_KEY && clickupChoice.clickupAction !== 'guide' && clickupChoice.clickupAction !== 'configure') {
+      console.log(chalk.red('❌ ClickUp API key not configured.'));
+      console.log(chalk.yellow('💡 Add CLICKUP_API_KEY to your .env file first.'));
+      console.log(chalk.blue('📚 See the ClickUp Integration Guide for setup instructions.'));
+      await this.promptReturn();
+      return;
+    }
+
+    switch (clickupChoice.clickupAction) {
+      case 'start-daemon':
+        console.log(chalk.blue('🚀 Starting ClickUp Automation Daemon...'));
+        try {
+          execSync('npm run start-clickup', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to start ClickUp daemon. Check configuration.'));
+        }
+        break;
+      
+      case 'status':
+        try {
+          execSync('npm run clickup-status', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Failed to get ClickUp status. Is the daemon running?'));
+        }
+        break;
+      
+      case 'sync-project':
+        console.log(chalk.blue('🔄 Syncing current project to ClickUp...'));
+        try {
+          execSync('npm run sync-clickup', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ Project sync failed. Check ClickUp configuration.'));
+        }
+        break;
+      
+      case 'import':
+        console.log(chalk.blue('📥 Importing from ClickUp...'));
+        try {
+          // This would use the MCP server to import data
+          console.log(chalk.yellow('💡 Use the ClickUp MCP in Cursor to import tasks and docs:'));
+          console.log(chalk.gray('  sync_docs_to_cursor'));
+          console.log(chalk.gray('  search_clickup_data'));
+        } catch (error) {
+          console.log(chalk.red('❌ Import failed.'));
+        }
+        break;
+      
+      case 'export':
+        console.log(chalk.blue('📤 Exporting to ClickUp...'));
+        try {
+          console.log(chalk.yellow('💡 Use the ClickUp MCP in Cursor to export files:'));
+          console.log(chalk.gray('  send_files_to_clickup'));
+          console.log(chalk.gray('  sync_cursor_project'));
+        } catch (error) {
+          console.log(chalk.red('❌ Export failed.'));
+        }
+        break;
+      
+      case 'setup-automation':
+        console.log(chalk.blue('⚙️ Setting up automation rules...'));
+        try {
+          console.log(chalk.yellow('💡 Use the ClickUp MCP in Cursor to setup automation:'));
+          console.log(chalk.gray('  setup_automation_rules'));
+          console.log(chalk.gray('  auto_manage_tasks'));
+        } catch (error) {
+          console.log(chalk.red('❌ Automation setup failed.'));
+        }
+        break;
+      
+      case 'test-connection':
+        try {
+          execSync('npm run test-clickup', { stdio: 'inherit' });
+        } catch (error) {
+          console.log(chalk.red('❌ ClickUp connection test failed. Check API configuration.'));
+        }
+        break;
+      
+      case 'configure':
+        console.log(chalk.blue('\n🔧 ClickUp Configuration Guide:'));
+        console.log(chalk.yellow('\n1. Get your ClickUp API key:'));
+        console.log(chalk.gray('   • Go to ClickUp > Settings > Apps'));
+        console.log(chalk.gray('   • Generate API Key'));
+        console.log(chalk.yellow('\n2. Find your Team & Workspace IDs:'));
+        console.log(chalk.gray('   • Check the URL: https://app.clickup.com/{team_id}/'));
+        console.log(chalk.yellow('\n3. Add to your .env file:'));
+        console.log(chalk.gray('   CLICKUP_API_KEY=your-api-key'));
+        console.log(chalk.gray('   CLICKUP_TEAM_ID=your-team-id'));
+        console.log(chalk.gray('   CLICKUP_WORKSPACE_ID=your-workspace-id'));
+        break;
+      
+      case 'guide':
+        console.log(chalk.blue('\nOpening ClickUp Integration guide...\n'));
+        try {
+          const command = process.platform === 'darwin' ? 'open' : 
+                        process.platform === 'win32' ? 'start' : 'xdg-open';
+          execSync(`${command} comprehensive-platform-knowledge-base.md`, { stdio: 'pipe' });
+        } catch (error) {
+          console.log(chalk.yellow('Could not open file automatically.'));
+          console.log(chalk.gray('File: comprehensive-platform-knowledge-base.md'));
         }
         break;
     }
