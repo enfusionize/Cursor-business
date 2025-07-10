@@ -48,7 +48,13 @@
     "auto-fix-interactive": "node scripts/auto-fix-engine.js --interactive",
     "auto-fix-continuous": "node scripts/auto-fix-engine.js --continuous",
     "debug-dashboard": "echo 'Open http://localhost:3000/dashboard/debug-dashboard.html in your browser'",
-    "system-diagnostics": "node scripts/health-monitor.js --verbose && node scripts/auto-fix-engine.js --dry-run"
+    "system-diagnostics": "node scripts/health-monitor.js --verbose && node scripts/auto-fix-engine.js --dry-run",
+    "miro-dashboard": "node mcps/miro-realtime-dashboard.js",
+    "test-miro": "node scripts/test-miro-dashboard.js",
+    "miro-system-overview": "node scripts/test-miro-dashboard.js --type=system-overview",
+    "miro-business-analytics": "node scripts/test-miro-dashboard.js --type=business-analytics",
+    "miro-automation-flows": "node scripts/test-miro-dashboard.js --type=automation-flows",
+    "miro-site-monitoring": "node scripts/test-miro-dashboard.js --type=site-monitoring"
   },
   "dependencies": {
     "next": "^14.0.0",
