@@ -34,7 +34,12 @@
     "start-clickup": "node scripts/clickup-automation-daemon.js start",
     "clickup-status": "node scripts/clickup-automation-daemon.js status",
     "test-clickup": "node scripts/test-clickup-integration.js",
-    "sync-clickup": "node scripts/sync-project-to-clickup.js"
+    "sync-clickup": "node scripts/sync-project-to-clickup.js",
+    "string-automation": "node scripts/string-automation-engine.js",
+    "create-automation": "node scripts/string-automation-engine.js",
+    "automation-templates": "node scripts/string-automation-engine.js templates",
+    "business-intelligence": "node scripts/string-automation-engine.js bi",
+    "test-string-integration": "node scripts/string-automation-engine.js test"
   },
   "dependencies": {
     "next": "^14.0.0",
