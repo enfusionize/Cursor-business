@@ -105,6 +105,11 @@ class MCPLauncher {
         description: 'Create comprehensive business monitoring systems'
       },
       {
+        name: '🏥 Health Monitor & Debugging',
+        value: 'health-debug',
+        description: 'System health monitoring and automated debugging'
+      },
+      {
         name: '� Utilities',
         value: 'utils',
         description: 'Backup, restore, and maintenance tools'
@@ -177,6 +182,9 @@ class MCPLauncher {
         break;
       case 'business-intelligence':
         await this.runBusinessIntelligence();
+        break;
+      case 'health-debug':
+        await this.runHealthDebug();
         break;
       case 'utils':
         await this.showUtilities();
@@ -1274,6 +1282,147 @@ class MCPLauncher {
         await this.showMainMenu();
         break;
     }
+  }
+
+  async runHealthDebug() {
+    console.log(chalk.yellow('\n🏥 Health Monitor & Debugging System\n'));
+    
+    const healthChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'healthAction',
+        message: 'Health & Debug - What would you like to do?',
+        choices: [
+          { name: '🔍 Run Health Check', value: 'health-check' },
+          { name: '📊 Open Debug Dashboard', value: 'debug-dashboard' },
+          { name: '🔧 Auto-Fix Issues', value: 'auto-fix' },
+          { name: '🔄 Continuous Monitoring', value: 'continuous' },
+          { name: '🧪 System Diagnostics', value: 'diagnostics' },
+          { name: '📈 Performance Monitor', value: 'performance' },
+          { name: '🚨 Emergency Recovery', value: 'emergency' },
+          { name: '📋 Generate Health Report', value: 'report' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (healthChoice.healthAction === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    try {
+      switch (healthChoice.healthAction) {
+        case 'health-check':
+          console.log(chalk.blue('🔍 Running comprehensive health check...'));
+          execSync('npm run health-check', { stdio: 'inherit' });
+          break;
+          
+        case 'debug-dashboard':
+          console.log(chalk.blue('📊 Opening debug dashboard...'));
+          console.log(chalk.green('🌐 Debug Dashboard: http://localhost:3000/dashboard/debug-dashboard.html'));
+          console.log(chalk.gray('💡 Make sure your development server is running (npm run dev)'));
+          
+          const openDashboard = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'open',
+              message: 'Open debug dashboard in browser?',
+              default: true
+            }
+          ]);
+          
+          if (openDashboard.open) {
+            try {
+              const command = process.platform === 'darwin' ? 'open' : 
+                            process.platform === 'win32' ? 'start' : 'xdg-open';
+              execSync(`${command} http://localhost:3000/dashboard/debug-dashboard.html`, { stdio: 'pipe' });
+            } catch (error) {
+              console.log(chalk.yellow('Could not open browser automatically.'));
+              console.log(chalk.gray('Please open: http://localhost:3000/dashboard/debug-dashboard.html'));
+            }
+          }
+          break;
+          
+        case 'auto-fix':
+          const fixChoice = await inquirer.prompt([
+            {
+              type: 'list',
+              name: 'fixType',
+              message: 'Auto-fix options:',
+              choices: [
+                { name: '🔍 Dry Run (Show what would be fixed)', value: 'dry-run' },
+                { name: '🔧 Interactive Fix (Choose issues to fix)', value: 'interactive' },
+                { name: '⚡ Auto Fix All Issues', value: 'auto' },
+                { name: '🔄 Continuous Auto-Fix', value: 'continuous' }
+              ]
+            }
+          ]);
+          
+          console.log(chalk.blue('🔧 Running auto-fix engine...'));
+          switch (fixChoice.fixType) {
+            case 'dry-run':
+              execSync('npm run auto-fix-dry-run', { stdio: 'inherit' });
+              break;
+            case 'interactive':
+              execSync('npm run auto-fix-interactive', { stdio: 'inherit' });
+              break;
+            case 'auto':
+              execSync('npm run auto-fix', { stdio: 'inherit' });
+              break;
+            case 'continuous':
+              execSync('npm run auto-fix-continuous', { stdio: 'inherit' });
+              break;
+          }
+          break;
+          
+        case 'continuous':
+          console.log(chalk.blue('🔄 Starting continuous health monitoring...'));
+          console.log(chalk.yellow('⚠️  This will run in the background. Press Ctrl+C to stop.'));
+          execSync('npm run health-continuous', { stdio: 'inherit' });
+          break;
+          
+        case 'diagnostics':
+          console.log(chalk.blue('🧪 Running system diagnostics...'));
+          execSync('npm run system-diagnostics', { stdio: 'inherit' });
+          break;
+          
+        case 'performance':
+          console.log(chalk.blue('📈 Starting performance monitoring...'));
+          execSync('npm run health-monitor', { stdio: 'inherit' });
+          break;
+          
+        case 'emergency':
+          console.log(chalk.red('🚨 Emergency Recovery Mode'));
+          console.log(chalk.yellow('This will attempt to fix critical system issues automatically.'));
+          
+          const confirmEmergency = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'proceed',
+              message: 'Proceed with emergency recovery?',
+              default: false
+            }
+          ]);
+          
+          if (confirmEmergency.proceed) {
+            console.log(chalk.blue('🔧 Running emergency recovery...'));
+            execSync('node scripts/auto-fix-engine.js --type missing-env-vars --type api-connection-failed --type mcp-server-down', { stdio: 'inherit' });
+          }
+          break;
+          
+        case 'report':
+          console.log(chalk.blue('📋 Generating comprehensive health report...'));
+          execSync('node scripts/health-monitor.js --verbose --auto-fix', { stdio: 'inherit' });
+          console.log(chalk.green('📄 Health report saved to logs/health-report-*.json'));
+          break;
+      }
+      
+    } catch (error) {
+      console.log(chalk.red('❌ Health monitoring failed:'), error.message);
+    }
+
+    await this.promptReturn();
   }
 
   async promptReturn() {
