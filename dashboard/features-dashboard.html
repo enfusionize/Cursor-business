@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Marketing Platform - Features Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        .category-filter {
+            transition: all 0.2s ease;
+        }
+        .category-filter.active {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.4);
+        }
+        .roi-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .difficulty-badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .difficulty-easy { background-color: #10b981; color: white; }
+        .difficulty-medium { background-color: #f59e0b; color: white; }
+        .difficulty-hard { background-color: #ef4444; color: white; }
+        
+        .demo-preview {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">Vibe Marketing Platform</h1>
+                    <span class="ml-4 px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800">
+                        🚀 Features Dashboard
+                    </span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                        ← Back to Dashboard
+                    </a>
+                    <button onclick="openDemo()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        🎯 Live Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-4">AI-Powered Marketing Automation</h2>
+            <p class="text-xl mb-8 text-blue-100">Transform your business with 25+ production-ready features, 18 interactive workflows, and enterprise-grade MCP integrations</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+                <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+                    <div class="text-3xl font-bold">425%</div>
+                    <div class="text-blue-200">Average ROI</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+                    <div class="text-3xl font-bold">25+</div>
+                    <div class="text-blue-200">AI Features</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+                    <div class="text-3xl font-bold">18</div>
+                    <div class="text-blue-200">Workflows</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+                    <div class="text-3xl font-bold">$1.3T</div>
+                    <div class="text-blue-200">Market TAM</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Categories -->
+    <section class="py-8 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button onclick="filterFeatures('all')" class="category-filter active px-6 py-2 rounded-lg border border-gray-300">
+                    All Features
+                </button>
+                <button onclick="filterFeatures('ai-content')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    🤖 AI Content
+                </button>
+                <button onclick="filterFeatures('automation')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    ⚡ Automation
+                </button>
+                <button onclick="filterFeatures('analytics')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    📊 Analytics
+                </button>
+                <button onclick="filterFeatures('design')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    🎨 Design
+                </button>
+                <button onclick="filterFeatures('business')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    💼 Business
+                </button>
+                <button onclick="filterFeatures('integration')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                    🔗 Integrations
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Features will be dynamically populated -->
+        </div>
+    </main>
+
+    <!-- Demo Modal -->
+    <div id="demo-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-900">🎯 Live Feature Demo</h3>
+                <button onclick="closeDemo()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="demo-content" class="p-6">
+                <!-- Demo content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const features = [
+            {
+                id: 'claude-workflows',
+                title: 'Claude AI Workflows',
+                category: 'ai-content',
+                description: 'Advanced AI workflows powered by Claude 3.5 Sonnet for content generation, code analysis, and business automation.',
+                benefits: ['Multi-step reasoning', 'Code generation', 'Business intelligence'],
+                roi: '300% productivity boost',
+                difficulty: 'medium',
+                icon: '🧠',
+                tags: ['AI', 'Automation', 'Claude'],
+                demo: 'claude-workflow'
+            },
+            {
+                id: 'figma-framer',
+                title: 'Figma to Framer Converter',
+                category: 'design',
+                description: 'Convert Figma designs to fully functional Framer websites with AI-powered component matching and responsive layouts.',
+                benefits: ['Design to code', 'Responsive layouts', 'Component library'],
+                roi: '500% faster deployment',
+                difficulty: 'easy',
+                icon: '🎨',
+                tags: ['Design', 'Automation', 'Conversion'],
+                demo: 'figma-framer'
+            },
+            {
+                id: 'playwright-automation',
+                title: 'Web Automation Suite',
+                category: 'automation',
+                description: 'Comprehensive web automation using Playwright for testing, scraping, and user journey automation.',
+                benefits: ['Cross-browser testing', 'Data extraction', 'User simulation'],
+                roi: '400% testing efficiency',
+                difficulty: 'medium',
+                icon: '🤖',
+                tags: ['Testing', 'Automation', 'Playwright'],
+                demo: 'playwright-automation'
+            },
+            {
+                id: 'perplexity-research',
+                title: 'AI Research Engine',
+                category: 'ai-content',
+                description: 'Powered by Perplexity AI for real-time market research, competitor analysis, and content intelligence.',
+                benefits: ['Real-time data', 'Market insights', 'Competitor tracking'],
+                roi: '350% research speed',
+                difficulty: 'easy',
+                icon: '🔍',
+                tags: ['Research', 'AI', 'Analytics'],
+                demo: 'perplexity-research'
+            },
+            {
+                id: 'firecrawl-intelligence',
+                title: 'Web Intelligence Platform',
+                category: 'analytics',
+                description: 'Advanced web crawling and intelligence gathering using Firecrawl for competitive analysis and market monitoring.',
+                benefits: ['Web crawling', 'Data intelligence', 'Market monitoring'],
+                roi: '450% data accuracy',
+                difficulty: 'medium',
+                icon: '🕷️',
+                tags: ['Intelligence', 'Crawling', 'Analytics'],
+                demo: 'firecrawl-intelligence'
+            },
+            {
+                id: 'clickup-integration',
+                title: 'ClickUp Project Hub',
+                category: 'business',
+                description: 'Complete project management integration with automated task creation, progress tracking, and team collaboration.',
+                benefits: ['Project automation', 'Team collaboration', 'Progress tracking'],
+                roi: '250% project efficiency',
+                difficulty: 'easy',
+                icon: '📋',
+                tags: ['Project Management', 'Collaboration', 'Automation'],
+                demo: 'clickup-integration'
+            },
+            {
+                id: 'xero-accounting',
+                title: 'Xero Financial Automation',
+                category: 'business',
+                description: 'Automated accounting workflows with Xero integration for invoicing, expense tracking, and financial reporting.',
+                benefits: ['Automated invoicing', 'Expense tracking', 'Financial reports'],
+                roi: '600% accounting efficiency',
+                difficulty: 'medium',
+                icon: '💰',
+                tags: ['Accounting', 'Finance', 'Automation'],
+                demo: 'xero-accounting'
+            },
+            {
+                id: 'vercel-deployment',
+                title: 'Vercel Deploy Engine',
+                category: 'integration',
+                description: 'Automated deployment pipeline with Vercel for instant website publishing and performance optimization.',
+                benefits: ['Instant deployment', 'Performance optimization', 'Global CDN'],
+                roi: '800% deployment speed',
+                difficulty: 'easy',
+                icon: '🚀',
+                tags: ['Deployment', 'Performance', 'CDN'],
+                demo: 'vercel-deployment'
+            },
+            {
+                id: 'midjourney-generator',
+                title: 'Midjourney Visual Creator',
+                category: 'design',
+                description: 'AI-powered visual content generation using Midjourney for marketing materials, social media, and brand assets.',
+                benefits: ['Visual content', 'Brand assets', 'Social media'],
+                roi: '700% content creation speed',
+                difficulty: 'easy',
+                icon: '🎭',
+                tags: ['Visual Content', 'AI', 'Branding'],
+                demo: 'midjourney-generator'
+            },
+            {
+                id: 'stable-diffusion',
+                title: 'Stable Diffusion Studio',
+                category: 'design',
+                description: 'Professional image generation and editing using Stable Diffusion for custom visuals and product imagery.',
+                benefits: ['Custom visuals', 'Product imagery', 'Style consistency'],
+                roi: '600% visual production',
+                difficulty: 'medium',
+                icon: '🖼️',
+                tags: ['Image Generation', 'AI', 'Design'],
+                demo: 'stable-diffusion'
+            },
+            {
+                id: 'runway-video',
+                title: 'Runway Video Producer',
+                category: 'design',
+                description: 'AI video generation and editing platform using Runway ML for marketing videos and social content.',
+                benefits: ['Video generation', 'AI editing', 'Marketing content'],
+                roi: '500% video production',
+                difficulty: 'hard',
+                icon: '🎬',
+                tags: ['Video', 'AI', 'Marketing'],
+                demo: 'runway-video'
+            },
+            {
+                id: 'dataforeco-seo',
+                title: 'DataForSEO Intelligence',
+                category: 'analytics',
+                description: 'Comprehensive SEO analytics and competitor research using DataForSEO for keyword tracking and SERP analysis.',
+                benefits: ['SEO analytics', 'Competitor research', 'SERP tracking'],
+                roi: '400% SEO performance',
+                difficulty: 'medium',
+                icon: '📈',
+                tags: ['SEO', 'Analytics', 'Competition'],
+                demo: 'dataforeco-seo'
+            },
+            {
+                id: 'string-automation',
+                title: 'String.com Integration',
+                category: 'automation',
+                description: 'Natural language automation engine inspired by String.com for creating complex workflows through conversational AI.',
+                benefits: ['Natural language', 'Complex workflows', 'AI conversation'],
+                roi: '900% automation adoption',
+                difficulty: 'easy',
+                icon: '🔮',
+                tags: ['Natural Language', 'Workflows', 'AI'],
+                demo: 'string-automation'
+            },
+            {
+                id: 'emergent-mind',
+                title: 'Emergent Mind Research',
+                category: 'ai-content',
+                description: 'Advanced AI research and development platform using Emergent Mind for cutting-edge AI model integration.',
+                benefits: ['AI research', 'Model integration', 'Innovation'],
+                roi: '300% research efficiency',
+                difficulty: 'hard',
+                icon: '🧪',
+                tags: ['AI Research', 'Innovation', 'Development'],
+                demo: 'emergent-mind'
+            },
+            {
+                id: 'orchids-ai',
+                title: 'Orchids AI Platform',
+                category: 'ai-content',
+                description: 'Specialized AI content platform using Orchids AI for personalized marketing and customer engagement.',
+                benefits: ['Personalized content', 'Customer engagement', 'AI personalization'],
+                roi: '450% engagement rate',
+                difficulty: 'medium',
+                icon: '🌺',
+                tags: ['Personalization', 'Engagement', 'AI'],
+                demo: 'orchids-ai'
+            },
+            {
+                id: 'minimax-ai',
+                title: 'Minimax AI Engine',
+                category: 'ai-content',
+                description: 'High-performance AI model integration using Minimax for advanced reasoning and content generation.',
+                benefits: ['Advanced reasoning', 'Content generation', 'High performance'],
+                roi: '350% content quality',
+                difficulty: 'hard',
+                icon: '⚡',
+                tags: ['High Performance', 'Reasoning', 'AI'],
+                demo: 'minimax-ai'
+            },
+            {
+                id: 'dora-ai',
+                title: 'Dora AI Designer',
+                category: 'design',
+                description: 'Automated web design and development using Dora AI for creating responsive websites from natural language.',
+                benefits: ['Automated design', 'Responsive websites', 'Natural language'],
+                roi: '800% design speed',
+                difficulty: 'easy',
+                icon: '🎯',
+                tags: ['Web Design', 'Automation', 'AI'],
+                demo: 'dora-ai'
+            },
+            {
+                id: 'business-intelligence',
+                title: 'Business Intelligence Suite',
+                category: 'analytics',
+                description: 'Comprehensive business analytics platform combining multiple data sources for strategic decision making.',
+                benefits: ['Data integration', 'Strategic insights', 'Decision support'],
+                roi: '550% decision accuracy',
+                difficulty: 'medium',
+                icon: '📊',
+                tags: ['Business Intelligence', 'Analytics', 'Strategy'],
+                demo: 'business-intelligence'
+            }
+        ];
+
+        function renderFeatures(featuresToRender = features) {
+            const grid = document.getElementById('features-grid');
+            grid.innerHTML = '';
+
+            featuresToRender.forEach(feature => {
+                const featureCard = document.createElement('div');
+                featureCard.className = `feature-card bg-white rounded-xl p-6 cursor-pointer feature-item`;
+                featureCard.setAttribute('data-category', feature.category);
+                featureCard.onclick = () => showFeatureDemo(feature);
+
+                featureCard.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="text-3xl">${feature.icon}</div>
+                        <div class="flex flex-col items-end">
+                            <span class="roi-badge">${feature.roi}</span>
+                            <span class="difficulty-badge difficulty-${feature.difficulty} mt-2">${feature.difficulty.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">${feature.title}</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">${feature.description}</p>
+                    
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1">
+                            ${feature.benefits.map(benefit => `
+                                <li class="text-sm text-gray-600 flex items-center">
+                                    <span class="text-green-500 mr-2">✓</span>
+                                    ${benefit}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${feature.tags.map(tag => `
+                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-lg">${tag}</span>
+                        `).join('')}
+                    </div>
+                    
+                    <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-sm font-medium">
+                        Try Live Demo →
+                    </button>
+                `;
+
+                grid.appendChild(featureCard);
+            });
+        }
+
+        function filterFeatures(category) {
+            // Update active filter button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter features
+            const filteredFeatures = category === 'all' 
+                ? features 
+                : features.filter(feature => feature.category === category);
+            
+            renderFeatures(filteredFeatures);
+        }
+
+        function showFeatureDemo(feature) {
+            const modal = document.getElementById('demo-modal');
+            const content = document.getElementById('demo-content');
+            
+            content.innerHTML = `
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">${feature.icon}</div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">${feature.title}</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">${feature.description}</p>
+                </div>
+                
+                <div class="demo-preview p-8 mb-6">
+                    <div class="text-center">
+                        <div class="animate-pulse">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto mb-4"></div>
+                            <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto mb-4"></div>
+                            <div class="h-32 bg-gray-300 rounded mb-4"></div>
+                            <div class="h-4 bg-gray-300 rounded w-2/3 mx-auto"></div>
+                        </div>
+                        <p class="text-gray-500 mt-4">🚀 Live demo loading...</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-2">Expected ROI</h4>
+                        <p class="text-green-700">${feature.roi}</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-2">Difficulty Level</h4>
+                        <span class="difficulty-badge difficulty-${feature.difficulty}">${feature.difficulty.toUpperCase()}</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h4 class="font-semibold text-gray-800 mb-3">Implementation Benefits:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        ${feature.benefits.map(benefit => `
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-700">${benefit}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="flex justify-center space-x-4">
+                    <button onclick="startImplementation('${feature.id}')" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-emerald-700">
+                        🚀 Start Implementation
+                    </button>
+                    <button onclick="scheduleConsultation('${feature.id}')" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700">
+                        📅 Schedule Consultation
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            
+            // Simulate demo loading
+            setTimeout(() => {
+                loadFeatureDemo(feature);
+            }, 2000);
+        }
+
+        function loadFeatureDemo(feature) {
+            const demoPreview = document.querySelector('.demo-preview');
+            
+            // Demo content based on feature type
+            const demoContent = {
+                'claude-workflow': `
+                    <div class="bg-white p-6 rounded-lg border-2 border-blue-200">
+                        <h5 class="font-semibold mb-3">🧠 Claude AI Workflow Demo</h5>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded">Input: "Analyze our Q3 sales data and create a strategic report"</div>
+                            <div class="text-center">↓ AI Processing ↓</div>
+                            <div class="bg-green-50 p-3 rounded">Output: Executive summary, trends analysis, recommendations, and action items</div>
+                        </div>
+                    </div>
+                `,
+                'figma-framer': `
+                    <div class="bg-white p-6 rounded-lg border-2 border-purple-200">
+                        <h5 class="font-semibold mb-3">🎨 Figma to Framer Demo</h5>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-100 p-4 rounded text-center">
+                                <div class="h-20 bg-blue-200 rounded mb-2"></div>
+                                <small>Figma Design</small>
+                            </div>
+                            <div class="bg-green-100 p-4 rounded text-center">
+                                <div class="h-20 bg-green-200 rounded mb-2"></div>
+                                <small>Framer Website</small>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'default': `
+                    <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                        <h5 class="font-semibold mb-3">✨ Feature Demo</h5>
+                        <p class="text-gray-600">This feature provides powerful automation capabilities that can transform your business operations.</p>
+                        <div class="mt-4 p-3 bg-blue-50 rounded">
+                            <small class="text-blue-700">💡 Contact our team for a personalized demo of this feature</small>
+                        </div>
+                    </div>
+                `
+            };
+            
+            demoPreview.innerHTML = demoContent[feature.demo] || demoContent['default'];
+        }
+
+        function startImplementation(featureId) {
+            alert(`🚀 Starting implementation for ${featureId}. Our team will contact you within 24 hours to begin setup.`);
+            closeDemo();
+        }
+
+        function scheduleConsultation(featureId) {
+            alert(`📅 Consultation scheduled for ${featureId}. We'll send you a calendar invite with available time slots.`);
+            closeDemo();
+        }
+
+        function openDemo() {
+            alert('🎯 Opening live platform demo. This would redirect to a comprehensive interactive demonstration.');
+        }
+
+        function closeDemo() {
+            document.getElementById('demo-modal').classList.add('hidden');
+        }
+
+        // Initialize the features dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFeatures();
+            console.log('🚀 Vibe Marketing Features Dashboard initialized');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('demo-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDemo();
+            }
+        });
+    </script>
+</body>
+</html>
