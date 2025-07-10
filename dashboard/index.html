@@ -32,6 +32,171 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+
+        /* AI Tooltip Styles */
+        .ai-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .ai-tooltip .tooltip-trigger {
+            color: #3b82f6;
+            font-size: 14px;
+            margin-left: 4px;
+        }
+
+        .ai-tooltip .tooltip-content {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: left;
+            border-radius: 12px;
+            padding: 16px;
+            width: 320px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-tooltip .tooltip-content::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #667eea transparent transparent transparent;
+        }
+
+        .ai-tooltip:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-4px);
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #fbbf24;
+        }
+
+        .tooltip-tips {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tooltip-tip {
+            display: flex;
+            align-items: flex-start;
+            margin: 6px 0;
+            font-size: 13px;
+        }
+
+        .tooltip-tip::before {
+            content: "💡";
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .level-beginner { background-color: #10b981; color: white; }
+        .level-intermediate { background-color: #f59e0b; color: white; }
+        .level-advanced { background-color: #ef4444; color: white; }
+        .level-expert { background-color: #8b5cf6; color: white; }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Smart help system */
+        .smart-help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .help-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .help-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 25px -5px rgba(102, 126, 234, 0.6);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -125,7 +290,21 @@
                 <!-- MCP Launcher -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">🚀 MCP Launcher</h3>
+                        <h3 class="text-lg font-medium text-gray-900">🚀 MCP Launcher 
+                            <span class="ai-tooltip">
+                                <span class="tooltip-trigger">🤖</span>
+                                <div class="tooltip-content">
+                                    <div class="tooltip-title">MCP Launcher</div>
+                                    <p>Control center for all Model Context Protocol operations. Each button launches a specific automation workflow.</p>
+                                    <div class="tooltip-tips">
+                                        <div class="tooltip-tip">Start with Setup if this is your first time</div>
+                                        <div class="tooltip-tip">Validate checks all configurations</div>
+                                        <div class="tooltip-tip">Dev Mode for development testing</div>
+                                    </div>
+                                    <span class="level-badge level-beginner">Beginner</span>
+                                </div>
+                            </span>
+                        </h3>
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-2 gap-3">
@@ -157,7 +336,21 @@
                         
                         <!-- Natural Language Automation -->
                         <div class="mt-6 pt-6 border-t border-gray-200">
-                            <h4 class="text-sm font-medium text-gray-900 mb-3">✨ Natural Language Automation</h4>
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">✨ Natural Language Automation
+                                <span class="ai-tooltip">
+                                    <span class="tooltip-trigger">🧠</span>
+                                    <div class="tooltip-content">
+                                        <div class="tooltip-title">Natural Language Automation</div>
+                                        <p>Describe what you want to automate in plain English. AI will analyze your request and create workflows using available MCP servers.</p>
+                                        <div class="tooltip-tips">
+                                            <div class="tooltip-tip">Be specific: "Monitor competitor pricing daily"</div>
+                                            <div class="tooltip-tip">Include outcomes: "and send alerts to Slack"</div>
+                                            <div class="tooltip-tip">Review generated workflow before deploying</div>
+                                        </div>
+                                        <span class="level-badge level-intermediate">Intermediate</span>
+                                    </div>
+                                </span>
+                            </h4>
                             <textarea id="automation-input" placeholder="Describe what you want to automate..." 
                                     class="w-full p-3 border border-gray-300 rounded-lg resize-none" rows="3"></textarea>
                             <button onclick="createAutomation()" 
@@ -171,7 +364,21 @@
                 <!-- MCP Servers Status -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">🔧 MCP Servers</h3>
+                        <h3 class="text-lg font-medium text-gray-900">🔧 MCP Servers
+                            <span class="ai-tooltip">
+                                <span class="tooltip-trigger">🔧</span>
+                                <div class="tooltip-content">
+                                    <div class="tooltip-title">MCP Servers</div>
+                                    <p>Model Context Protocol servers provide specialized AI capabilities. Each server handles specific tasks like web scraping, research, or design automation.</p>
+                                    <div class="tooltip-tips">
+                                        <div class="tooltip-tip">Green status = Server running and ready</div>
+                                        <div class="tooltip-tip">Click Start/Stop to control individual servers</div>
+                                        <div class="tooltip-tip">Check logs if a server shows errors</div>
+                                    </div>
+                                    <span class="level-badge level-beginner">Beginner</span>
+                                </div>
+                            </span>
+                        </h3>
                     </div>
                     <div class="p-6">
                         <div id="mcp-servers" class="space-y-3">
@@ -213,7 +420,21 @@
                 <!-- System Metrics -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">📊 System Metrics</h3>
+                        <h3 class="text-lg font-medium text-gray-900">📊 System Metrics
+                            <span class="ai-tooltip">
+                                <span class="tooltip-trigger">📊</span>
+                                <div class="tooltip-content">
+                                    <div class="tooltip-title">System Performance</div>
+                                    <p>Real-time monitoring of CPU, memory, and disk usage. Keep an eye on these metrics to ensure optimal performance of your automations.</p>
+                                    <div class="tooltip-tips">
+                                        <div class="tooltip-tip">CPU over 80% may slow down automations</div>
+                                        <div class="tooltip-tip">Memory usage affects concurrent workflows</div>
+                                        <div class="tooltip-tip">Restart if metrics show consistent high usage</div>
+                                    </div>
+                                    <span class="level-badge level-beginner">Beginner</span>
+                                </div>
+                            </span>
+                        </h3>
                     </div>
                     <div class="p-6">
                         <div class="space-y-4">
@@ -264,6 +485,16 @@
             </div>
         </div>
     </main>
+
+    <!-- Smart Help System -->
+    <div class="smart-help">
+        <button class="help-button" onclick="toggleSmartHelp()" title="AI Assistant">
+            🤖
+        </button>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
 
     <!-- Document Viewer Modal -->
     <div id="document-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
@@ -657,6 +888,200 @@
                 container.removeChild(container.lastChild);
             }
         }
+
+        // AI Tooltip and Smart Features
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    ${type === 'success' ? '✅' : type === 'error' ? '❌' : '💡'} 
+                    <span class="ml-2">${message}</span>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Hide notification after duration
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        container.removeChild(notification);
+                    }
+                }, 300);
+            }, duration);
+        }
+
+        function toggleSmartHelp() {
+            const helpTexts = [
+                "💡 Hover over the 🤖 icons for AI-powered guidance on any feature!",
+                "🚀 Start with the Setup button if this is your first time",
+                "⚡ Use Natural Language Automation to describe what you want to automate",
+                "🎨 Try the Figma→Framer converter for design-to-website automation",
+                "📊 Monitor system metrics to ensure optimal performance",
+                "🔧 Green status indicators mean MCP servers are running properly"
+            ];
+            
+            const randomTip = helpTexts[Math.floor(Math.random() * helpTexts.length)];
+            showNotification(randomTip, 'info', 8000);
+            
+            // Add activity
+            addActivity('🤖 AI Assistant activated', 'info');
+        }
+
+        // Initialize smart features
+        function initializeSmartFeatures() {
+            // Load tooltips from API
+            loadTooltips();
+            
+            // Show welcome message for new users
+            if (!localStorage.getItem('dashboard_visited')) {
+                setTimeout(() => {
+                    showNotification('🎉 Welcome to the Vibe Marketing Platform! Hover over 🤖 icons for helpful guidance.', 'success', 10000);
+                    localStorage.setItem('dashboard_visited', 'true');
+                }, 2000);
+            }
+            
+            // Add smart help hints
+            setInterval(() => {
+                if (Math.random() < 0.1) { // 10% chance every interval
+                    const hints = [
+                        "💡 Pro tip: Use specific language in automation descriptions for better results",
+                        "🔍 Check system metrics regularly to maintain optimal performance",
+                        "⚡ Restart MCP servers if they show consistent errors",
+                        "🎯 Combine multiple workflows for complete automation funnels"
+                    ];
+                    const hint = hints[Math.floor(Math.random() * hints.length)];
+                    console.log(`Smart Hint: ${hint}`);
+                }
+            }, 30000); // Every 30 seconds
+        }
+
+        async function loadTooltips() {
+            try {
+                const response = await fetch('/api/tooltips');
+                const data = await response.json();
+                
+                // Store tooltips data for dynamic content
+                window.tooltipsData = data.tooltips;
+                
+                console.log('AI tooltips loaded successfully');
+            } catch (error) {
+                console.error('Failed to load tooltips:', error);
+            }
+        }
+
+        // Figma to Framer Converter Functions
+        async function showFigmaFramerConverter() {
+            const figmaUrl = prompt('Enter Figma file URL or ID:');
+            if (!figmaUrl) return;
+            
+            const projectName = prompt('Enter project name:') || 'New Framer Project';
+            const pageType = prompt('Enter page type (landing/sales/web/portfolio/blog/ecommerce):') || 'landing';
+            
+            try {
+                showNotification('🎨 Starting Figma to Framer conversion...', 'info');
+                addActivity(`🔄 Converting Figma design to ${pageType} page`, 'info');
+                
+                const response = await fetch('/api/figma-framer/convert', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        figmaFileId: extractFigmaId(figmaUrl),
+                        projectName,
+                        pageType
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(`✅ Conversion guide generated! Check activity feed for instructions.`, 'success');
+                    addActivity(`📋 Conversion instructions for ${projectName}:`, 'success');
+                    
+                    // Display instructions in activity feed
+                    result.instructions.instructions.figma_steps.forEach(step => {
+                        addActivity(`📁 ${step}`, 'info');
+                    });
+                    
+                    result.instructions.instructions.framer_steps.forEach(step => {
+                        addActivity(`🔄 ${step}`, 'info');
+                    });
+                    
+                } else {
+                    showNotification('❌ Conversion failed. Please check your Figma URL.', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Figma to Framer conversion failed:', error);
+                showNotification('❌ Conversion error. Please try again.', 'error');
+            }
+        }
+
+        function extractFigmaId(url) {
+            const match = url.match(/figma\.com\/file\/([a-zA-Z0-9]+)/);
+            return match ? match[1] : url.trim();
+        }
+
+        // Enhanced error handling with AI suggestions
+        window.addEventListener('error', function(e) {
+            console.error('Dashboard error:', e.error);
+            
+            const errorSuggestions = {
+                'Failed to fetch': 'Check your internet connection and API server status',
+                'Unauthorized': 'Please check your API keys and authentication',
+                'Not found': 'The requested resource may have been moved or deleted',
+                'Internal Server Error': 'Server is experiencing issues. Please try again later'
+            };
+            
+            const suggestion = Object.keys(errorSuggestions).find(key => 
+                e.error.message.includes(key)
+            );
+            
+            if (suggestion) {
+                showNotification(`🔧 ${errorSuggestions[suggestion]}`, 'error', 8000);
+            }
+        });
+
+        // Performance monitoring with smart alerts
+        function monitorPerformance() {
+            const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.duration > 1000) {
+                        console.warn(`Slow operation detected: ${entry.name} took ${entry.duration}ms`);
+                        if (entry.duration > 5000) {
+                            showNotification('⚠️ Slow performance detected. Consider refreshing the page.', 'warning');
+                        }
+                    }
+                }
+            });
+            
+            observer.observe({ entryTypes: ['measure', 'navigation'] });
+        }
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSmartFeatures();
+            monitorPerformance();
+            
+            // Connect WebSocket with retry logic
+            connectWebSocket();
+            loadInitialData();
+            
+            // Set up refresh button
+            document.getElementById('refresh-btn').addEventListener('click', () => {
+                showNotification('🔄 Refreshing dashboard data...', 'info', 2000);
+                loadInitialData();
+            });
+            
+            console.log('🚀 Vibe Marketing Dashboard initialized with AI features');
+        });
     </script>
 </body>
 </html>
