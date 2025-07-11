@@ -46,6 +46,11 @@ class AnalyticsMCPServer {
                 accessToken: process.env.SALESFORCE_ACCESS_TOKEN,
                 initialized: false
             },
+            humblytics: {
+                apiKey: process.env.HUMBLYTICS_API_KEY,
+                baseUrl: 'https://api.humblytics.com/v1',
+                initialized: false
+            },
             custom: {
                 endpoints: new Map(),
                 initialized: true
@@ -70,12 +75,14 @@ class AnalyticsMCPServer {
             this.analytics.wickedReports.initialized = !!this.analytics.wickedReports.apiKey;
             this.analytics.hubspot.initialized = !!this.analytics.hubspot.accessToken;
             this.analytics.salesforce.initialized = !!this.analytics.salesforce.accessToken;
+            this.analytics.humblytics.initialized = !!this.analytics.humblytics.apiKey;
 
             console.log('Analytics services initialized:', {
                 google: this.analytics.google.initialized,
                 wickedReports: this.analytics.wickedReports.initialized,
                 hubspot: this.analytics.hubspot.initialized,
-                salesforce: this.analytics.salesforce.initialized
+                salesforce: this.analytics.salesforce.initialized,
+                humblytics: this.analytics.humblytics.initialized
             });
         } catch (error) {
             console.error('Error initializing analytics:', error);
@@ -230,6 +237,86 @@ class AnalyticsMCPServer {
                     }
                 },
 
+                // Humblytics Analytics Tools
+                {
+                    name: 'get_humblytics_site_analytics',
+                    description: 'Get site analytics from Humblytics (privacy-first analytics)',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            siteId: { type: 'string', description: 'Humblytics Site ID' },
+                            startDate: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
+                            endDate: { type: 'string', description: 'End date (YYYY-MM-DD)' },
+                            metrics: { 
+                                type: 'array', 
+                                items: { 
+                                    type: 'string', 
+                                    enum: ['visitors', 'pageviews', 'sessions', 'bounce_rate', 'session_duration'] 
+                                } 
+                            }
+                        },
+                        required: ['siteId', 'startDate', 'endDate']
+                    }
+                },
+                {
+                    name: 'get_humblytics_heatmap_data',
+                    description: 'Get heatmap data from Humblytics',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            siteId: { type: 'string', description: 'Humblytics Site ID' },
+                            pageUrl: { type: 'string', description: 'Specific page URL to analyze' },
+                            heatmapType: { type: 'string', enum: ['click', 'scroll', 'move'], description: 'Type of heatmap data' },
+                            startDate: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
+                            endDate: { type: 'string', description: 'End date (YYYY-MM-DD)' }
+                        },
+                        required: ['siteId', 'pageUrl', 'heatmapType']
+                    }
+                },
+                {
+                    name: 'get_humblytics_funnel_analysis',
+                    description: 'Get funnel analysis from Humblytics',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            siteId: { type: 'string', description: 'Humblytics Site ID' },
+                            funnelId: { type: 'string', description: 'Funnel ID' },
+                            startDate: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
+                            endDate: { type: 'string', description: 'End date (YYYY-MM-DD)' },
+                            segment: { type: 'string', description: 'User segment filter' }
+                        },
+                        required: ['siteId', 'funnelId']
+                    }
+                },
+                {
+                    name: 'get_humblytics_ab_test_results',
+                    description: 'Get A/B test results from Humblytics',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            siteId: { type: 'string', description: 'Humblytics Site ID' },
+                            testId: { type: 'string', description: 'A/B test ID' },
+                            includeStatistics: { type: 'boolean', description: 'Include statistical significance data', default: true }
+                        },
+                        required: ['siteId', 'testId']
+                    }
+                },
+                {
+                    name: 'get_humblytics_conversion_tracking',
+                    description: 'Get conversion tracking data from Humblytics',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            siteId: { type: 'string', description: 'Humblytics Site ID' },
+                            conversionGoal: { type: 'string', description: 'Conversion goal name' },
+                            startDate: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
+                            endDate: { type: 'string', description: 'End date (YYYY-MM-DD)' },
+                            attributionModel: { type: 'string', enum: ['first-touch', 'last-touch', 'linear'], default: 'last-touch' }
+                        },
+                        required: ['siteId', 'conversionGoal', 'startDate', 'endDate']
+                    }
+                },
+
                 // Custom Analytics Tools
                 {
                     name: 'get_unified_dashboard_metrics',
@@ -298,6 +385,18 @@ class AnalyticsMCPServer {
                         return await this.getSalesforcePipelineAnalytics(args);
                     case 'get_salesforce_lead_analytics':
                         return await this.getSalesforceLeadAnalytics(args);
+
+                    // Humblytics handlers
+                    case 'get_humblytics_site_analytics':
+                        return await this.getHumblyticsSiteAnalytics(args);
+                    case 'get_humblytics_heatmap_data':
+                        return await this.getHumblyticsHeatmapData(args);
+                    case 'get_humblytics_funnel_analysis':
+                        return await this.getHumblyticsFunnelAnalysis(args);
+                    case 'get_humblytics_ab_test_results':
+                        return await this.getHumblyticsABTestResults(args);
+                    case 'get_humblytics_conversion_tracking':
+                        return await this.getHumblyticsConversionTracking(args);
 
                     // Custom handlers
                     case 'get_unified_dashboard_metrics':
@@ -696,6 +795,192 @@ class AnalyticsMCPServer {
         };
     }
 
+    // Humblytics Methods
+    async getHumblyticsSiteAnalytics(args) {
+        if (!this.analytics.humblytics.initialized) {
+            throw new Error('Humblytics not initialized');
+        }
+
+        const metricsParam = args.metrics?.join(',') || 'visitors,pageviews,sessions,bounce_rate,session_duration';
+        
+        const response = await axios.get(`${this.analytics.humblytics.baseUrl}/sites/${args.siteId}/analytics`, {
+            headers: {
+                'Authorization': `Bearer ${this.analytics.humblytics.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                start_date: args.startDate,
+                end_date: args.endDate,
+                metrics: metricsParam
+            }
+        });
+
+        return {
+            content: [
+                {
+                    type: 'text',
+                    text: JSON.stringify({
+                        site_analytics: response.data,
+                        site_id: args.siteId,
+                        date_range: { startDate: args.startDate, endDate: args.endDate },
+                        metrics: args.metrics || ['visitors', 'pageviews', 'sessions', 'bounce_rate', 'session_duration'],
+                        source: 'Humblytics (Privacy-First Analytics)'
+                    }, null, 2)
+                }
+            ]
+        };
+    }
+
+    async getHumblyticsHeatmapData(args) {
+        if (!this.analytics.humblytics.initialized) {
+            throw new Error('Humblytics not initialized');
+        }
+
+        const response = await axios.get(`${this.analytics.humblytics.baseUrl}/sites/${args.siteId}/heatmaps`, {
+            headers: {
+                'Authorization': `Bearer ${this.analytics.humblytics.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                page_url: args.pageUrl,
+                heatmap_type: args.heatmapType,
+                start_date: args.startDate || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: args.endDate || new Date().toISOString().split('T')[0]
+            }
+        });
+
+        return {
+            content: [
+                {
+                    type: 'text',
+                    text: JSON.stringify({
+                        heatmap_data: response.data,
+                        page_url: args.pageUrl,
+                        heatmap_type: args.heatmapType,
+                        insights: {
+                            type: args.heatmapType,
+                            description: args.heatmapType === 'click' ? 'User click patterns and hot zones' :
+                                       args.heatmapType === 'scroll' ? 'User scroll behavior and engagement depth' :
+                                       'Mouse movement patterns and attention areas'
+                        },
+                        source: 'Humblytics (Privacy-First Analytics)'
+                    }, null, 2)
+                }
+            ]
+        };
+    }
+
+    async getHumblyticsFunnelAnalysis(args) {
+        if (!this.analytics.humblytics.initialized) {
+            throw new Error('Humblytics not initialized');
+        }
+
+        const response = await axios.get(`${this.analytics.humblytics.baseUrl}/sites/${args.siteId}/funnels/${args.funnelId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.analytics.humblytics.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                start_date: args.startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: args.endDate || new Date().toISOString().split('T')[0],
+                segment: args.segment
+            }
+        });
+
+        return {
+            content: [
+                {
+                    type: 'text',
+                    text: JSON.stringify({
+                        funnel_analysis: response.data,
+                        funnel_id: args.funnelId,
+                        segment: args.segment,
+                        conversion_insights: {
+                            total_visitors: response.data?.total_visitors || 'N/A',
+                            conversion_rate: response.data?.conversion_rate || 'N/A',
+                            drop_off_points: response.data?.drop_off_analysis || 'See detailed data above'
+                        },
+                        source: 'Humblytics (Privacy-First Analytics)'
+                    }, null, 2)
+                }
+            ]
+        };
+    }
+
+    async getHumblyticsABTestResults(args) {
+        if (!this.analytics.humblytics.initialized) {
+            throw new Error('Humblytics not initialized');
+        }
+
+        const response = await axios.get(`${this.analytics.humblytics.baseUrl}/sites/${args.siteId}/tests/${args.testId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.analytics.humblytics.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                include_statistics: args.includeStatistics !== false
+            }
+        });
+
+        return {
+            content: [
+                {
+                    type: 'text',
+                    text: JSON.stringify({
+                        ab_test_results: response.data,
+                        test_id: args.testId,
+                        statistical_significance: args.includeStatistics !== false ? response.data?.statistics : 'Statistics not requested',
+                        test_insights: {
+                            status: response.data?.status || 'Unknown',
+                            winner: response.data?.winner || 'Test in progress',
+                            confidence_level: response.data?.confidence_level || 'N/A'
+                        },
+                        source: 'Humblytics (Privacy-First Analytics)'
+                    }, null, 2)
+                }
+            ]
+        };
+    }
+
+    async getHumblyticsConversionTracking(args) {
+        if (!this.analytics.humblytics.initialized) {
+            throw new Error('Humblytics not initialized');
+        }
+
+        const response = await axios.get(`${this.analytics.humblytics.baseUrl}/sites/${args.siteId}/conversions`, {
+            headers: {
+                'Authorization': `Bearer ${this.analytics.humblytics.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                goal: args.conversionGoal,
+                start_date: args.startDate,
+                end_date: args.endDate,
+                attribution_model: args.attributionModel || 'last-touch'
+            }
+        });
+
+        return {
+            content: [
+                {
+                    type: 'text',
+                    text: JSON.stringify({
+                        conversion_tracking: response.data,
+                        conversion_goal: args.conversionGoal,
+                        attribution_model: args.attributionModel || 'last-touch',
+                        date_range: { startDate: args.startDate, endDate: args.endDate },
+                        privacy_features: {
+                            cookieless: true,
+                            gdpr_compliant: true,
+                            privacy_first: true
+                        },
+                        source: 'Humblytics (Privacy-First Analytics)'
+                    }, null, 2)
+                }
+            ]
+        };
+    }
+
     // Custom Methods
     async getUnifiedDashboardMetrics(args) {
         const unifiedData = {
@@ -710,7 +995,7 @@ class AnalyticsMCPServer {
             }
         };
 
-        const platforms = args.platforms || ['google', 'wickedReports', 'hubspot', 'salesforce'];
+        const platforms = args.platforms || ['google', 'wickedReports', 'hubspot', 'salesforce', 'humblytics'];
 
         for (const platform of platforms) {
             try {
@@ -754,6 +1039,18 @@ class AnalyticsMCPServer {
                                 endDate: args.endDate
                             });
                             platformData = { name: 'Salesforce', data: sfData };
+                        }
+                        break;
+
+                    case 'humblytics':
+                        if (this.analytics.humblytics.initialized && args.siteId) {
+                            const humblyticsData = await this.getHumblyticsSiteAnalytics({
+                                siteId: args.siteId,
+                                startDate: args.startDate,
+                                endDate: args.endDate,
+                                metrics: ['visitors', 'pageviews', 'sessions', 'bounce_rate']
+                            });
+                            platformData = { name: 'Humblytics', data: humblyticsData };
                         }
                         break;
                 }

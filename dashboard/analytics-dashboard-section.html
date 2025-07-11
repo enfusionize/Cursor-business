@@ -134,6 +134,9 @@
                 <button onclick="switchAnalyticsTab('salesforce')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
                     Salesforce
                 </button>
+                <button onclick="switchAnalyticsTab('humblytics')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                    Humblytics
+                </button>
                 <button onclick="switchAnalyticsTab('unified')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
                     Unified View
                 </button>
@@ -277,6 +280,93 @@
             </div>
         </div>
 
+        <!-- Humblytics Tab -->
+        <div id="humblytics-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">📊 Privacy-First Analytics</h4>
+                    <canvas id="humblyticsTrafficChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">🔥 Heatmap Insights</h4>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2">Click Heatmap</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Most clicked element</span>
+                                <span class="font-semibold text-blue-600" id="topClickElement">--</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2">Scroll Depth</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Average scroll depth</span>
+                                <span class="font-semibold text-green-600" id="avgScrollDepth">--%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2">Engagement Zones</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Hot zones detected</span>
+                                <span class="font-semibold text-purple-600" id="hotZones">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">🎯 Funnel Performance</h4>
+                    <canvas id="humblyticsFunnelChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">🧪 A/B Test Results</h4>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <h5 class="font-medium">Landing Page Test</h5>
+                                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Winner</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Variant B conversion</span>
+                                <span class="font-semibold text-green-600" id="abTestWinner">+--% vs control</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2">Statistical Significance</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Confidence level</span>
+                                <span class="font-semibold text-blue-600" id="confidenceLevel">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4">🔒 Privacy-First Features</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+                        <h5 class="font-medium mb-2 text-green-800">Cookieless Tracking</h5>
+                        <p class="text-sm text-green-600">✓ GDPR Compliant</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+                        <h5 class="font-medium mb-2 text-blue-800">Real-Time Data</h5>
+                        <p class="text-sm text-blue-600">✓ 36KB Script</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+                        <h5 class="font-medium mb-2 text-purple-800">No Consent Banner</h5>
+                        <p class="text-sm text-purple-600">✓ Privacy-First</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+                        <h5 class="font-medium mb-2 text-orange-800">1-Click A/B Tests</h5>
+                        <p class="text-sm text-orange-600">✓ No Dev Required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Unified View Tab -->
         <div id="unified-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -390,6 +480,7 @@ function setupAnalyticsCharts() {
     initializeWickedReportsCharts();
     initializeHubSpotCharts();
     initializeSalesforceCharts();
+    initializeHumblyticsCharts();
     initializeUnifiedCharts();
 }
 
@@ -560,6 +651,90 @@ function initializeSalesforceCharts() {
     });
 }
 
+function initializeHumblyticsCharts() {
+    // Humblytics Traffic Chart
+    const humblyticsTrafficCtx = document.getElementById('humblyticsTrafficChart').getContext('2d');
+    analyticsCharts.humblyticsTraffic = new Chart(humblyticsTrafficCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Visitors',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                },
+                {
+                    label: 'Sessions',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'top' },
+                title: {
+                    display: true,
+                    text: 'Privacy-First Analytics (Cookieless)'
+                }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Humblytics Funnel Chart
+    const humblyticsFunnelCtx = document.getElementById('humblyticsFunnelChart').getContext('2d');
+    analyticsCharts.humblyticsFunnel = new Chart(humblyticsFunnelCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Landing Page', 'Product View', 'Add to Cart', 'Checkout', 'Purchase'],
+            datasets: [{
+                label: 'Conversion Rate',
+                data: [100, 45, 28, 15, 12],
+                backgroundColor: [
+                    '#10b981',
+                    '#3b82f6', 
+                    '#f59e0b',
+                    '#ef4444',
+                    '#8b5cf6'
+                ],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Conversion Funnel Analysis'
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 function initializeUnifiedCharts() {
     // Unified Revenue Chart
     const unifiedRevenueCtx = document.getElementById('unifiedRevenueChart').getContext('2d');
@@ -639,6 +814,7 @@ function loadAnalyticsData() {
     loadWickedReportsData();
     loadHubSpotData();
     loadSalesforceData();
+    loadHumblyticsData();
     loadUnifiedData();
 }
 
@@ -662,7 +838,8 @@ function updatePlatformStatus() {
         { name: 'Google Analytics', status: 'connected', color: 'green' },
         { name: 'Wicked Reports', status: 'connected', color: 'green' },
         { name: 'HubSpot', status: 'connected', color: 'green' },
-        { name: 'Salesforce', status: 'error', color: 'red' }
+        { name: 'Salesforce', status: 'error', color: 'red' },
+        { name: 'Humblytics', status: 'connected', color: 'green' }
     ];
 
     const platformStatusHtml = platforms.map(platform => `
@@ -798,6 +975,30 @@ function loadSalesforceData() {
     document.getElementById('sfOpportunities').textContent = '89';
     document.getElementById('sfWinRate').textContent = '23%';
     document.getElementById('sfAvgDealSize').textContent = '$4,750';
+}
+
+function loadHumblyticsData() {
+    // Mock Humblytics data
+    const trafficLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const visitorsData = [1850, 2140, 1980, 2350, 2780, 3250, 2890];
+    const sessionsData = [1420, 1680, 1550, 1920, 2180, 2540, 2280];
+
+    analyticsCharts.humblyticsTraffic.data.labels = trafficLabels;
+    analyticsCharts.humblyticsTraffic.data.datasets[0].data = visitorsData;
+    analyticsCharts.humblyticsTraffic.data.datasets[1].data = sessionsData;
+    analyticsCharts.humblyticsTraffic.update();
+
+    // Update heatmap insights
+    document.getElementById('topClickElement').textContent = 'CTA Button (34%)';
+    document.getElementById('avgScrollDepth').textContent = '68%';
+    document.getElementById('hotZones').textContent = '3 zones';
+
+    // Update A/B test results
+    document.getElementById('abTestWinner').textContent = '+23.5% vs control';
+    document.getElementById('confidenceLevel').textContent = '95%';
+
+    // Funnel data is already set in chart initialization
+    analyticsCharts.humblyticsFunnel.update();
 }
 
 function loadUnifiedData() {
