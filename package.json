@@ -58,7 +58,16 @@
     "responsive-dashboard": "node scripts/responsive-dashboard-launcher.js",
     "mobile-dashboard": "DASHBOARD_PORT=3001 node scripts/responsive-dashboard-launcher.js",
     "dashboard-dev": "DASHBOARD_PORT=3001 NODE_ENV=development node scripts/responsive-dashboard-launcher.js",
-    "dashboard-prod": "DASHBOARD_PORT=3001 NODE_ENV=production node scripts/responsive-dashboard-launcher.js"
+    "dashboard-prod": "DASHBOARD_PORT=3001 NODE_ENV=production node scripts/responsive-dashboard-launcher.js",
+    "admin-system": "node scripts/admin-system.js",
+    "admin-dev": "NODE_ENV=development node scripts/admin-system.js",
+    "super-admin": "node scripts/admin-system.js",
+    "analytics-mcp": "node scripts/analytics-mcp-server.js",
+    "analytics-dev": "NODE_ENV=development node scripts/analytics-mcp-server.js",
+    "full-dashboard": "concurrently \"npm run responsive-dashboard\" \"npm run admin-system\" \"npm run analytics-mcp\"",
+    "start-all": "npm run full-dashboard",
+    "mobile-demo": "node scripts/mobile-app-demo.js",
+    "demo": "npm run mobile-demo"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -74,7 +83,10 @@
     "express": "^4.18.0",
     "axios": "^1.6.0",
     "body-parser": "^1.20.0",
-    "ws": "^8.14.0"
+    "ws": "^8.14.0",
+    "axios": "^1.6.0",
+    "google-auth-library": "^9.4.0",
+    "chart.js": "^4.4.0"
   },
   "devDependencies": {
     "vercel": "^32.0.0",
