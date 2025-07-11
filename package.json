@@ -67,7 +67,13 @@
     "full-dashboard": "concurrently \"npm run responsive-dashboard\" \"npm run admin-system\" \"npm run analytics-mcp\"",
     "start-all": "npm run full-dashboard",
     "mobile-demo": "node scripts/mobile-app-demo.js",
-    "demo": "npm run mobile-demo"
+    "demo": "npm run mobile-demo",
+    "demo-space": "node scripts/demo-space-server.js",
+    "website-integration": "node scripts/website-integration.js",
+    "frontend-backend-bridge": "node scripts/frontend-backend-bridge.js",
+    "tag-system": "node scripts/tag-system-manager.js",
+    "enfusion-dashboard": "open dashboard/enfusionaize-dashboard.html",
+    "full-system": "concurrently \"npm run responsive-dashboard\" \"npm run admin-system\" \"npm run analytics-mcp\" \"npm run demo-space\" \"npm run website-integration\" \"npm run frontend-backend-bridge\""
   },
   "dependencies": {
     "next": "^14.0.0",
