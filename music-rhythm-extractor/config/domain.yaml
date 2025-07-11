@@ -1,0 +1,118 @@
+api_endpoints:
+- /extract/track
+- /extract/playlist
+- /analyze/audio
+- /generate/progression
+- /paths/creative
+- /collaboration/find
+categories:
+- color: '#E91E63'
+  description: Music composition and songwriting
+  keywords:
+  - compose
+  - songwriting
+  - melody
+  - harmony
+  name: composition
+- color: '#9C27B0'
+  description: Audio production and mixing
+  keywords:
+  - production
+  - mixing
+  - mastering
+  - daw
+  name: production
+- color: '#3F51B5'
+  description: Music theory and analysis
+  keywords:
+  - theory
+  - scales
+  - chords
+  - progression
+  name: theory
+- color: '#FF5722'
+  description: Musical inspiration and creativity
+  keywords:
+  - inspiration
+  - creativity
+  - artistic
+  name: inspiration
+- color: '#FF9800'
+  description: Live performance and technique
+  keywords:
+  - performance
+  - technique
+  - practice
+  name: performance
+- color: '#4CAF50'
+  description: Musical collaboration and networking
+  keywords:
+  - collaboration
+  - band
+  - network
+  name: collaboration
+description: Music creation and audio content optimization
+domain: !!python/object/apply:backend.core.domain_config.Domain
+- music
+extractors:
+- class_path: extractors.music.youtube_music_extractor.YouTubeMusicExtractor
+  config: null
+  enabled: true
+  name: youtube_music
+- class_path: extractors.music.spotify_extractor.SpotifyExtractor
+  config: null
+  enabled: true
+  name: spotify
+- class_path: extractors.music.soundcloud_extractor.SoundCloudExtractor
+  config: null
+  enabled: true
+  name: soundcloud
+- class_path: extractors.music.bandcamp_extractor.BandcampExtractor
+  config: null
+  enabled: true
+  name: bandcamp
+- class_path: extractors.music.music_theory_extractor.MusicTheoryExtractor
+  config: null
+  enabled: true
+  name: music_theory
+- class_path: extractors.music.lyrics_extractor.LyricsExtractor
+  config: null
+  enabled: true
+  name: lyrics
+name: Music Rhythm Extractor
+path_preferences:
+  creative_blocks:
+  - 06:00-09:00
+  - 14:00-17:00
+  - 20:00-22:00
+  default_duration: 21
+  energy_mapping:
+    composition: morning
+    inspiration: evening
+    performance: afternoon
+    production: afternoon
+    theory: morning
+processors:
+- class_path: processors.music.audio_analyzer.AudioAnalyzer
+  config: null
+  name: audio_analyzer
+  priority: 50
+- class_path: processors.music.chord_analyzer.ChordAnalyzer
+  config: null
+  name: chord_progression
+  priority: 75
+- class_path: processors.music.genre_classifier.GenreClassifier
+  config: null
+  name: genre_classifier
+  priority: 100
+- class_path: processors.music.creative_flow_generator.CreativeFlowGenerator
+  config: null
+  name: creative_flow
+  priority: 200
+ui_config:
+  background: audio-wave
+  icons: music
+  primary_color: '#E91E63'
+  theme: music
+  title: Music Rhythm Extractor
+version: 1.0.0

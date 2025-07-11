@@ -1,0 +1,139 @@
+api_endpoints:
+- /extract/paper
+- /extract/dataset
+- /analyze/methodology
+- /paths/research
+- /citations/analyze
+- /agents/track
+categories:
+- color: '#2196F3'
+  description: Foundational AI and ML concepts
+  keywords:
+  - foundation
+  - basics
+  - introduction
+  - overview
+  name: foundation
+- color: '#9C27B0'
+  description: Neural network architectures
+  keywords:
+  - architecture
+  - network
+  - model
+  - design
+  name: architectures
+- color: '#FF5722'
+  description: Training methodologies and optimization
+  keywords:
+  - training
+  - optimization
+  - learning
+  - gradient
+  name: training
+- color: '#4CAF50'
+  description: Real-world applications and use cases
+  keywords:
+  - application
+  - use case
+  - deployment
+  - production
+  name: applications
+- color: '#FF9800'
+  description: Datasets and data processing
+  keywords:
+  - dataset
+  - data
+  - preprocessing
+  - cleaning
+  name: datasets
+- color: '#795548'
+  description: Evaluation metrics and benchmarks
+  keywords:
+  - evaluation
+  - metric
+  - benchmark
+  - testing
+  name: evaluation
+- color: '#E91E63'
+  description: AI agents and autonomous systems
+  keywords:
+  - agent
+  - autonomous
+  - planning
+  - reasoning
+  name: agents
+- color: '#607D8B'
+  description: Multimodal AI and cross-domain learning
+  keywords:
+  - multimodal
+  - vision
+  - language
+  - audio
+  name: multimodal
+description: AI agent research and academic content optimization
+domain: !!python/object/apply:backend.core.domain_config.Domain
+- research
+extractors:
+- class_path: extractors.research.arxiv_extractor.ArxivExtractor
+  config: null
+  enabled: true
+  name: arxiv
+- class_path: extractors.research.pubmed_extractor.PubmedExtractor
+  config: null
+  enabled: true
+  name: pubmed
+- class_path: extractors.research.github_research_extractor.GitHubResearchExtractor
+  config: null
+  enabled: true
+  name: github_research
+- class_path: extractors.research.huggingface_extractor.HuggingFaceExtractor
+  config: null
+  enabled: true
+  name: huggingface
+- class_path: extractors.research.dataset_extractor.DatasetExtractor
+  config: null
+  enabled: true
+  name: datasets
+- class_path: extractors.research.conference_extractor.ConferenceExtractor
+  config: null
+  enabled: true
+  name: conferences
+name: Research Agent Extractor
+path_preferences:
+  default_duration: 42
+  energy_mapping:
+    agents: afternoon
+    applications: afternoon
+    architectures: morning
+    evaluation: morning
+    foundation: morning
+    training: afternoon
+  research_blocks:
+  - 06:00-10:00
+  - 10:30-12:00
+  - 14:00-16:00
+  - 16:30-18:00
+processors:
+- class_path: processors.research.paper_analyzer.PaperAnalyzer
+  config: null
+  name: paper_analyzer
+  priority: 50
+- class_path: processors.research.methodology_extractor.MethodologyExtractor
+  config: null
+  name: methodology_extractor
+  priority: 75
+- class_path: processors.research.citation_analyzer.CitationAnalyzer
+  config: null
+  name: citation_analyzer
+  priority: 100
+- class_path: processors.research.research_path_generator.ResearchPathGenerator
+  config: null
+  name: research_path
+  priority: 200
+ui_config:
+  background: neural-network
+  icons: academic
+  primary_color: '#2196F3'
+  theme: research
+  title: Research Agent Extractor
+version: 1.0.0

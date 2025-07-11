@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  music-app:
+    build: .
+    container_name: music-rhythm-extractor
+    ports:
+      - "80012:8000"
+    environment:
+      - DOMAIN=music
+      - DATABASE_URL=sqlite:///./data/content_music.db
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    restart: unless-stopped
+    
+  music-db:
+    image: postgres:13
+    container_name: music-postgres
+    environment:
+      - POSTGRES_DB=content_music
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - music_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  music_db_data:

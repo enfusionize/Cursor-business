@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  research-app:
+    build: .
+    container_name: research-rhythm-extractor
+    ports:
+      - "80017:8000"
+    environment:
+      - DOMAIN=research
+      - DATABASE_URL=sqlite:///./data/content_research.db
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    restart: unless-stopped
+    
+  research-db:
+    image: postgres:13
+    container_name: research-postgres
+    environment:
+      - POSTGRES_DB=content_research
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - research_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  research_db_data:
