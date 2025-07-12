@@ -73,7 +73,15 @@
     "frontend-backend-bridge": "node scripts/frontend-backend-bridge.js",
     "tag-system": "node scripts/tag-system-manager.js",
     "enfusion-dashboard": "open dashboard/enfusionaize-dashboard.html",
-    "full-system": "concurrently \"npm run responsive-dashboard\" \"npm run admin-system\" \"npm run analytics-mcp\" \"npm run demo-space\" \"npm run website-integration\" \"npm run frontend-backend-bridge\""
+    "full-system": "concurrently \"npm run responsive-dashboard\" \"npm run admin-system\" \"npm run analytics-mcp\" \"npm run demo-space\" \"npm run website-integration\" \"npm run frontend-backend-bridge\"",
+    "sandbox": "node sandbox/sandbox-manager.js",
+    "sandbox-cli": "node sandbox/cli.js",
+    "sandbox-dashboard": "node sandbox/sandbox-manager.js && open http://localhost:3100/dashboard",
+    "sandbox-create": "node sandbox/cli.js create",
+    "sandbox-list": "node sandbox/cli.js list",
+    "sandbox-promote": "node sandbox/cli.js promote",
+    "sandbox-interactive": "node sandbox/cli.js interactive",
+    "sandbox-cleanup": "node sandbox/cli.js cleanup"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -108,7 +116,12 @@
     "chalk": "^5.3.0",
     "ora": "^7.0.0",
     "figlet": "^1.7.0",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "commander": "^11.1.0",
+    "cli-table3": "^0.6.3",
+    "dockerode": "^4.0.0",
+    "js-yaml": "^4.1.0",
+    "open": "^9.1.0"
   },
   "keywords": [
     "cursor",
