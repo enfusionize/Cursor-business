@@ -138,6 +138,8 @@ const chiTimeTimer = require('chi-time-timer');
 const psiTimeTimer = require('psi-time-timer');
 const omegaTimeTimer = require('omega-time-timer');
 
+const Tesseract = require('tesseract.js');
+
 require('dotenv').config();
 
 const app = express();
@@ -655,6 +657,58 @@ app.post('/api/upload-audio', upload.single('audio'), async (req, res) => {
   } catch (error) {
     console.error('Error processing audio:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// File upload, OCR, and CSV matching endpoint
+app.post('/api/upload', upload.array('files'), async (req, res) => {
+  try {
+    const files = req.files;
+    let results = [];
+    let csvData = [];
+    // Find CSV file and parse it
+    for (const file of files) {
+      if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
+        // Parse CSV
+        const rows = [];
+        await new Promise((resolve, reject) => {
+          fs.createReadStream(file.path)
+            .pipe(csv())
+            .on('data', (data) => rows.push(data))
+            .on('end', () => resolve())
+            .on('error', reject);
+        });
+        csvData = rows;
+      }
+    }
+    // Process images with OCR
+    for (const file of files) {
+      if (file.mimetype.startsWith('image/')) {
+        const { data: { text } } = await Tesseract.recognize(file.path, 'eng');
+        // Try to match OCR text to CSV data
+        let bestMatch = null;
+        let bestScore = 0;
+        for (const row of csvData) {
+          // Simple matching: check if track name or DJ name appears in OCR text
+          let score = 0;
+          if (row['DJ Name'] && text.toLowerCase().includes(row['DJ Name'].toLowerCase())) score++;
+          if (row['Name of the Tracks'] && text.toLowerCase().includes(row['Name of the Tracks'].toLowerCase())) score++;
+          if (score > bestScore) {
+            bestScore = score;
+            bestMatch = row;
+          }
+        }
+        results.push({
+          file: file.originalname,
+          ocrText: text,
+          match: bestMatch,
+        });
+      }
+    }
+    res.json({ results });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to process files' });
   }
 });
 
