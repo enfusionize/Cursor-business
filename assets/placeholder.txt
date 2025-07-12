@@ -1,0 +1,27 @@
+This directory should contain:
+- icon.png (app icon)
+- splash.png (splash screen)
+- adaptive-icon.png (Android adaptive icon)
+- favicon.png (web favicon)
+- treeBg.png (home screen background)
+- pages/ (directory with all book page images)
+  - front-cover.png
+  - inside-portal.png
+  - back-cover.png
+  - preface.png
+  - entrypoint.png
+  - week1.png
+  - week2.png
+  - week3.png
+  - day22.png
+  - week4.png
+  - week5.png
+  - week6.png
+  - day44.png
+  - week7.png
+  - week8.png
+  - week9.png
+  - day66.png
+  - day67.png
+  - bonus-meditation.png
+  - universal-circuits.png

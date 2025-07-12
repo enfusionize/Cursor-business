@@ -1,11 +1,56 @@
 # Dependencies
 node_modules/
-/.pnp
-.pnp.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# typescript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Logs
+logs
+*.log
 
 # Runtime data
 pids
@@ -13,23 +58,14 @@ pids
 *.seed
 *.pid.lock
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Coverage directory used by tools like istanbul
+coverage/
 
-# Production build
-/build
-/.next/
-/out/
-/dist/
+# nyc test coverage
+.nyc_output
 
-# Runtime data
-*.tgz
-*.tar.gz
-.npm
+# Dependency directories
+jspm_packages/
 
 # Optional npm cache directory
 .npm
@@ -37,34 +73,11 @@ pids
 # Optional eslint cache
 .eslintcache
 
-# Logs
-logs
-*.log
-
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
-
-# nyc test coverage
-.nyc_output
-
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
-jspm_packages/
-
-# TypeScript cache
-*.tsbuildinfo
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -86,10 +99,6 @@ jspm_packages/
 .nuxt
 dist
 
-# Gatsby files
-.cache/
-public
-
 # Storybook build outputs
 .out
 .storybook-out
@@ -98,121 +107,31 @@ public
 tmp/
 temp/
 
-# Runtime data
-*.pid
-*.seed
-*.pid.lock
-
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# MCP Business Operations specific
-backups/
-exports/
-screenshots/
-downloads/
-
-# API keys and sensitive data
-*.key
-*.pem
-*.p12
-*.env.*
-config/secrets/
-
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-
-# Docker
-.dockerignore
-docker-compose.override.yml
-
-# Vercel
-.vercel
-
-# Playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/
-
-# Claude Code temporary files
-.claude/
-claude-temp/
-
-# MCP server logs
-mcp-logs/
-
-# Business data exports
-content/exports/
-workflows/generated/
-templates/output/
-
-# Backup files
-*.backup
-*.bak
-
-# Lock files (keep package-lock.json for reproducible builds)
-# yarn.lock
-
-# Python (if using Python MCPs)
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-
-# Java (if using Java MCPs)
-*.class
-*.jar
-*.war
-*.ear
-
-# macOS
-.AppleDouble
-.LSOverride
-
-# Windows
-desktop.ini
-
-# Linux
-*~
-
-# JetBrains IDEs
-.idea/
-*.iml
-*.iws
-
-# Visual Studio Code
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+# Editor directories and files
+.vscode/*
 !.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Cursor IDE
-.cursor/
+# FuseBox cache
+.fusebox/
 
-# MCP configuration backups
-*.settings.json.backup
+# DynamoDB Local files
+.dynamodb/
 
-# Development artifacts
-*.dev
-*.test
-*.local
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
