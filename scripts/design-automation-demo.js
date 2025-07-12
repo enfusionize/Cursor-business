@@ -112,23 +112,23 @@ class DesignAutomationDemo {
 
   async showWelcome() {
     console.clear();
-    console.log(chalk.gradient('purple', 'pink')(
+    console.log(
       figlet.textSync('Design AI Hub', {
         font: 'ANSI Shadow',
         horizontalLayout: 'default',
         verticalLayout: 'default'
       })
-    ));
+    );
     
-    console.log(chalk.cyan('\n🎨 Digital Design AI Automation Platform'));
-    console.log(chalk.gray('Transforming creative workflows with AI and MCP integration\n'));
+    console.log('\n🎨 Digital Design AI Automation Platform');
+    console.log('Transforming creative workflows with AI and MCP integration\n');
     
-    console.log(chalk.green('✨ Features:'));
-    console.log(chalk.white('  • AI-powered asset generation and remixing'));
-    console.log(chalk.white('  • Cross-platform design tool integration'));
-    console.log(chalk.white('  • Automated workflow orchestration'));
-    console.log(chalk.white('  • Real-time collaboration and sync'));
-    console.log(chalk.white('  • Universal asset archive with version control\n'));
+    console.log('✨ Features:');
+    console.log('  • AI-powered asset generation and remixing');
+    console.log('  • Cross-platform design tool integration');
+    console.log('  • Automated workflow orchestration');
+    console.log('  • Real-time collaboration and sync');
+    console.log('  • Universal asset archive with version control\n');
   }
 
   async showMainMenu() {

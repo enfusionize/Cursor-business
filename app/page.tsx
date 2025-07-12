@@ -22,8 +22,10 @@ import {
   Heart,
   Clock,
   User,
+  Users,
   Tag,
-  TrendingUp
+  TrendingUp,
+  Figma
 } from 'lucide-react';
 
 // Import components
@@ -33,6 +35,8 @@ import AIRemixPanel from './components/AIRemixPanel';
 import DesignToolsPanel from './components/DesignToolsPanel';
 import SearchFilters from './components/SearchFilters';
 import AssetPreview from './components/AssetPreview';
+import TeamFeedbackPanel from './components/TeamFeedbackPanel';
+import FigmaIntegration from './components/FigmaIntegration';
 
 interface Asset {
   id: string;
@@ -67,6 +71,8 @@ export default function Home() {
   const [showUpload, setShowUpload] = useState(false);
   const [showRemixPanel, setShowRemixPanel] = useState(false);
   const [showDesignTools, setShowDesignTools] = useState(false);
+  const [showTeamFeedback, setShowTeamFeedback] = useState(false);
+  const [showFigmaIntegration, setShowFigmaIntegration] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Sample data for demonstration
@@ -173,14 +179,30 @@ export default function Home() {
             
             <div className="flex items-center space-x-4">
               <button
+                onClick={() => setShowTeamFeedback(!showTeamFeedback)}
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                title="Team Feedback"
+              >
+                <Users className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => setShowFigmaIntegration(!showFigmaIntegration)}
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                title="Figma Integration"
+              >
+                <Figma className="h-5 w-5" />
+              </button>
+              <button
                 onClick={() => setShowDesignTools(!showDesignTools)}
                 className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                title="Design Tools"
               >
                 <Palette className="h-5 w-5" />
               </button>
               <button
                 onClick={() => setShowRemixPanel(!showRemixPanel)}
                 className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all"
+                title="AI Remix Studio"
               >
                 <Sparkles className="h-5 w-5" />
               </button>
@@ -296,6 +318,12 @@ export default function Home() {
         )}
         {showDesignTools && (
           <DesignToolsPanel onClose={() => setShowDesignTools(false)} />
+        )}
+        {showTeamFeedback && (
+          <TeamFeedbackPanel onClose={() => setShowTeamFeedback(false)} />
+        )}
+        {showFigmaIntegration && (
+          <FigmaIntegration onClose={() => setShowFigmaIntegration(false)} />
         )}
         {selectedAsset && (
           <AssetPreview 

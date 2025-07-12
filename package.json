@@ -8,6 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "demo": "node scripts/design-automation-demo.js",
+    "team-feedback": "echo 'Opening Team Collaboration Hub...' && npm run dev",
+    "figma-demo": "echo 'Starting Figma Integration Demo...' && npm run dev",
     "setup": "node scripts/setup.js",
     "install-mcps": "node scripts/install-mcps.js",
     "validate-setup": "node scripts/validate-setup.js",
@@ -82,7 +85,9 @@
     "midjourney",
     "stable-diffusion",
     "remix",
-    "creative-tools"
+    "creative-tools",
+    "team-collaboration",
+    "workflow-automation"
   ],
   "author": "Design AI Hub",
   "license": "MIT",
