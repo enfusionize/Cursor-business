@@ -705,10 +705,77 @@ app.post('/api/upload', upload.array('files'), async (req, res) => {
         });
       }
     }
+
+    // Send results to n8n webhook for automation
+    try {
+      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/dj-track-uploaded';
+      await axios.post(n8nWebhookUrl, {
+        results,
+        timestamp: new Date().toISOString(),
+        source: 'dj-platform-upload'
+      });
+      console.log('✅ Sent results to n8n workflow');
+    } catch (n8nError) {
+      console.error('❌ Failed to send to n8n:', n8nError.message);
+      // Continue execution even if n8n fails
+    }
+
     res.json({ results });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to process files' });
+  }
+});
+
+// New endpoint for n8n to add tracks to library
+app.post('/api/library/add', async (req, res) => {
+  try {
+    const { djName, trackName, purchaseLink, price, platform, status } = req.body;
+    
+    // Here you would typically save to a database
+    // For now, we'll just log and respond
+    console.log('📚 Adding to library:', {
+      djName,
+      trackName,
+      purchaseLink,
+      price,
+      platform,
+      status,
+      addedAt: new Date().toISOString()
+    });
+
+    // TODO: Save to your database/library system
+    // Example: await db.tracks.create({ djName, trackName, ... });
+
+    res.json({ 
+      success: true, 
+      message: 'Track added to library',
+      track: { djName, trackName, price, platform }
+    });
+  } catch (err) {
+    console.error('Failed to add to library:', err);
+    res.status(500).json({ error: 'Failed to add track to library' });
+  }
+});
+
+// New endpoint for logging failed OCR matches
+app.post('/api/ocr/failed', async (req, res) => {
+  try {
+    const { filename, ocrText, timestamp } = req.body;
+    
+    console.log('⚠️ Failed OCR match:', {
+      filename,
+      ocrText: ocrText.substring(0, 100) + '...',
+      timestamp
+    });
+
+    // TODO: Save failed matches for manual review or AI improvement
+    // Example: await db.failedMatches.create({ filename, ocrText, timestamp });
+
+    res.json({ success: true, message: 'Failed match logged' });
+  } catch (err) {
+    console.error('Failed to log OCR failure:', err);
+    res.status(500).json({ error: 'Failed to log OCR failure' });
   }
 });
 
