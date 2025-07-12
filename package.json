@@ -34,7 +34,9 @@
     "start-clickup": "node scripts/clickup-automation-daemon.js start",
     "clickup-status": "node scripts/clickup-automation-daemon.js status",
     "test-clickup": "node scripts/test-clickup-integration.js",
-    "sync-clickup": "node scripts/sync-project-to-clickup.js"
+    "sync-clickup": "node scripts/sync-project-to-clickup.js",
+    "setup-n8n": "node scripts/setup-n8n.js",
+    "test-n8n": "node scripts/test-n8n-integration.js"
   },
   "dependencies": {
     "next": "^14.0.0",

@@ -118,6 +118,16 @@
         "CLICKUP_DOCS_PATH": "./project-docs"
       },
       "description": "ClickUp integration for task management, document sync, and project automation"
+    },
+    "n8n": {
+      "command": "node",
+      "args": ["./mcps/n8n-mcp-server.js"],
+      "env": {
+        "N8N_BASE_URL": "http://localhost:5678",
+        "N8N_API_KEY": "your-n8n-api-key-here",
+        "N8N_WEBHOOK_URL": "http://localhost:5678/webhook"
+      },
+      "description": "n8n workflow automation and orchestration integration"
     }
   }
 }

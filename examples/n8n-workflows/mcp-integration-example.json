@@ -1,0 +1,245 @@
+{
+  "name": "MCP Integration Example",
+  "nodes": [
+    {
+      "id": "webhook-trigger",
+      "name": "MCP Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mcp-integration",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "validate-input",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.action }}",
+              "operation": "exists"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "process-data",
+      "name": "Process Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [680, 200],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "processed_at",
+              "value": "={{ new Date().toISOString() }}"
+            },
+            {
+              "name": "action",
+              "value": "={{ $json.action }}"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json.data || {} }}"
+            },
+            {
+              "name": "source",
+              "value": "MCP Integration"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "http-request",
+      "name": "External API Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 200],
+      "parameters": {
+        "url": "https://api.example.com/process",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "={{ $json.action }}"
+            },
+            {
+              "name": "data",
+              "value": "={{ JSON.stringify($json.data) }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $json.processed_at }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "error-handler",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "error",
+              "value": "Invalid input: action is required"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "success-response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1120, 200],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"status\": \"success\", \"message\": \"Data processed successfully\", \"data\": $json, \"execution_id\": $executionId } }}"
+      }
+    },
+    {
+      "id": "error-response",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 400],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"status\": \"error\", \"message\": $json.error, \"timestamp\": $json.timestamp } }}"
+      }
+    },
+    {
+      "id": "log-execution",
+      "name": "Log Execution",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1120, 300],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "log_entry",
+              "value": "={{ { \"execution_id\": $executionId, \"action\": $('Process Data').json.action, \"timestamp\": $('Process Data').json.processed_at, \"status\": \"completed\" } }}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "MCP Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Process Data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data": {
+      "main": [
+        [
+          {
+            "node": "External API Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "External API Call": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success Response": {
+      "main": [
+        [
+          {
+            "node": "Log Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "instanceId": "mcp-integration-example"
+  },
+  "id": "mcp-integration-example",
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "mcp-integration",
+      "name": "MCP Integration"
+    }
+  ]
+}
