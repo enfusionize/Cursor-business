@@ -1,0 +1,94 @@
+{
+  "timestamp": "2025-07-10T23:24:42.318Z",
+  "total_tests": 10,
+  "passed": 10,
+  "failed": 0,
+  "success_rate": "100.0",
+  "test_results": [
+    {
+      "test": "System Overview Dashboard",
+      "status": "PASS",
+      "details": "Created board test-board-1752189880312",
+      "url": "https://miro.com/app/board/test-board-1752189880312/"
+    },
+    {
+      "test": "Business Analytics Dashboard",
+      "status": "PASS",
+      "details": "Created board test-board-1752189880313",
+      "url": "https://miro.com/app/board/test-board-1752189880313/"
+    },
+    {
+      "test": "Automation Flows Dashboard",
+      "status": "PASS",
+      "details": "Created board test-board-1752189880314",
+      "url": "https://miro.com/app/board/test-board-1752189880314/"
+    },
+    {
+      "test": "Site Monitoring Dashboard",
+      "status": "PASS",
+      "details": "Created board test-board-1752189880314",
+      "url": "https://miro.com/app/board/test-board-1752189880314/"
+    },
+    {
+      "test": "Real-time Data Updates",
+      "status": "PASS",
+      "details": "Successfully updated metrics, status, and error data"
+    },
+    {
+      "test": "System Flowchart Creation",
+      "status": "PASS",
+      "details": "Created system architecture flowchart"
+    },
+    {
+      "test": "Analytics Visualization",
+      "status": "PASS",
+      "details": "Created analytics line chart visualization"
+    },
+    {
+      "test": "Monitoring Controls",
+      "status": "PASS",
+      "details": "Successfully started and stopped real-time monitoring"
+    },
+    {
+      "test": "Data Export",
+      "status": "PASS",
+      "details": "Successfully exported data in JSON and CSV formats"
+    },
+    {
+      "test": "Performance Testing",
+      "status": "PASS",
+      "details": "Completed 5 concurrent updates in 1ms (avg: 0.2ms per update)"
+    }
+  ],
+  "created_boards": [
+    {
+      "id": "test-board-1752189880312",
+      "url": "https://miro.com/app/board/test-board-1752189880312/",
+      "type": "system-overview",
+      "name": "System Overview Test"
+    },
+    {
+      "id": "test-board-1752189880313",
+      "url": "https://miro.com/app/board/test-board-1752189880313/",
+      "type": "business-analytics",
+      "name": "Business Analytics Test"
+    },
+    {
+      "id": "test-board-1752189880314",
+      "url": "https://miro.com/app/board/test-board-1752189880314/",
+      "type": "automation-flows",
+      "name": "Automation Flows Test"
+    },
+    {
+      "id": "test-board-1752189880314",
+      "url": "https://miro.com/app/board/test-board-1752189880314/",
+      "type": "site-monitoring",
+      "name": "Site Monitoring Test"
+    }
+  ],
+  "environment": {
+    "node_version": "v22.16.0",
+    "platform": "linux",
+    "miro_api_configured": false
+  }
+}

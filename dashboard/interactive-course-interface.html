@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnfusionAIze | Interactive Course Experience</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-cyan: #06b6d4;
+            --accent-purple: #7c3aed;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --error-red: #ef4444;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --tooltip-bg: #374151;
+            --popup-bg: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(30, 64, 175, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Course Navigation Sidebar */
+        .course-nav {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .course-nav h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .week-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .week-item:hover {
+            background: rgba(30, 64, 175, 0.1);
+        }
+
+        .week-item.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            color: white;
+        }
+
+        .week-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .week-phase {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-green);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .content-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            color: white;
+            padding: 2rem;
+        }
+
+        .content-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-phase {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .content-tabs {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        .content-body {
+            padding: 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-trigger {
+            border-bottom: 2px dotted var(--primary-blue);
+            cursor: help;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--tooltip-bg);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--tooltip-bg);
+        }
+
+        .interactive-element:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .context-popup-trigger {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        .context-popup-trigger:hover {
+            background: #a855f7;
+        }
+
+        /* Context Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-content {
+            background: var(--popup-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .popup-title {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Iframe Integration */
+        .iframe-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .iframe-header {
+            background: linear-gradient(135deg, var(--accent-purple), #a855f7);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .iframe-title {
+            font-weight: 600;
+        }
+
+        .iframe-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .iframe-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .iframe-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .iframe-wrapper {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .course-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Layer Prompting Tool */
+        .prompter-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .prompter-header {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prompter-body {
+            padding: 1rem;
+        }
+
+        .layer-input {
+            margin-bottom: 1rem;
+        }
+
+        .layer-label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .layer-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .layer-textarea:focus {
+            outline: none;
+            border-color: var(--success-green);
+        }
+
+        .prompter-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .prompt-output {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-green);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .course-nav,
+            .iframe-container {
+                position: static;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(30, 64, 175, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(30, 64, 175, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(30, 64, 175, 0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EnfusionAIze | Interactive Course</span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-primary" onclick="openFullCourse()">
+                    <i class="fas fa-external-link-alt"></i>
+                    Full Course
+                </button>
+                <button class="btn btn-primary" onclick="togglePrompter()">
+                    <i class="fas fa-robot"></i>
+                    Layer Prompter
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Course Navigation Sidebar -->
+        <div class="course-nav">
+            <h3><i class="fas fa-list"></i> Course Weeks</h3>
+            <div id="course-weeks">
+                <!-- Week items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1 class="content-title" id="content-title">Layer Prompting Fundamentals</h1>
+                <p class="content-phase" id="content-phase">Foundation Phase • Week 1</p>
+                <div class="content-tabs">
+                    <div class="tab active" onclick="switchTab('overview')">Overview</div>
+                    <div class="tab" onclick="switchTab('objectives')">Objectives</div>
+                    <div class="tab" onclick="switchTab('demo')">Interactive Demo</div>
+                    <div class="tab" onclick="switchTab('exercises')">Exercises</div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <!-- Overview Tab -->
+                <div id="overview-content" class="tab-content active">
+                    <h3>Welcome to Layer Prompting</h3>
+                    <p>
+                        Master the art of <span class="interactive-element">
+                            <span class="tooltip-trigger">Layer Prompting</span>
+                            <div class="tooltip">Our proprietary 7-layer AI interaction methodology</div>
+                        </span> - the systematic approach to AI interaction that achieves 
+                        <span class="interactive-element">
+                            <span class="tooltip-trigger">425% productivity gains</span>
+                            <div class="tooltip">Measured across 200+ course participants</div>
+                        </span>.
+                        <span class="context-popup-trigger" onclick="showContextPopup('layer-prompting-intro')">
+                            More Context
+                        </span>
+                    </p>
+
+                    <h4>The 7 Layers Framework</h4>
+                    <ul>
+                        <li>
+                            <strong>Context Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Environmental awareness</span>
+                                <div class="tooltip">Establish situational context and background information</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('context-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Objective Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Goal definition</span>
+                                <div class="tooltip">Clear, measurable outcomes and success criteria</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('objective-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Constraint Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Limitations & boundaries</span>
+                                <div class="tooltip">Resource, technical, and business constraints</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('constraint-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Data Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Information & examples</span>
+                                <div class="tooltip">Relevant data, examples, and reference materials</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('data-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Process Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Step-by-step workflow</span>
+                                <div class="tooltip">Systematic methodology and execution process</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('process-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Output Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Format & deliverables</span>
+                                <div class="tooltip">Desired structure, format, and presentation</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('output-layer')">Details</span>
+                        </li>
+                        <li>
+                            <strong>Validation Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Quality assurance</span>
+                                <div class="tooltip">Quality checks and success verification</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('validation-layer')">Details</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Objectives Tab -->
+                <div id="objectives-content" class="tab-content">
+                    <h3>Week 1 Learning Objectives</h3>
+                    <ul>
+                        <li>
+                            Master the 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">7-layer prompting methodology</span>
+                                <div class="tooltip">Complete understanding of all layers and their interactions</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('methodology-mastery')">Learning Path</span>
+                        </li>
+                        <li>
+                            Complete 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">platform orientation</span>
+                                <div class="tooltip">Full access to all EnfusionAIze tools and features</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('platform-setup')">Setup Guide</span>
+                        </li>
+                        <li>
+                            Build personal 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">prompt library</span>
+                                <div class="tooltip">10 business-ready Layer Prompts for common tasks</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('prompt-library')">Templates</span>
+                        </li>
+                        <li>
+                            Achieve first 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">automation success</span>
+                                <div class="tooltip">Working automation that saves 2+ hours weekly</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('first-automation')">Examples</span>
+                        </li>
+                    </ul>
+
+                    <h4>Success Metrics</h4>
+                    <ul>
+                        <li>50% reduction in manual task completion time</li>
+                        <li>3+ successful Layer Prompts created independently</li>
+                        <li>Platform proficiency score of 80%+</li>
+                        <li>1 fully automated business workflow implemented</li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Demo Tab -->
+                <div id="demo-content" class="tab-content">
+                    <h3>Interactive Demo: Your First Layer Prompt</h3>
+                    <p>
+                        Practice creating a 
+                        <span class="interactive-element">
+                            <span class="tooltip-trigger">Layer Prompt</span>
+                            <div class="tooltip">Structured AI interaction using our 7-layer framework</div>
+                        </span> 
+                        for a common business task. Follow along with this 
+                        <span class="interactive-element">
+                            <span class="tooltip-trigger">guided example</span>
+                            <div class="tooltip">Step-by-step walkthrough with real business context</div>
+                        </span>.
+                        <span class="context-popup-trigger" onclick="showContextPopup('demo-walkthrough')">Full Walkthrough</span>
+                    </p>
+
+                    <div style="background: rgba(30, 64, 175, 0.1); border: 1px solid var(--primary-blue); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h4>Demo Scenario: Email Campaign Strategy</h4>
+                        <p>You need to create an email marketing campaign for a new product launch. Let's build this using Layer Prompting:</p>
+                        
+                        <div style="margin-top: 1rem;">
+                            <strong>Context Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">E-commerce company launching eco-friendly water bottles</span>
+                                <div class="tooltip">SaaS company, 500 employees, B2B focus, Q4 launch timing</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('demo-context')">Context Details</span>
+                        </div>
+                        
+                        <div style="margin-top: 0.5rem;">
+                            <strong>Objective Layer:</strong> 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">Generate 1000 qualified leads in 30 days</span>
+                                <div class="tooltip">20% open rate, 5% click-through rate, 2% conversion target</div>
+                            </span>
+                            <span class="context-popup-trigger" onclick="showContextPopup('demo-objectives')">Objective Breakdown</span>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="loadFullDemo()" style="margin-top: 1rem;">
+                            <i class="fas fa-play"></i>
+                            Run Interactive Demo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exercises Tab -->
+                <div id="exercises-content" class="tab-content">
+                    <h3>Practice Exercises</h3>
+                    
+                    <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h4>Exercise 1: Basic Layer Construction</h4>
+                        <p>
+                            Create a 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">3-layer prompt</span>
+                                <div class="tooltip">Context, Objective, and Constraint layers only</div>
+                            </span> 
+                            for task automation.
+                            <span class="context-popup-trigger" onclick="showContextPopup('exercise-1')">Instructions</span>
+                        </p>
+                        <button class="btn btn-success" onclick="startExercise(1)">Start Exercise</button>
+                    </div>
+
+                    <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h4>Exercise 2: Complete Layer Prompt</h4>
+                        <p>
+                            Build a 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">full 7-layer prompt</span>
+                                <div class="tooltip">All layers: Context, Objective, Constraint, Data, Process, Output, Validation</div>
+                            </span> 
+                            for business process automation.
+                            <span class="context-popup-trigger" onclick="showContextPopup('exercise-2')">Instructions</span>
+                        </p>
+                        <button class="btn btn-success" onclick="startExercise(2)">Start Exercise</button>
+                    </div>
+
+                    <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
+                        <h4>Exercise 3: Real-World Application</h4>
+                        <p>
+                            Apply Layer Prompting to your 
+                            <span class="interactive-element">
+                                <span class="tooltip-trigger">actual business challenge</span>
+                                <div class="tooltip">Use your real business context and requirements</div>
+                            </span>.
+                            <span class="context-popup-trigger" onclick="showContextPopup('exercise-3')">Guidelines</span>
+                        </p>
+                        <button class="btn btn-success" onclick="startExercise(3)">Start Exercise</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Iframe & Prompter Sidebar -->
+        <div>
+            <!-- Course Access Iframe -->
+            <div class="iframe-container">
+                <div class="iframe-header">
+                    <div class="iframe-title">
+                        <i class="fas fa-window-maximize"></i>
+                        Course Portal
+                    </div>
+                    <div class="iframe-controls">
+                        <button class="iframe-btn" onclick="refreshIframe()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="iframe-btn" onclick="expandIframe()">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="iframe-wrapper">
+                    <iframe id="course-iframe" class="course-iframe" src="about:blank"></iframe>
+                </div>
+            </div>
+
+            <!-- Layer Prompting Tool -->
+            <div class="prompter-container" id="prompter-container" style="display: none;">
+                <div class="prompter-header">
+                    <div>
+                        <i class="fas fa-robot"></i>
+                        Layer Prompter
+                    </div>
+                    <button class="iframe-btn" onclick="togglePrompter()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="prompter-body">
+                    <div class="layer-input">
+                        <label class="layer-label">Context Layer</label>
+                        <textarea class="layer-textarea" id="context-layer" placeholder="Describe the environment, situation, and background..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Objective Layer</label>
+                        <textarea class="layer-textarea" id="objective-layer" placeholder="Define clear goals and success metrics..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Constraint Layer</label>
+                        <textarea class="layer-textarea" id="constraint-layer" placeholder="Specify limitations and boundaries..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Data Layer</label>
+                        <textarea class="layer-textarea" id="data-layer" placeholder="Provide relevant information and examples..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Process Layer</label>
+                        <textarea class="layer-textarea" id="process-layer" placeholder="Outline step-by-step methodology..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Output Layer</label>
+                        <textarea class="layer-textarea" id="output-layer" placeholder="Specify desired format and deliverables..."></textarea>
+                    </div>
+                    
+                    <div class="layer-input">
+                        <label class="layer-label">Validation Layer</label>
+                        <textarea class="layer-textarea" id="validation-layer" placeholder="Define quality checks and success verification..."></textarea>
+                    </div>
+
+                    <div class="prompter-actions">
+                        <button class="btn btn-success" onclick="generateLayerPrompt()">
+                            <i class="fas fa-magic"></i>
+                            Generate Prompt
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearPrompt()">
+                            <i class="fas fa-eraser"></i>
+                            Clear
+                        </button>
+                        <button class="btn btn-primary" onclick="savePrompt()">
+                            <i class="fas fa-save"></i>
+                            Save
+                        </button>
+                    </div>
+
+                    <div id="prompt-output" class="prompt-output" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Popup Modal -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closeContextPopup()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="popup-title" id="popup-title">Context Information</h3>
+            <div id="popup-body">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course data structure
+        const courseData = {
+            weeks: [
+                {
+                    id: 1,
+                    title: "Layer Prompting Fundamentals",
+                    phase: "Foundation",
+                    progress: 0,
+                    content: {
+                        overview: "Master the 7-layer AI interaction framework",
+                        objectives: ["Learn framework", "Setup platform", "Create prompts", "First automation"],
+                        demo: "email-campaign-demo",
+                        exercises: ["basic-layers", "complete-prompt", "real-world"]
+                    }
+                },
+                {
+                    id: 2,
+                    title: "Platform Mastery - Core Tools",
+                    phase: "Foundation",
+                    progress: 0,
+                    content: {
+                        overview: "Master Cursor Build Stack and MCP integrations",
+                        objectives: ["Cursor integration", "MCP setup", "Analytics dashboard", "Automated workflows"],
+                        demo: "platform-integration-demo",
+                        exercises: ["cursor-setup", "mcp-config", "workflow-creation"]
+                    }
+                },
+                {
+                    id: 3,
+                    title: "Business Applications Foundation",
+                    phase: "Foundation",
+                    progress: 0
+                },
+                {
+                    id: 4,
+                    title: "Advanced Layer Prompting Techniques",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 5,
+                    title: "AI Model Orchestration",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 6,
+                    title: "Business Intelligence & Analytics",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 7,
+                    title: "Content & Creative Automation",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 8,
+                    title: "Development & Technical Integration",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 9,
+                    title: "Quality Assurance & Testing",
+                    phase: "Specialization",
+                    progress: 0
+                },
+                {
+                    id: 10,
+                    title: "Advanced Business Applications",
+                    phase: "Mastery",
+                    progress: 0
+                },
+                {
+                    id: 11,
+                    title: "Scaling & Optimization",
+                    phase: "Mastery",
+                    progress: 0
+                },
+                {
+                    id: 12,
+                    title: "Industry-Specific Applications",
+                    phase: "Mastery",
+                    progress: 0
+                },
+                {
+                    id: 13,
+                    title: "Certification & Launch",
+                    phase: "Mastery",
+                    progress: 0
+                }
+            ],
+            currentWeek: 1
+        };
+
+        // Context popup content
+        const contextContent = {
+            'layer-prompting-intro': {
+                title: 'Layer Prompting Methodology',
+                content: `
+                    <h4>What is Layer Prompting?</h4>
+                    <p>Layer Prompting is EnfusionAIze's proprietary methodology for structuring AI interactions across multiple cognitive layers to achieve optimal business outcomes.</p>
+                    
+                    <h4>Why 7 Layers?</h4>
+                    <ul>
+                        <li><strong>Cognitive Alignment:</strong> Mirrors human problem-solving processes</li>
+                        <li><strong>Systematic Structure:</strong> Ensures consistency and reproducibility</li>
+                        <li><strong>Context Preservation:</strong> Maintains information across interactions</li>
+                        <li><strong>Quality Assurance:</strong> Built-in validation and error checking</li>
+                        <li><strong>Scalable Implementation:</strong> Works across all AI models and use cases</li>
+                    </ul>
+                    
+                    <h4>Proven Results:</h4>
+                    <ul>
+                        <li>425% average productivity increase</li>
+                        <li>60% cost reduction in operations</li>
+                        <li>95% quality consistency</li>
+                        <li>200+ successful implementations</li>
+                    </ul>
+                `
+            },
+            'context-layer': {
+                title: 'Context Layer - Environmental Awareness',
+                content: `
+                    <h4>Purpose:</h4>
+                    <p>Establish environmental and situational awareness for the AI</p>
+                    
+                    <h4>Components:</h4>
+                    <ul>
+                        <li><strong>Environmental Context:</strong> Current situation, constraints, stakeholders</li>
+                        <li><strong>Historical Context:</strong> Relevant past events, decisions, outcomes</li>
+                        <li><strong>Organizational Context:</strong> Company culture, goals, processes</li>
+                        <li><strong>Technical Context:</strong> Available tools, systems, integrations</li>
+                    </ul>
+                    
+                    <h4>Example:</h4>
+                    <div style="background: #374151; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+                        <code>
+                        CONTEXT LAYER:<br>
+                        Environment: Mid-sized B2B SaaS company, competitive market, growth stage<br>
+                        History: Previous strategies focused on feature development, limited market analysis<br>
+                        Organization: 50 employees, product-focused culture, expanding sales team<br>
+                        Technology: EnfusionAIze platform, CRM integration, analytics capabilities
+                        </code>
+                    </div>
+                `
+            },
+            'objective-layer': {
+                title: 'Objective Layer - Goal Definition',
+                content: `
+                    <h4>Purpose:</h4>
+                    <p>Define clear goals and success metrics</p>
+                    
+                    <h4>Components:</h4>
+                    <ul>
+                        <li><strong>Primary Objective:</strong> Main goal to be accomplished</li>
+                        <li><strong>Secondary Objectives:</strong> Supporting goals and considerations</li>
+                        <li><strong>Success Metrics:</strong> Quantifiable measures of success</li>
+                        <li><strong>Timeline:</strong> Deadlines and milestone requirements</li>
+                    </ul>
+                    
+                    <h4>Best Practices:</h4>
+                    <ul>
+                        <li>Use SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound)</li>
+                        <li>Include both quantitative and qualitative metrics</li>
+                        <li>Align with business objectives</li>
+                        <li>Consider short-term and long-term outcomes</li>
+                    </ul>
+                `
+            },
+            'demo-walkthrough': {
+                title: 'Interactive Demo Walkthrough',
+                content: `
+                    <h4>Email Campaign Strategy Demo</h4>
+                    <p>This guided walkthrough demonstrates how to apply Layer Prompting to a real business scenario.</p>
+                    
+                    <h4>Learning Objectives:</h4>
+                    <ul>
+                        <li>Apply all 7 layers to a practical business challenge</li>
+                        <li>See how layers interact and build upon each other</li>
+                        <li>Generate actionable business outputs</li>
+                        <li>Practice quality validation techniques</li>
+                    </ul>
+                    
+                    <h4>Demo Components:</h4>
+                    <ol>
+                        <li><strong>Scenario Setup:</strong> Real business context and requirements</li>
+                        <li><strong>Layer-by-Layer Construction:</strong> Step-by-step prompt building</li>
+                        <li><strong>AI Interaction:</strong> Live AI response generation</li>
+                        <li><strong>Output Analysis:</strong> Quality assessment and optimization</li>
+                        <li><strong>Implementation Planning:</strong> Next steps and action items</li>
+                    </ol>
+                    
+                    <button class="btn btn-primary" onclick="loadFullDemo(); closeContextPopup();" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Demo Now
+                    </button>
+                `
+            }
+        };
+
+        // Initialize course interface
+        function initializeCourse() {
+            renderCourseWeeks();
+            loadCourseContent();
+            setupIframe();
+        }
+
+        // Render course navigation
+        function renderCourseWeeks() {
+            const container = document.getElementById('course-weeks');
+            container.innerHTML = courseData.weeks.map(week => `
+                <div class="week-item ${week.id === courseData.currentWeek ? 'active' : ''}" 
+                     onclick="selectWeek(${week.id})">
+                    <div class="week-title">Week ${week.id}: ${week.title}</div>
+                    <div class="week-phase">${week.phase} Phase</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${week.progress}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Select week
+        function selectWeek(weekId) {
+            courseData.currentWeek = weekId;
+            renderCourseWeeks();
+            loadCourseContent();
+            
+            // Update iframe content
+            const iframe = document.getElementById('course-iframe');
+            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2>Week ${weekId} Content</h2><p>This iframe would load the actual course content for Week ${weekId}.</p><p>Content includes:</p><ul><li>Video lessons</li><li>Interactive exercises</li><li>Templates and resources</li><li>Progress tracking</li></ul></body></html>`;
+        }
+
+        // Load course content
+        function loadCourseContent() {
+            const currentWeek = courseData.weeks.find(w => w.id === courseData.currentWeek);
+            if (!currentWeek) return;
+
+            document.getElementById('content-title').textContent = currentWeek.title;
+            document.getElementById('content-phase').textContent = `${currentWeek.phase} Phase • Week ${currentWeek.id}`;
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-content`).classList.add('active');
+        }
+
+        // Context popup functions
+        function showContextPopup(contentKey) {
+            const content = contextContent[contentKey];
+            if (!content) return;
+
+            document.getElementById('popup-title').textContent = content.title;
+            document.getElementById('popup-body').innerHTML = content.content;
+            document.getElementById('popup-overlay').style.display = 'flex';
+        }
+
+        function closeContextPopup() {
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        // Layer Prompter functions
+        function togglePrompter() {
+            const prompter = document.getElementById('prompter-container');
+            prompter.style.display = prompter.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function generateLayerPrompt() {
+            const layers = {
+                context: document.getElementById('context-layer').value,
+                objective: document.getElementById('objective-layer').value,
+                constraint: document.getElementById('constraint-layer').value,
+                data: document.getElementById('data-layer').value,
+                process: document.getElementById('process-layer').value,
+                output: document.getElementById('output-layer').value,
+                validation: document.getElementById('validation-layer').value
+            };
+
+            let prompt = "LAYER PROMPTING FRAMEWORK:\n\n";
+            
+            if (layers.context) prompt += `CONTEXT LAYER:\n${layers.context}\n\n`;
+            if (layers.objective) prompt += `OBJECTIVE LAYER:\n${layers.objective}\n\n`;
+            if (layers.constraint) prompt += `CONSTRAINT LAYER:\n${layers.constraint}\n\n`;
+            if (layers.data) prompt += `DATA LAYER:\n${layers.data}\n\n`;
+            if (layers.process) prompt += `PROCESS LAYER:\n${layers.process}\n\n`;
+            if (layers.output) prompt += `OUTPUT LAYER:\n${layers.output}\n\n`;
+            if (layers.validation) prompt += `VALIDATION LAYER:\n${layers.validation}\n\n`;
+
+            const outputDiv = document.getElementById('prompt-output');
+            outputDiv.textContent = prompt;
+            outputDiv.style.display = 'block';
+        }
+
+        function clearPrompt() {
+            document.querySelectorAll('.layer-textarea').forEach(textarea => textarea.value = '');
+            document.getElementById('prompt-output').style.display = 'none';
+        }
+
+        function savePrompt() {
+            const prompt = document.getElementById('prompt-output').textContent;
+            if (!prompt) {
+                alert('Please generate a prompt first');
+                return;
+            }
+
+            // Create downloadable file
+            const blob = new Blob([prompt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `layer-prompt-${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Iframe functions
+        function setupIframe() {
+            const iframe = document.getElementById('course-iframe');
+            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2>Course Portal</h2><p>Welcome to the EnfusionAIze Course Portal!</p><p>This iframe provides direct access to:</p><ul><li>Video lessons and tutorials</li><li>Interactive exercises</li><li>Progress tracking</li><li>Resource downloads</li><li>Community discussions</li></ul><p><em>Click "Full Course" to open in a new window.</em></p></body></html>`;
+        }
+
+        function refreshIframe() {
+            const iframe = document.getElementById('course-iframe');
+            iframe.src = iframe.src;
+        }
+
+        function expandIframe() {
+            const iframe = document.getElementById('course-iframe');
+            if (iframe.src !== 'about:blank') {
+                window.open(iframe.src, '_blank');
+            }
+        }
+
+        function openFullCourse() {
+            // Open full course in new window
+            const courseWindow = window.open('', '_blank', 'width=1200,height=800');
+            courseWindow.document.write(`
+                <html>
+                <head>
+                    <title>EnfusionAIze Full Course Portal</title>
+                    <style>
+                        body { font-family: Arial; padding: 20px; background: #1e293b; color: white; }
+                        .course-section { background: #374151; padding: 20px; margin: 20px 0; border-radius: 10px; }
+                        .progress-bar { background: #4b5563; height: 20px; border-radius: 10px; overflow: hidden; }
+                        .progress-fill { background: #10b981; height: 100%; transition: width 0.3s ease; }
+                    </style>
+                </head>
+                <body>
+                    <h1>🎓 EnfusionAIze Accelerator Course</h1>
+                    <h2>Full Course Portal Access</h2>
+                    
+                    <div class="course-section">
+                        <h3>📚 Current Progress</h3>
+                        <p>Week ${courseData.currentWeek} of 13 - Layer Prompting Fundamentals</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(courseData.currentWeek / 13) * 100}%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-section">
+                        <h3>🎯 This Week's Focus</h3>
+                        <ul>
+                            <li>Master the 7-layer prompting methodology</li>
+                            <li>Complete platform orientation and setup</li>
+                            <li>Build personal AI prompt library</li>
+                            <li>Achieve first automation success</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="course-section">
+                        <h3>🔧 Available Tools</h3>
+                        <ul>
+                            <li>Layer Prompting Builder</li>
+                            <li>AI Model Orchestration</li>
+                            <li>Business Automation Templates</li>
+                            <li>Progress Tracking Dashboard</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="course-section">
+                        <h3>👥 Community & Support</h3>
+                        <p>Connect with fellow learners, get expert help, and share your successes.</p>
+                        <ul>
+                            <li>Weekly live sessions</li>
+                            <li>1-on-1 implementation support</li>
+                            <li>Private community forum</li>
+                            <li>Expert office hours</li>
+                        </ul>
+                    </div>
+                </body>
+                </html>
+            `);
+        }
+
+        // Demo functions
+        function loadFullDemo() {
+            alert('🎬 Loading Interactive Demo...\n\nThis would launch the full interactive demo experience with:\n\n• Step-by-step Layer Prompting construction\n• Real-time AI interaction\n• Live output generation\n• Quality assessment tools\n• Implementation guidance');
+        }
+
+        function startExercise(exerciseNum) {
+            alert(`🏋️ Starting Exercise ${exerciseNum}...\n\nThis would launch the interactive exercise environment with:\n\n• Guided instruction\n• Practice templates\n• Real-time feedback\n• Progress tracking\n• Success validation`);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeCourse);
+
+        // Close popup when clicking outside
+        document.getElementById('popup-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContextPopup();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -11,6 +11,15 @@ console.log(chalk.gray('Complete Business Operations Environment for Cursor\n'))
 class MCPLauncher {
   constructor() {
     this.processes = new Map();
+    this.stringEngine = null;
+  }
+
+  async initStringEngine() {
+    if (!this.stringEngine) {
+      const StringAutomationEngine = require('./scripts/string-automation-engine.js');
+      this.stringEngine = new StringAutomationEngine();
+    }
+    return this.stringEngine;
   }
 
   async showMainMenu() {
@@ -81,7 +90,27 @@ class MCPLauncher {
         description: 'Open guides and documentation'
       },
       {
-        name: '🔧 Utilities',
+        name: '�️ Create Automation (Natural Language)',
+        value: 'string-automation',
+        description: 'Describe what you want to automate in plain English'
+      },
+      {
+        name: '📚 Automation Templates Library',
+        value: 'automation-templates',
+        description: 'Browse pre-built String.com-inspired automations'
+      },
+      {
+        name: '🎯 Business Intelligence Generator',
+        value: 'business-intelligence',
+        description: 'Create comprehensive business monitoring systems'
+      },
+      {
+        name: '🏥 Health Monitor & Debugging',
+        value: 'health-debug',
+        description: 'System health monitoring and automated debugging'
+      },
+      {
+        name: '� Utilities',
         value: 'utils',
         description: 'Backup, restore, and maintenance tools'
       },
@@ -144,6 +173,18 @@ class MCPLauncher {
         break;
       case 'docs':
         await this.showDocumentation();
+        break;
+      case 'string-automation':
+        await this.runStringAutomation();
+        break;
+      case 'automation-templates':
+        await this.runAutomationTemplates();
+        break;
+      case 'business-intelligence':
+        await this.runBusinessIntelligence();
+        break;
+      case 'health-debug':
+        await this.runHealthDebug();
         break;
       case 'utils':
         await this.showUtilities();
@@ -1011,6 +1052,377 @@ class MCPLauncher {
     } catch (error) {
       // Package.json not found or invalid
     }
+  }
+
+  async runStringAutomation() {
+    console.log(chalk.yellow('\n🗣️ Natural Language Automation Builder\n'));
+    console.log(chalk.blue('Inspired by String.com - Create automations using plain English!\n'));
+    
+    try {
+      const engine = await this.initStringEngine();
+      
+      const prompt = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'automation',
+          message: 'Describe what you want to automate (in plain English):',
+          validate: input => input.length > 10 || 'Please provide more detail'
+        }
+      ]);
+
+      console.log(chalk.blue('\n🤖 Analyzing your request...\n'));
+      
+      const automation = await engine.createAutomationFromPrompt(prompt.automation);
+      console.log(chalk.green('✅ Automation created successfully!'));
+      
+      // Show generated workflow
+      console.log(chalk.blue('\n📋 Generated Workflow:'));
+      automation.steps.forEach((step, i) => {
+        console.log(chalk.gray(`  ${i + 1}. ${step.description}`));
+      });
+      
+      // Offer to test or deploy
+      const action = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'next',
+          message: 'What would you like to do?',
+          choices: [
+            { name: '🧪 Test automation', value: 'test' },
+            { name: '🚀 Deploy automation', value: 'deploy' },
+            { name: '✏️ Modify workflow', value: 'modify' },
+            { name: '🏠 Back to main menu', value: 'menu' }
+          ]
+        }
+      ]);
+      
+      await this.handleAutomationAction(action.next, automation);
+      
+    } catch (error) {
+      console.log(chalk.red('❌ Failed to create automation. Please try rephrasing.'));
+      console.log(chalk.gray(`Error: ${error.message}`));
+      await this.promptReturn();
+    }
+  }
+
+  async runAutomationTemplates() {
+    console.log(chalk.yellow('\n📚 Automation Templates Library\n'));
+    console.log(chalk.blue('Pre-built templates inspired by String.com use cases\n'));
+    
+    try {
+      const engine = await this.initStringEngine();
+      const workflow = await engine.showAutomationTemplates();
+      
+      if (workflow) {
+        console.log(chalk.green('\n✅ Template customized successfully!'));
+        
+        const action = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'next',
+            message: 'What would you like to do?',
+            choices: [
+              { name: '🧪 Test automation', value: 'test' },
+              { name: '🚀 Deploy automation', value: 'deploy' },
+              { name: '🏠 Back to main menu', value: 'menu' }
+            ]
+          }
+        ]);
+        
+        await this.handleAutomationAction(action.next, workflow);
+      } else {
+        await this.promptReturn();
+      }
+      
+    } catch (error) {
+      console.log(chalk.red('❌ Failed to load templates.'));
+      console.log(chalk.gray(`Error: ${error.message}`));
+      await this.promptReturn();
+    }
+  }
+
+  async runBusinessIntelligence() {
+    console.log(chalk.yellow('\n🎯 Business Intelligence Generator\n'));
+    console.log(chalk.blue('Create comprehensive business monitoring systems\n'));
+    
+    const biChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'type',
+        message: 'What type of business intelligence would you like to create?',
+        choices: [
+          { name: '📊 Daily Business Dashboard', value: 'dashboard' },
+          { name: '🕵️ Competitor Intelligence Hub', value: 'competitor' },
+          { name: '📈 Content Performance Tracker', value: 'content' },
+          { name: '💰 Financial Optimization Engine', value: 'financial' },
+          { name: '🎯 Custom Business Intelligence', value: 'custom' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (biChoice.type === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    try {
+      const engine = await this.initStringEngine();
+      let automationPrompt = '';
+
+      switch (biChoice.type) {
+        case 'dashboard':
+          automationPrompt = 'Monitor daily business metrics from Xero and ClickUp, analyze trends, and create comprehensive dashboard reports';
+          break;
+        case 'competitor':
+          automationPrompt = 'Monitor competitor websites, analyze changes, research market context, and generate intelligence reports with actionable insights';
+          break;
+        case 'content':
+          automationPrompt = 'Track content performance, monitor SEO rankings, analyze competitor content, and generate optimization recommendations';
+          break;
+        case 'financial':
+          automationPrompt = 'Analyze financial data from Xero, identify cost optimization opportunities, track KPIs, and generate budget recommendations';
+          break;
+        case 'custom':
+          const custom = await inquirer.prompt([
+            {
+              type: 'input',
+              name: 'description',
+              message: 'Describe your business intelligence needs:',
+              validate: input => input.length > 10 || 'Please provide more detail'
+            }
+          ]);
+          automationPrompt = custom.description;
+          break;
+      }
+
+      console.log(chalk.blue('\n🤖 Creating business intelligence automation...\n'));
+      
+      const automation = await engine.createAutomationFromPrompt(automationPrompt);
+      console.log(chalk.green('✅ Business intelligence system created!'));
+      
+      console.log(chalk.blue('\n📋 Generated Intelligence Workflow:'));
+      automation.steps.forEach((step, i) => {
+        console.log(chalk.gray(`  ${i + 1}. ${step.description}`));
+      });
+      
+      const action = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'next',
+          message: 'What would you like to do?',
+          choices: [
+            { name: '🧪 Test intelligence system', value: 'test' },
+            { name: '🚀 Deploy to production', value: 'deploy' },
+            { name: '📊 View analytics setup', value: 'analytics' },
+            { name: '🏠 Back to main menu', value: 'menu' }
+          ]
+        }
+      ]);
+      
+      await this.handleAutomationAction(action.next, automation);
+      
+    } catch (error) {
+      console.log(chalk.red('❌ Failed to create business intelligence system.'));
+      console.log(chalk.gray(`Error: ${error.message}`));
+      await this.promptReturn();
+    }
+  }
+
+  async handleAutomationAction(action, automation) {
+    const engine = await this.initStringEngine();
+    
+    switch (action) {
+      case 'test':
+        const testResult = await engine.testAutomation(automation);
+        if (testResult) {
+          const deploy = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'deploy',
+              message: 'Automation tested successfully! Deploy now?',
+              default: true
+            }
+          ]);
+          if (deploy.deploy) {
+            await engine.deployAutomation(automation);
+            console.log(chalk.green('\n🎉 Automation is now live and running!'));
+          }
+        } else {
+          console.log(chalk.yellow('\n🔧 Automation needs adjustments before deployment.'));
+        }
+        await this.promptReturn();
+        break;
+        
+      case 'deploy':
+        const deployed = await engine.deployAutomation(automation);
+        console.log(chalk.green('\n🎉 Automation deployed successfully!'));
+        console.log(chalk.blue(`Automation ID: ${deployed.id}`));
+        await this.promptReturn();
+        break;
+        
+      case 'analytics':
+        console.log(chalk.blue('\n📊 Analytics Setup'));
+        console.log(chalk.gray('Automation will track:'));
+        console.log(chalk.gray('  • Execution success rates'));
+        console.log(chalk.gray('  • Performance metrics'));
+        console.log(chalk.gray('  • Business impact measures'));
+        console.log(chalk.gray('  • Cost optimization opportunities'));
+        await this.promptReturn();
+        break;
+        
+      case 'modify':
+        console.log(chalk.blue('\n✏️ Workflow Modification'));
+        console.log(chalk.gray('Feature coming soon - workflow editor with visual interface'));
+        await this.promptReturn();
+        break;
+        
+      case 'menu':
+      default:
+        await this.showMainMenu();
+        break;
+    }
+  }
+
+  async runHealthDebug() {
+    console.log(chalk.yellow('\n🏥 Health Monitor & Debugging System\n'));
+    
+    const healthChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'healthAction',
+        message: 'Health & Debug - What would you like to do?',
+        choices: [
+          { name: '🔍 Run Health Check', value: 'health-check' },
+          { name: '📊 Open Debug Dashboard', value: 'debug-dashboard' },
+          { name: '🔧 Auto-Fix Issues', value: 'auto-fix' },
+          { name: '🔄 Continuous Monitoring', value: 'continuous' },
+          { name: '🧪 System Diagnostics', value: 'diagnostics' },
+          { name: '📈 Performance Monitor', value: 'performance' },
+          { name: '🚨 Emergency Recovery', value: 'emergency' },
+          { name: '📋 Generate Health Report', value: 'report' },
+          { name: '🏠 Back to main menu', value: 'menu' }
+        ]
+      }
+    ]);
+
+    if (healthChoice.healthAction === 'menu') {
+      await this.showMainMenu();
+      return;
+    }
+
+    try {
+      switch (healthChoice.healthAction) {
+        case 'health-check':
+          console.log(chalk.blue('🔍 Running comprehensive health check...'));
+          execSync('npm run health-check', { stdio: 'inherit' });
+          break;
+          
+        case 'debug-dashboard':
+          console.log(chalk.blue('📊 Opening debug dashboard...'));
+          console.log(chalk.green('🌐 Debug Dashboard: http://localhost:3000/dashboard/debug-dashboard.html'));
+          console.log(chalk.gray('💡 Make sure your development server is running (npm run dev)'));
+          
+          const openDashboard = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'open',
+              message: 'Open debug dashboard in browser?',
+              default: true
+            }
+          ]);
+          
+          if (openDashboard.open) {
+            try {
+              const command = process.platform === 'darwin' ? 'open' : 
+                            process.platform === 'win32' ? 'start' : 'xdg-open';
+              execSync(`${command} http://localhost:3000/dashboard/debug-dashboard.html`, { stdio: 'pipe' });
+            } catch (error) {
+              console.log(chalk.yellow('Could not open browser automatically.'));
+              console.log(chalk.gray('Please open: http://localhost:3000/dashboard/debug-dashboard.html'));
+            }
+          }
+          break;
+          
+        case 'auto-fix':
+          const fixChoice = await inquirer.prompt([
+            {
+              type: 'list',
+              name: 'fixType',
+              message: 'Auto-fix options:',
+              choices: [
+                { name: '🔍 Dry Run (Show what would be fixed)', value: 'dry-run' },
+                { name: '🔧 Interactive Fix (Choose issues to fix)', value: 'interactive' },
+                { name: '⚡ Auto Fix All Issues', value: 'auto' },
+                { name: '🔄 Continuous Auto-Fix', value: 'continuous' }
+              ]
+            }
+          ]);
+          
+          console.log(chalk.blue('🔧 Running auto-fix engine...'));
+          switch (fixChoice.fixType) {
+            case 'dry-run':
+              execSync('npm run auto-fix-dry-run', { stdio: 'inherit' });
+              break;
+            case 'interactive':
+              execSync('npm run auto-fix-interactive', { stdio: 'inherit' });
+              break;
+            case 'auto':
+              execSync('npm run auto-fix', { stdio: 'inherit' });
+              break;
+            case 'continuous':
+              execSync('npm run auto-fix-continuous', { stdio: 'inherit' });
+              break;
+          }
+          break;
+          
+        case 'continuous':
+          console.log(chalk.blue('🔄 Starting continuous health monitoring...'));
+          console.log(chalk.yellow('⚠️  This will run in the background. Press Ctrl+C to stop.'));
+          execSync('npm run health-continuous', { stdio: 'inherit' });
+          break;
+          
+        case 'diagnostics':
+          console.log(chalk.blue('🧪 Running system diagnostics...'));
+          execSync('npm run system-diagnostics', { stdio: 'inherit' });
+          break;
+          
+        case 'performance':
+          console.log(chalk.blue('📈 Starting performance monitoring...'));
+          execSync('npm run health-monitor', { stdio: 'inherit' });
+          break;
+          
+        case 'emergency':
+          console.log(chalk.red('🚨 Emergency Recovery Mode'));
+          console.log(chalk.yellow('This will attempt to fix critical system issues automatically.'));
+          
+          const confirmEmergency = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'proceed',
+              message: 'Proceed with emergency recovery?',
+              default: false
+            }
+          ]);
+          
+          if (confirmEmergency.proceed) {
+            console.log(chalk.blue('🔧 Running emergency recovery...'));
+            execSync('node scripts/auto-fix-engine.js --type missing-env-vars --type api-connection-failed --type mcp-server-down', { stdio: 'inherit' });
+          }
+          break;
+          
+        case 'report':
+          console.log(chalk.blue('📋 Generating comprehensive health report...'));
+          execSync('node scripts/health-monitor.js --verbose --auto-fix', { stdio: 'inherit' });
+          console.log(chalk.green('📄 Health report saved to logs/health-report-*.json'));
+          break;
+      }
+      
+    } catch (error) {
+      console.log(chalk.red('❌ Health monitoring failed:'), error.message);
+    }
+
+    await this.promptReturn();
   }
 
   async promptReturn() {
