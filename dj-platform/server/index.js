@@ -145,6 +145,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+console.log('🎵 Dimensionaleyezed Data Center - Music Intelligence Platform');
+console.log('🚀 Starting server on port', PORT);
+
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -663,12 +666,17 @@ app.post('/api/upload-audio', upload.single('audio'), async (req, res) => {
 // File upload, OCR, and CSV matching endpoint
 app.post('/api/upload', upload.array('files'), async (req, res) => {
   try {
+    console.log('📁 Processing file upload request...');
     const files = req.files;
     let results = [];
     let csvData = [];
+    
+    console.log(`📊 Received ${files.length} files for processing`);
+    
     // Find CSV file and parse it
     for (const file of files) {
       if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
+        console.log(`📋 Processing CSV file: ${file.originalname}`);
         // Parse CSV
         const rows = [];
         await new Promise((resolve, reject) => {
@@ -679,50 +687,74 @@ app.post('/api/upload', upload.array('files'), async (req, res) => {
             .on('error', reject);
         });
         csvData = rows;
+        console.log(`✅ CSV processed: ${csvData.length} tracks loaded`);
       }
     }
+    
     // Process images with OCR
     for (const file of files) {
       if (file.mimetype.startsWith('image/')) {
+        console.log(`🔍 Running OCR on image: ${file.originalname}`);
         const { data: { text } } = await Tesseract.recognize(file.path, 'eng');
+        console.log(`📝 OCR extracted text (${text.length} chars): ${text.substring(0, 100)}...`);
+        
         // Try to match OCR text to CSV data
         let bestMatch = null;
         let bestScore = 0;
+        
         for (const row of csvData) {
           // Simple matching: check if track name or DJ name appears in OCR text
           let score = 0;
-          if (row['DJ Name'] && text.toLowerCase().includes(row['DJ Name'].toLowerCase())) score++;
-          if (row['Name of the Tracks'] && text.toLowerCase().includes(row['Name of the Tracks'].toLowerCase())) score++;
+          if (row['DJ Name'] && text.toLowerCase().includes(row['DJ Name'].toLowerCase())) {
+            score++;
+            console.log(`🎧 DJ match found: ${row['DJ Name']}`);
+          }
+          if (row['Name of the Tracks'] && text.toLowerCase().includes(row['Name of the Tracks'].toLowerCase())) {
+            score++;
+            console.log(`🎵 Track match found: ${row['Name of the Tracks']}`);
+          }
           if (score > bestScore) {
             bestScore = score;
             bestMatch = row;
           }
         }
-        results.push({
+        
+        const result = {
           file: file.originalname,
           ocrText: text,
           match: bestMatch,
-        });
+        };
+        
+        if (bestMatch) {
+          console.log(`✅ Best match for ${file.originalname}: ${bestMatch['DJ Name']} - ${bestMatch['Name of the Tracks']}`);
+        } else {
+          console.log(`❌ No match found for ${file.originalname}`);
+        }
+        
+        results.push(result);
       }
     }
 
     // Send results to n8n webhook for automation
     try {
       const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/dj-track-uploaded';
+      console.log(`🔄 Sending results to n8n automation workflow: ${n8nWebhookUrl}`);
+      
       await axios.post(n8nWebhookUrl, {
         results,
         timestamp: new Date().toISOString(),
-        source: 'dj-platform-upload'
+        source: 'dimensionaleyezed-data-center'
       });
-      console.log('✅ Sent results to n8n workflow');
+      console.log('✅ Results successfully sent to n8n workflow for automation');
     } catch (n8nError) {
-      console.error('❌ Failed to send to n8n:', n8nError.message);
+      console.error('❌ Failed to send to n8n workflow:', n8nError.message);
       // Continue execution even if n8n fails
     }
 
+    console.log(`🎯 Processing complete: ${results.length} files analyzed, ${results.filter(r => r.match).length} matches found`);
     res.json({ results });
   } catch (err) {
-    console.error(err);
+    console.error('💥 Error processing files:', err);
     res.status(500).json({ error: 'Failed to process files' });
   }
 });
@@ -734,7 +766,7 @@ app.post('/api/library/add', async (req, res) => {
     
     // Here you would typically save to a database
     // For now, we'll just log and respond
-    console.log('📚 Adding to library:', {
+    console.log('📚 Dimensionaleyezed Data Center - Adding track to library:', {
       djName,
       trackName,
       purchaseLink,
@@ -749,11 +781,11 @@ app.post('/api/library/add', async (req, res) => {
 
     res.json({ 
       success: true, 
-      message: 'Track added to library',
+      message: 'Track added to Dimensionaleyezed library',
       track: { djName, trackName, price, platform }
     });
   } catch (err) {
-    console.error('Failed to add to library:', err);
+    console.error('❌ Failed to add track to library:', err);
     res.status(500).json({ error: 'Failed to add track to library' });
   }
 });
@@ -763,7 +795,7 @@ app.post('/api/ocr/failed', async (req, res) => {
   try {
     const { filename, ocrText, timestamp } = req.body;
     
-    console.log('⚠️ Failed OCR match:', {
+    console.log('⚠️ Dimensionaleyezed Data Center - Failed OCR match logged:', {
       filename,
       ocrText: ocrText.substring(0, 100) + '...',
       timestamp
@@ -772,9 +804,9 @@ app.post('/api/ocr/failed', async (req, res) => {
     // TODO: Save failed matches for manual review or AI improvement
     // Example: await db.failedMatches.create({ filename, ocrText, timestamp });
 
-    res.json({ success: true, message: 'Failed match logged' });
+    res.json({ success: true, message: 'Failed match logged for analysis' });
   } catch (err) {
-    console.error('Failed to log OCR failure:', err);
+    console.error('❌ Failed to log OCR failure:', err);
     res.status(500).json({ error: 'Failed to log OCR failure' });
   }
 });
@@ -969,8 +1001,14 @@ app.post('/api/export-samples', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`DJ AI Platform server running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
+  console.log(`� Dimensionaleyezed Data Center server running on port ${PORT}`);
+  console.log(`🌐 Access the platform at: http://localhost:${PORT}`);
+  console.log(`📡 API endpoints available:`);
+  console.log(`   POST /api/upload - File upload and OCR processing`);
+  console.log(`   POST /api/library/add - Add tracks to library`);
+  console.log(`   POST /api/ocr/failed - Log failed OCR matches`);
+  console.log(`🤖 n8n webhook integration: ${process.env.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/dj-track-uploaded'}`);
+  console.log(`✨ Ready for AI-powered music intelligence operations!`);
 });
 
 module.exports = app;

@@ -1,16 +1,18 @@
-# Complete MCP Business Operations Environment
+# Dimensionaleyezed Data Center - Complete MCP Business Operations Environment
 
-This is a **production-ready, full-stack development environment** that transforms Cursor into your business operations hub through Model Context Protocols (MCPs). Based on workflows from Amir and James (The Boring Marketer), this environment enables non-technical people to become AI-powered developers in 3 weeks.
+This is a **production-ready, full-stack development environment** that transforms Cursor into your comprehensive business operations hub through Model Context Protocols (MCPs). The **Dimensionaleyezed Data center** combines advanced AI-powered business operations with cutting-edge DJ/music management capabilities.
 
 ## 🔥 What Makes This Special
 
-This isn't just configuration files - it's a **complete business development platform**:
+This isn't just configuration files - it's a **complete business development platform** with specialized music industry tools:
 - ✅ **One-command setup** with automated configuration  
 - ✅ **Docker containerization** for consistent environments
 - ✅ **Production deployment** with Vercel integration
 - ✅ **Real ROI tracking** with transparent cost analysis
 - ✅ **Interactive launcher** with guided workflows
 - ✅ **Comprehensive validation** and testing tools
+- ✅ **Advanced DJ/Music Management** with OCR and automation
+- ✅ **n8n Workflow Automation** for music operations
 
 ## 🎯 What You'll Achieve
 
@@ -23,8 +25,9 @@ Transform Cursor into your business operations hub for:
 - **Keyword Research**: Real search volume data and competition analysis (DataForSEO)
 - **Sales**: Lead research, email templates, market intelligence
 - **Analytics**: Business intelligence reports, trend analysis
-
-**New**: Learn James's (The Boring Marketer) proven workflow that enables non-technical people to become developers in 3 weeks, building apps that get thousands of monthly visitors.
+- **🎵 DJ/Music Management**: Track identification, purchase automation, sample management
+- **🎧 Music Platform Integration**: Beatport, Loopcloud, Spotify, SoundCloud sync
+- **🤖 AI-Powered Music Analysis**: OCR track identification, mixing compatibility analysis
 
 ## 🚀 Advanced Multi-Model AI & Design Workflow
 
@@ -42,27 +45,36 @@ This environment now includes integrated support for **multiple AI models and Fi
 - **Designer Collaboration Hub**: Real-time feedback loops between designers and AI agents
 - **Round-trip Optimization**: Designer feedback → AI refinement → Final polish automation
 
+### 🎵 DJ/Music Management Platform
+- **Image Upload & OCR**: Upload screenshots → Auto-identify tracks → Find purchase links
+- **CSV Integration**: Bulk import track databases with purchase information
+- **n8n Automation**: Workflow automation for track purchases, library updates, notifications
+- **Music Platform APIs**: Beatport, Loopcloud, Spotify, SoundCloud integration
+- **AI Sample Generation**: Auto-chop tracks into samples with AI tagging
+- **Mixing Compatibility Analysis**: AI-powered track compatibility scoring
+
 ### ⚡ Complete AI-Powered Workflows
 1. **Multi-Model Content Generation**: Create variations across all AI providers, then select the best outputs
 2. **Design-Code-Deploy Pipeline**: Figma design → React components → Vercel deployment
-3. **Performance-Optimized Results**: Automated bundling, SEO optimization, and accessibility compliance
-4. **Business Intelligence Integration**: Connect AI insights with real business metrics and ROI tracking
+3. **Music Research Pipeline**: Screenshot → OCR → Track ID → Purchase automation
+4. **Performance-Optimized Results**: Automated bundling, SEO optimization, and accessibility compliance
+5. **Business Intelligence Integration**: Connect AI insights with real business metrics and ROI tracking
 
-**Access these advanced features**: Run `npm start` and choose "Multi-Model AI Testing" or "Figma Design Sync" from the interactive launcher.
+**Access these advanced features**: Run `npm start` and choose "Multi-Model AI Testing", "Figma Design Sync", or "DJ Platform Management" from the interactive launcher.
 
 ## ⚡ Instant Setup (30 seconds)
 
 ```bash
 # Clone and launch the interactive environment
 git clone <repository-url>
-cd cursor-mcp-business-environment
+cd dimensionaleyezed-data-center
 npm install
 npm start
 ```
 
 **That's it!** The interactive launcher will guide you through everything else.
 
-🎯 **What you get:** 17 files, 5,000+ lines of production code, automated setup, Docker environment, comprehensive documentation, and a complete business development platform.
+🎯 **What you get:** 25+ files, 8,000+ lines of production code, automated setup, Docker environment, comprehensive documentation, complete business development platform, and advanced DJ/music management tools.
 
 ## 📋 Quick Start (Choose Your Path)
 
@@ -72,7 +84,14 @@ npm start
 - Works without API keys initially
 - Test with Playwright MCP first
 
-### 🎯 I Want to Build Production Apps Like James (Advanced)
+### � I Want to Set Up DJ/Music Management
+→ **[DJ Platform Setup Guide](N8N_SETUP_GUIDE.md)**
+- Image upload and OCR track identification
+- n8n workflow automation setup
+- Music platform integrations (Beatport, Loopcloud)
+- Complete sample management system
+
+### �🎯 I Want to Build Production Apps Like James (Advanced)
 → **[Advanced Claude Code Workflow](advanced-claude-code-workflow.md)**
 - Complete research-to-deploy pipeline in under 60 minutes
 - Cursor Agent + Claude Code methodology
@@ -112,16 +131,26 @@ npm start
 4. **DataForSEO MCP** - Keyword research, search volume validation
 5. **Xero MCP** - Accounting and financial operations
 
+### Music Industry MCP Servers (NEW)
+6. **Music Central MCP** - Comprehensive music search and management
+7. **Beatport MCP** - Track search, purchase, and analysis
+8. **Loopcloud MCP** - Loop and sample management
+9. **DJ Sample MCP** - Sample extraction and management
+10. **n8n Automation MCP** - Workflow automation and orchestration
+
 ### Business Workflow Templates
 - Daily financial check routines
 - Weekly UX analysis workflows
 - Monthly competitive intelligence reports
 - Automated content research pipelines
+- DJ track identification and purchase workflows
+- Music platform synchronization routines
 
 ### Context Files & Organization
 - Business context templates
 - Folder structure for operations
 - Custom modes for specialized tasks
+- Music industry context files
 
 ## 🎬 Demo Recreation
 
@@ -145,33 +174,55 @@ The transcript showed these key capabilities:
 "Use Firecrawl to actually generate that file for you to scrape humbolytics.com"
 ```
 
+### DJ/Music Management Team (NEW)
+```
+"Upload this screenshot and identify the track being played"
+"Search Beatport for similar tracks and add them to my library"
+"Generate samples from this track and tag them automatically"
+"Set up an automation to notify me when tracks under $2 are found"
+```
+
 ## 🛠️ Prerequisites
 
 - **Cursor version 0.45.6+** (for MCP support)
 - **Node.js** (for running MCP servers)
 - **Claude Code** (for advanced development workflows)
 - **Vercel account** (for production deployment - free tier available)
+- **n8n** (for workflow automation - free self-hosted)
 - **API Keys** (for full functionality):
   - Firecrawl API key (free tier available)
   - Perplexity API key (for research)
   - DataForSEO credentials (for keyword research)
   - Xero developer credentials (for accounting)
+  - Beatport API credentials (for music platform integration)
+  - OpenAI API key (for AI-powered features)
 
 ## 📁 File Structure
 
 ```
-cursor-mcp-business-operations/
+dimensionaleyezed-data-center/
 ├── README.md                           # This overview
 ├── quick-start-mcp-setup.md            # 15-minute setup guide
 ├── cursor-mcp-business-setup-guide.md  # Complete setup guide
-├── advanced-claude-code-workflow.md    # Advanced development pipeline (NEW)
+├── advanced-claude-code-workflow.md    # Advanced development pipeline
+├── N8N_SETUP_GUIDE.md                  # DJ/Music automation setup (NEW)
 ├── mcp-config-template.json            # Ready-to-use MCP configuration
 ├── example-prompts.md                  # Business workflow prompts
-├── cost-analysis-and-roi.md            # Transparent cost breakdown & ROI (NEW)
+├── cost-analysis-and-roi.md            # Transparent cost breakdown & ROI
+├── dj-platform/                        # DJ/Music management platform (NEW)
+│   ├── client/                         # React frontend with file uploader
+│   └── server/                         # Node.js backend with OCR
+├── mcps/                               # MCP servers (NEW)
+│   ├── music-central-mcp.js
+│   ├── beatport-mcp.js
+│   ├── loopcloud-mcp.js
+│   └── n8n-automation-mcp.js
+├── n8n-dj-workflow.json               # n8n workflow template (NEW)
 └── examples/
     ├── finance-workflows.md
     ├── ux-analysis-workflows.md
-    └── marketing-workflows.md
+    ├── marketing-workflows.md
+    └── dj-music-workflows.md            # Music industry workflows (NEW)
 ```
 
 ## 🚦 Getting Started Steps
@@ -180,7 +231,8 @@ cursor-mcp-business-operations/
 2. **Follow the setup guide** that matches your needs
 3. **Copy the MCP configuration** and add your API keys
 4. **Test with example prompts** to verify everything works
-5. **Customize for your business** with your own context files
+5. **Set up DJ/Music features** if needed (optional)
+6. **Customize for your business** with your own context files
 
 ## 🎯 Success Metrics
 
@@ -190,54 +242,13 @@ After setup, you should be able to:
 - ✅ Research market trends with AI assistance
 - ✅ Generate financial reports from accounting data
 - ✅ Create comprehensive business intelligence reports
+- ✅ Upload images and identify music tracks automatically
+- ✅ Automate music purchases and library management
+- ✅ Generate and manage AI-powered samples
 - ✅ Run all operations from within Cursor
-
-## 🤝 Support & Troubleshooting
-
-### Common Issues
-- **MCP server not starting**: Check Node.js installation and API keys
-- **Playwright browser issues**: Run `npx playwright install`
-- **API rate limits**: Monitor usage and implement delays
-- **Authentication errors**: Verify API key validity
-
-### Getting Help
-- Check the troubleshooting sections in the setup guides
-- Test individual MCPs with simple prompts first
-- Verify MCP server status in Cursor settings
-
-## 🔄 Updates & Maintenance
-
-### Staying Current
-- Monitor MCP server updates (`npm update`)
-- Check for new Cursor versions with MCP improvements
-- Update API keys when they expire
-- Add new MCP servers as they become available
-
-### Expanding Your Setup
-- Add custom MCP servers for your specific tools
-- Create additional context files for different projects
-- Develop specialized prompts for your industry
-- Share successful workflows with your team
-
-## 🎉 What's Next?
-
-Once you have the basic setup working:
-
-1. **Automate Daily Operations**: Create morning briefs, status checks
-2. **Build Custom Workflows**: Combine multiple MCPs for complex tasks
-3. **Scale Team Usage**: Share configurations and prompts with colleagues
-4. **Monitor & Optimize**: Track which workflows provide the most value
-
-## 📈 Advanced Use Cases
-
-As you get comfortable with the basics, explore:
-- Custom MCP server development for your proprietary tools
-- Automated reporting pipelines that run on schedules
-- Integration with your existing business intelligence tools
-- Team collaboration workflows with shared contexts
 
 ---
 
-**Ready to transform Cursor into your business operations command center?** 
+**Ready to transform Cursor into your comprehensive business operations and music management command center?** 
 
-Choose your starting point above and begin building your AI-powered business workflow today!
+Choose your starting point above and begin building your AI-powered **Dimensionaleyezed Data center** today!
