@@ -1,243 +1,253 @@
-# Complete MCP Business Operations Environment
+# Conscious Wealth - Investment App for New Millionaires
 
-This is a **production-ready, full-stack development environment** that transforms Cursor into your business operations hub through Model Context Protocols (MCPs). Based on workflows from Amir and James (The Boring Marketer), this environment enables non-technical people to become AI-powered developers in 3 weeks.
+## 🌟 Overview
 
-## 🔥 What Makes This Special
+**Conscious Wealth** is a comprehensive full-stack investment application designed specifically for newly created millionaires who want to manage their wealth responsibly while making a positive impact on the world. The app provides tools for conscious investing, wealth scaling, and tracking your "Wealthprint™" - your overall wealth influence and impact.
 
-This isn't just configuration files - it's a **complete business development platform**:
-- ✅ **One-command setup** with automated configuration  
-- ✅ **Docker containerization** for consistent environments
-- ✅ **Production deployment** with Vercel integration
-- ✅ **Real ROI tracking** with transparent cost analysis
-- ✅ **Interactive launcher** with guided workflows
-- ✅ **Comprehensive validation** and testing tools
+## 🎯 Key Features
 
-## 🎯 What You'll Achieve
+### 📊 **Investment Dashboard**
+- Real-time portfolio tracking with beautiful visualizations
+- Comprehensive analytics with ESG (Environmental, Social, Governance) metrics
+- Performance tracking with conscious investment percentage
+- Risk assessment and diversification scoring
 
-Transform Cursor into your business operations hub for:
-- **Programmatic SEO**: Build thousands of targeted pages for organic traffic (10,000+ monthly visits)
-- **Complete Development Pipeline**: Research to production deployment in under 60 minutes
-- **Finance**: Automated accounting reports, invoice management, P&L analysis (Xero integration)
-- **UX Analysis**: Website screenshots, user flow testing, conversion optimization (Playwright)
-- **Marketing**: Competitive research, content strategy, SEO analysis (Firecrawl + Perplexity)
-- **Keyword Research**: Real search volume data and competition analysis (DataForSEO)
-- **Sales**: Lead research, email templates, market intelligence
-- **Analytics**: Business intelligence reports, trend analysis
+### 🗺️ **Wealth Roadmap**
+- **Preparation Phase**: Building foundation for millionaire status ($0-$250K)
+- **Acceleration Phase**: Rapid wealth building towards $1M ($250K-$1M)
+- **Catalyzing Phase**: Leveraging millionaire status for exponential growth ($1M-$5M)
+- **Scaling Phase**: Wealthprint™ scaling and legacy building ($5M+)
 
-**New**: Learn James's (The Boring Marketer) proven workflow that enables non-technical people to become developers in 3 weeks, building apps that get thousands of monthly visitors.
+### 🌱 **Wealthprint™ Tracker**
+- Environmental impact measurement (carbon reduction, renewable energy funded)
+- Social impact tracking (jobs created, communities served)
+- Governance scoring (transparency, ethics, compliance)
+- Achievement system with gamification elements
 
-## 🚀 Advanced Multi-Model AI & Design Workflow
+### � **Conscious Investing Features**
+- ESG fund recommendations
+- Impact investment opportunities
+- Sustainable portfolio allocation
+- Carbon footprint tracking
+- Social impact measurement
 
-This environment now includes integrated support for **multiple AI models and Figma design collaboration**, creating the most comprehensive AI development ecosystem available:
+## 🚀 Getting Started
 
-### 🤖 Multi-Model AI Testing
-- **Compare 8+ AI Providers**: Test Minimax, Dora AI, Emergent Mind, Orchids AI, Runway ML, Midjourney, Stable Diffusion, and Claude simultaneously
-- **Automated Performance Analytics**: Track quality scores, response times, and costs across all models
-- **Intelligent Model Selection**: Automatically choose the best AI model for each specific task type
-- **Real-time Cost Optimization**: Monitor usage and optimize spending across providers
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-### 🎨 Figma Design Integration
-- **Bidirectional Design Sync**: Import Figma designs → Generate production code automatically
-- **One-Click Design-to-Deployment**: Figma URL → Live website in under 60 minutes
-- **Designer Collaboration Hub**: Real-time feedback loops between designers and AI agents
-- **Round-trip Optimization**: Designer feedback → AI refinement → Final polish automation
+### Installation
 
-### ⚡ Complete AI-Powered Workflows
-1. **Multi-Model Content Generation**: Create variations across all AI providers, then select the best outputs
-2. **Design-Code-Deploy Pipeline**: Figma design → React components → Vercel deployment
-3. **Performance-Optimized Results**: Automated bundling, SEO optimization, and accessibility compliance
-4. **Business Intelligence Integration**: Connect AI insights with real business metrics and ROI tracking
-
-**Access these advanced features**: Run `npm start` and choose "Multi-Model AI Testing" or "Figma Design Sync" from the interactive launcher.
-
-## ⚡ Instant Setup (30 seconds)
-
+1. **Clone the repository**
 ```bash
-# Clone and launch the interactive environment
 git clone <repository-url>
-cd cursor-mcp-business-environment
+cd conscious-wealth-app
+```
+
+2. **Install dependencies**
+```bash
 npm install
-npm start
 ```
 
-**That's it!** The interactive launcher will guide you through everything else.
-
-🎯 **What you get:** 17 files, 5,000+ lines of production code, automated setup, Docker environment, comprehensive documentation, and a complete business development platform.
-
-## 📋 Quick Start (Choose Your Path)
-
-### 🚀 I Want to Get Started Right Now (15 minutes)
-→ **[Quick Start Guide](quick-start-mcp-setup.md)**
-- Minimal setup with immediate results
-- Works without API keys initially
-- Test with Playwright MCP first
-
-### 🎯 I Want to Build Production Apps Like James (Advanced)
-→ **[Advanced Claude Code Workflow](advanced-claude-code-workflow.md)**
-- Complete research-to-deploy pipeline in under 60 minutes
-- Cursor Agent + Claude Code methodology
-- Build programmatic SEO sites targeting 10,000+ monthly visits
-- Non-technical to developer transformation
-
-### 📚 I Want the Complete Setup (1-2 hours)
-→ **[Complete Setup Guide](cursor-mcp-business-setup-guide.md)**
-- Comprehensive configuration
-- All MCPs covered
-- Advanced workflows and troubleshooting
-
-### ⚙️ I Just Want the Configuration Files
-→ **[MCP Config Template](mcp-config-template.json)**
-- Copy-paste ready configuration
-- Replace API keys with your own
-- Add directly to Cursor settings
-
-### 💬 I Want to Try Example Prompts
-→ **[Ready-to-Use Prompts](example-prompts.md)**
-- Test different business workflows
-- Copy-paste into Cursor Composer
-- See immediate results
-
-### 💰 I Want to Understand Costs & ROI
-→ **[Cost Analysis & ROI Guide](cost-analysis-and-roi.md)**
-- Real usage costs (James spent ~$20 per app)
-- ROI calculations and break-even analysis
-- Business case examples and scaling projections
-
-## 🔧 What's Included
-
-### Core MCP Servers (from the transcripts)
-1. **Playwright MCP** - Browser automation, screenshots, testing
-2. **Firecrawl MCP** - Web scraping, content extraction
-3. **Perplexity MCP** - AI-powered research and search
-4. **DataForSEO MCP** - Keyword research, search volume validation
-5. **Xero MCP** - Accounting and financial operations
-
-### Business Workflow Templates
-- Daily financial check routines
-- Weekly UX analysis workflows
-- Monthly competitive intelligence reports
-- Automated content research pipelines
-
-### Context Files & Organization
-- Business context templates
-- Folder structure for operations
-- Custom modes for specialized tasks
-
-## 🎬 Demo Recreation
-
-The transcript showed these key capabilities:
-
-### Finance Team Automation
-```
-"Connect to Xero MCP and list out my profit report for May 2024"
-"Create a quote for UX services for ABC Furniture"
+3. **Configure environment**
+```bash
+cp .env.example .env.local
 ```
 
-### UX Analysis Team
-```
-"Use Playwright MCP to go to humbolytics.com and take a screenshot"
-"Provide some examples on how you would improve this or give me some recommendations on what split tests to run"
-```
-
-### Marketing & Sales Team
-```
-"Use Perplexity MCP to research top split testing tools and refer to Humbolytics context file and keyword data to generate an article"
-"Use Firecrawl to actually generate that file for you to scrape humbolytics.com"
+4. **Run the development server**
+```bash
+npm run dev
 ```
 
-## 🛠️ Prerequisites
+5. **Open your browser**
+Navigate to `http://localhost:3000`
 
-- **Cursor version 0.45.6+** (for MCP support)
-- **Node.js** (for running MCP servers)
-- **Claude Code** (for advanced development workflows)
-- **Vercel account** (for production deployment - free tier available)
-- **API Keys** (for full functionality):
-  - Firecrawl API key (free tier available)
-  - Perplexity API key (for research)
-  - DataForSEO credentials (for keyword research)
-  - Xero developer credentials (for accounting)
+## 📱 Application Structure
 
-## 📁 File Structure
+### **Frontend Pages**
+- **/** - Landing page with features and testimonials
+- **/dashboard** - Main investment dashboard
+- **/investments** - Individual investment management
+- **/roadmap** - Wealth building roadmap
+- **/wealthprint** - Impact and influence tracking
 
-```
-cursor-mcp-business-operations/
-├── README.md                           # This overview
-├── quick-start-mcp-setup.md            # 15-minute setup guide
-├── cursor-mcp-business-setup-guide.md  # Complete setup guide
-├── advanced-claude-code-workflow.md    # Advanced development pipeline (NEW)
-├── mcp-config-template.json            # Ready-to-use MCP configuration
-├── example-prompts.md                  # Business workflow prompts
-├── cost-analysis-and-roi.md            # Transparent cost breakdown & ROI (NEW)
-└── examples/
-    ├── finance-workflows.md
-    ├── ux-analysis-workflows.md
-    └── marketing-workflows.md
-```
+### **Backend APIs**
+- **/api/investments** - Investment CRUD operations
+- **/api/portfolio/analytics** - Portfolio analytics and insights
+- **/api/user/profile** - User profile management
+- **/api/wealth/roadmap** - Wealth roadmap data and milestones
 
-## 🚦 Getting Started Steps
+## 🌟 Core Concepts
 
-1. **Choose your path** based on time available and complexity needed
-2. **Follow the setup guide** that matches your needs
-3. **Copy the MCP configuration** and add your API keys
-4. **Test with example prompts** to verify everything works
-5. **Customize for your business** with your own context files
+### **Wealthprint™**
+Your Wealthprint™ is a comprehensive score that measures:
+- **Financial Metrics**: Net worth, ROI, cash flow
+- **Impact Metrics**: Environmental and social impact
+- **Influence Metrics**: Network value, thought leadership, mentorship reach
 
-## 🎯 Success Metrics
+### **Conscious Investing**
+- Focus on ESG (Environmental, Social, Governance) investments
+- Impact measurement and reporting
+- Sustainable wealth building
+- Values-aligned investment strategies
 
-After setup, you should be able to:
-- ✅ Take automated screenshots and analyze UX
-- ✅ Extract competitor content for analysis
-- ✅ Research market trends with AI assistance
-- ✅ Generate financial reports from accounting data
-- ✅ Create comprehensive business intelligence reports
-- ✅ Run all operations from within Cursor
+### **Wealth Scaling Phases**
 
-## 🤝 Support & Troubleshooting
+#### 1. **Preparation Phase** ($0 - $250K)
+- Emergency fund building
+- Debt elimination
+- Investment education
+- Income optimization
 
-### Common Issues
-- **MCP server not starting**: Check Node.js installation and API keys
-- **Playwright browser issues**: Run `npx playwright install`
-- **API rate limits**: Monitor usage and implement delays
-- **Authentication errors**: Verify API key validity
+#### 2. **Acceleration Phase** ($250K - $1M)
+- Aggressive investing
+- Business building
+- Tax optimization
+- Network expansion
 
-### Getting Help
-- Check the troubleshooting sections in the setup guides
-- Test individual MCPs with simple prompts first
-- Verify MCP server status in Cursor settings
+#### 3. **Catalyzing Phase** ($1M - $5M)
+- Strategic leverage
+- Alternative investments
+- Impact investing
+- Wealth preservation
 
-## 🔄 Updates & Maintenance
+#### 4. **Scaling Phase** ($5M+)
+- Legacy building
+- Philanthropic impact
+- Wealth multiplication
+- Generational transfer
 
-### Staying Current
-- Monitor MCP server updates (`npm update`)
-- Check for new Cursor versions with MCP improvements
-- Update API keys when they expire
-- Add new MCP servers as they become available
+## 🎨 Design Philosophy
 
-### Expanding Your Setup
-- Add custom MCP servers for your specific tools
-- Create additional context files for different projects
-- Develop specialized prompts for your industry
-- Share successful workflows with your team
+### **Visual Design**
+- Modern glassmorphism UI with dark theme
+- Gradient backgrounds with purple/slate color scheme
+- Smooth animations and transitions
+- Responsive design for all devices
 
-## 🎉 What's Next?
+### **User Experience**
+- Intuitive navigation
+- Progressive disclosure of information
+- Gamification elements for engagement
+- Real-time data visualization
 
-Once you have the basic setup working:
+## 🔧 Technical Stack
 
-1. **Automate Daily Operations**: Create morning briefs, status checks
-2. **Build Custom Workflows**: Combine multiple MCPs for complex tasks
-3. **Scale Team Usage**: Share configurations and prompts with colleagues
-4. **Monitor & Optimize**: Track which workflows provide the most value
+### **Frontend**
+- **Next.js 14** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first CSS
+- **Framer Motion** - Animations
+- **Recharts** - Data visualization
+- **Lucide React** - Icons
 
-## 📈 Advanced Use Cases
+### **Backend**
+- **Next.js API Routes** - Serverless functions
+- **Node.js** - Runtime
+- **Express** - Web framework (optional)
 
-As you get comfortable with the basics, explore:
-- Custom MCP server development for your proprietary tools
-- Automated reporting pipelines that run on schedules
-- Integration with your existing business intelligence tools
-- Team collaboration workflows with shared contexts
+### **Database** (Production Ready)
+- **PostgreSQL** - Primary database
+- **Prisma** - ORM
+- **Redis** - Caching
+
+## 📊 Sample Data
+
+The app includes comprehensive sample data:
+- Mock investment portfolios
+- Analytics data
+- User profiles
+- Roadmap milestones
+- Impact metrics
+
+## 🎯 Target Audience
+
+### **Primary Users**
+- Newly created millionaires (entrepreneurs, tech executives, successful professionals)
+- Individuals with $1M+ net worth seeking conscious investing
+- Impact-focused investors
+- Sustainable wealth builders
+
+### **Use Cases**
+- Portfolio management and optimization
+- Impact measurement and reporting
+- Wealth scaling strategy
+- ESG investment discovery
+- Philanthropic planning
+
+## 🌱 Sustainability Focus
+
+### **Environmental Impact**
+- Carbon footprint tracking
+- Renewable energy investment tracking
+- Sustainable project funding
+- Tree planting initiatives
+
+### **Social Impact**
+- Job creation measurement
+- Community development tracking
+- Education funding
+- Healthcare access improvement
+
+### **Governance**
+- Transparency scoring
+- Ethics rating systems
+- Compliance monitoring
+- Stakeholder engagement
+
+## 🏆 Achievement System
+
+### **Badges & Achievements**
+- **Conscious Investor**: 65%+ ESG allocation
+- **Impact Champion**: 20+ sustainable projects funded
+- **Carbon Neutral**: Net-zero carbon footprint
+- **Philanthropic Leader**: Major charitable contributions
+- **Thought Leader**: Industry recognition
+
+### **Levels & Progression**
+- **Novice Investor**
+- **Conscious Investor**
+- **Impact Champion**
+- **Elite Conscious Investor**
+- **Philanthropic Leader**
+
+## 🔮 Future Enhancements
+
+### **Planned Features**
+- AI-powered investment recommendations
+- Social features and community
+- Advanced analytics and reporting
+- Mobile app development
+- Integration with financial institutions
+- Real-time market data
+- Automated rebalancing
+- Tax optimization tools
+
+### **Integrations**
+- **Plaid** - Bank account connections
+- **Alpha Vantage** - Market data
+- **Morningstar** - ESG ratings
+- **Stripe** - Payment processing
+- **SendGrid** - Email notifications
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## � License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- ESG data providers
+- Impact investing research
+- Sustainable finance frameworks
+- Open source community
 
 ---
 
-**Ready to transform Cursor into your business operations command center?** 
+**Conscious Wealth** - *Transform your newly created fortune into lasting wealth with purpose and impact.*
 
-Choose your starting point above and begin building your AI-powered business workflow today!
+For questions, support, or partnership opportunities, please contact us at hello@consciouswealth.com
