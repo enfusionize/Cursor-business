@@ -1,243 +1,256 @@
-# Complete MCP Business Operations Environment
+# Design AI Hub - Digital Asset Archive & AI Automation Platform
 
-This is a **production-ready, full-stack development environment** that transforms Cursor into your business operations hub through Model Context Protocols (MCPs). Based on workflows from Amir and James (The Boring Marketer), this environment enables non-technical people to become AI-powered developers in 3 weeks.
+A comprehensive digital design AI automation app with asset management, AI-powered remixing, and seamless MCP (Model Context Protocol) integration for creative workflows.
 
-## 🔥 What Makes This Special
+## 🚀 Features
 
-This isn't just configuration files - it's a **complete business development platform**:
-- ✅ **One-command setup** with automated configuration  
-- ✅ **Docker containerization** for consistent environments
-- ✅ **Production deployment** with Vercel integration
-- ✅ **Real ROI tracking** with transparent cost analysis
-- ✅ **Interactive launcher** with guided workflows
-- ✅ **Comprehensive validation** and testing tools
+### Digital Asset Management
+- **Universal Asset Archive**: Store and manage all design assets with full source files
+- **Cross-Platform Compatibility**: Support for Figma, Sketch, Adobe Creative Suite, and more
+- **Smart Tagging & Search**: AI-powered asset discovery and organization
+- **Version Control**: Track asset evolution and maintain design history
 
-## 🎯 What You'll Achieve
+### AI-Powered Creation & Remixing
+- **Multi-AI Integration**: Midjourney, Stable Diffusion, Runway ML, and more
+- **One-Click Remixing**: Transform existing assets with AI assistance
+- **Style Transfer**: Apply different artistic styles to existing designs
+- **Automated Variations**: Generate multiple variations from a single prompt
 
-Transform Cursor into your business operations hub for:
-- **Programmatic SEO**: Build thousands of targeted pages for organic traffic (10,000+ monthly visits)
-- **Complete Development Pipeline**: Research to production deployment in under 60 minutes
-- **Finance**: Automated accounting reports, invoice management, P&L analysis (Xero integration)
-- **UX Analysis**: Website screenshots, user flow testing, conversion optimization (Playwright)
-- **Marketing**: Competitive research, content strategy, SEO analysis (Firecrawl + Perplexity)
-- **Keyword Research**: Real search volume data and competition analysis (DataForSEO)
-- **Sales**: Lead research, email templates, market intelligence
-- **Analytics**: Business intelligence reports, trend analysis
+### MCP Integration
+- **Cross-Channel Communication**: Seamless integration between design tools
+- **Real-Time Collaboration**: Live sync across all connected platforms
+- **Automated Workflows**: Set up custom automation pipelines
+- **API Orchestration**: Unified interface for all design and AI services
 
-**New**: Learn James's (The Boring Marketer) proven workflow that enables non-technical people to become developers in 3 weeks, building apps that get thousands of monthly visitors.
+### Design Tool Integration
+- **Figma**: Direct integration with design files and components
+- **Sketch**: Symbol libraries and artboard management
+- **Adobe Creative Suite**: Photoshop, Illustrator, After Effects support
+- **Canva**: Template and brand kit integration
+- **Blender**: 3D asset management and rendering
 
-## 🚀 Advanced Multi-Model AI & Design Workflow
+## 🛠️ Technology Stack
 
-This environment now includes integrated support for **multiple AI models and Figma design collaboration**, creating the most comprehensive AI development ecosystem available:
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: TailwindCSS with custom design system
+- **Animations**: Framer Motion for smooth interactions
+- **Icons**: Lucide React icon library
+- **API**: Next.js API routes with TypeScript
+- **State Management**: React hooks and context
 
-### 🤖 Multi-Model AI Testing
-- **Compare 8+ AI Providers**: Test Minimax, Dora AI, Emergent Mind, Orchids AI, Runway ML, Midjourney, Stable Diffusion, and Claude simultaneously
-- **Automated Performance Analytics**: Track quality scores, response times, and costs across all models
-- **Intelligent Model Selection**: Automatically choose the best AI model for each specific task type
-- **Real-time Cost Optimization**: Monitor usage and optimize spending across providers
+## 📦 Installation
 
-### 🎨 Figma Design Integration
-- **Bidirectional Design Sync**: Import Figma designs → Generate production code automatically
-- **One-Click Design-to-Deployment**: Figma URL → Live website in under 60 minutes
-- **Designer Collaboration Hub**: Real-time feedback loops between designers and AI agents
-- **Round-trip Optimization**: Designer feedback → AI refinement → Final polish automation
-
-### ⚡ Complete AI-Powered Workflows
-1. **Multi-Model Content Generation**: Create variations across all AI providers, then select the best outputs
-2. **Design-Code-Deploy Pipeline**: Figma design → React components → Vercel deployment
-3. **Performance-Optimized Results**: Automated bundling, SEO optimization, and accessibility compliance
-4. **Business Intelligence Integration**: Connect AI insights with real business metrics and ROI tracking
-
-**Access these advanced features**: Run `npm start` and choose "Multi-Model AI Testing" or "Figma Design Sync" from the interactive launcher.
-
-## ⚡ Instant Setup (30 seconds)
-
+1. Clone the repository:
 ```bash
-# Clone and launch the interactive environment
-git clone <repository-url>
-cd cursor-mcp-business-environment
+git clone https://github.com/design-ai-hub/digital-design-automation.git
+cd digital-design-automation
+```
+
+2. Install dependencies:
+```bash
 npm install
-npm start
 ```
 
-**That's it!** The interactive launcher will guide you through everything else.
-
-🎯 **What you get:** 17 files, 5,000+ lines of production code, automated setup, Docker environment, comprehensive documentation, and a complete business development platform.
-
-## 📋 Quick Start (Choose Your Path)
-
-### 🚀 I Want to Get Started Right Now (15 minutes)
-→ **[Quick Start Guide](quick-start-mcp-setup.md)**
-- Minimal setup with immediate results
-- Works without API keys initially
-- Test with Playwright MCP first
-
-### 🎯 I Want to Build Production Apps Like James (Advanced)
-→ **[Advanced Claude Code Workflow](advanced-claude-code-workflow.md)**
-- Complete research-to-deploy pipeline in under 60 minutes
-- Cursor Agent + Claude Code methodology
-- Build programmatic SEO sites targeting 10,000+ monthly visits
-- Non-technical to developer transformation
-
-### 📚 I Want the Complete Setup (1-2 hours)
-→ **[Complete Setup Guide](cursor-mcp-business-setup-guide.md)**
-- Comprehensive configuration
-- All MCPs covered
-- Advanced workflows and troubleshooting
-
-### ⚙️ I Just Want the Configuration Files
-→ **[MCP Config Template](mcp-config-template.json)**
-- Copy-paste ready configuration
-- Replace API keys with your own
-- Add directly to Cursor settings
-
-### 💬 I Want to Try Example Prompts
-→ **[Ready-to-Use Prompts](example-prompts.md)**
-- Test different business workflows
-- Copy-paste into Cursor Composer
-- See immediate results
-
-### 💰 I Want to Understand Costs & ROI
-→ **[Cost Analysis & ROI Guide](cost-analysis-and-roi.md)**
-- Real usage costs (James spent ~$20 per app)
-- ROI calculations and break-even analysis
-- Business case examples and scaling projections
-
-## 🔧 What's Included
-
-### Core MCP Servers (from the transcripts)
-1. **Playwright MCP** - Browser automation, screenshots, testing
-2. **Firecrawl MCP** - Web scraping, content extraction
-3. **Perplexity MCP** - AI-powered research and search
-4. **DataForSEO MCP** - Keyword research, search volume validation
-5. **Xero MCP** - Accounting and financial operations
-
-### Business Workflow Templates
-- Daily financial check routines
-- Weekly UX analysis workflows
-- Monthly competitive intelligence reports
-- Automated content research pipelines
-
-### Context Files & Organization
-- Business context templates
-- Folder structure for operations
-- Custom modes for specialized tasks
-
-## 🎬 Demo Recreation
-
-The transcript showed these key capabilities:
-
-### Finance Team Automation
-```
-"Connect to Xero MCP and list out my profit report for May 2024"
-"Create a quote for UX services for ABC Furniture"
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
 ```
 
-### UX Analysis Team
-```
-"Use Playwright MCP to go to humbolytics.com and take a screenshot"
-"Provide some examples on how you would improve this or give me some recommendations on what split tests to run"
-```
+4. Configure your AI service API keys and MCP endpoints in `.env.local`
 
-### Marketing & Sales Team
-```
-"Use Perplexity MCP to research top split testing tools and refer to Humbolytics context file and keyword data to generate an article"
-"Use Firecrawl to actually generate that file for you to scrape humbolytics.com"
+5. Start the development server:
+```bash
+npm run dev
 ```
 
-## 🛠️ Prerequisites
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-- **Cursor version 0.45.6+** (for MCP support)
-- **Node.js** (for running MCP servers)
-- **Claude Code** (for advanced development workflows)
-- **Vercel account** (for production deployment - free tier available)
-- **API Keys** (for full functionality):
-  - Firecrawl API key (free tier available)
-  - Perplexity API key (for research)
-  - DataForSEO credentials (for keyword research)
-  - Xero developer credentials (for accounting)
+## 🎨 Usage
 
-## 📁 File Structure
+### Asset Management
+1. **Upload Assets**: Drag and drop files or use the upload button
+2. **Tag & Organize**: Add descriptive tags and categorize assets
+3. **Search & Filter**: Use the powerful search to find assets quickly
+4. **Preview & Download**: View asset details and download originals
+
+### AI Generation
+1. **Open AI Studio**: Click the sparkle icon in the header
+2. **Select AI Tool**: Choose from Midjourney, Stable Diffusion, etc.
+3. **Configure Settings**: Set style, quality, and parameters
+4. **Generate**: Create new assets with AI assistance
+
+### Design Tool Integration
+1. **Open Design Tools**: Click the palette icon in the header
+2. **Connect Services**: Link your Figma, Sketch, and other accounts
+3. **Sync Assets**: Automatically import and sync design files
+4. **Cross-Platform Workflow**: Work seamlessly across all tools
+
+## � Configuration
+
+### Environment Variables
+```env
+# AI Service API Keys
+MIDJOURNEY_API_KEY=your_midjourney_key
+STABILITY_API_KEY=your_stability_key
+RUNWAY_API_KEY=your_runway_key
+
+# Design Tool APIs
+FIGMA_ACCESS_TOKEN=your_figma_token
+SKETCH_API_KEY=your_sketch_key
+
+# MCP Configuration
+MCP_SERVER_URL=your_mcp_server_url
+MCP_API_KEY=your_mcp_api_key
+
+# Database (Optional)
+DATABASE_URL=your_database_url
+```
+
+### MCP Integration
+The app supports various MCP servers for different AI and design tools:
+
+- **Midjourney MCP**: Image generation and upscaling
+- **Stable Diffusion MCP**: Open-source image generation
+- **Runway MCP**: Video and motion generation
+- **Figma MCP**: Design file management and collaboration
+
+## 📁 Project Structure
 
 ```
-cursor-mcp-business-operations/
-├── README.md                           # This overview
-├── quick-start-mcp-setup.md            # 15-minute setup guide
-├── cursor-mcp-business-setup-guide.md  # Complete setup guide
-├── advanced-claude-code-workflow.md    # Advanced development pipeline (NEW)
-├── mcp-config-template.json            # Ready-to-use MCP configuration
-├── example-prompts.md                  # Business workflow prompts
-├── cost-analysis-and-roi.md            # Transparent cost breakdown & ROI (NEW)
-└── examples/
-    ├── finance-workflows.md
-    ├── ux-analysis-workflows.md
-    └── marketing-workflows.md
+design-ai-hub/
+├── app/
+│   ├── components/          # React components
+│   │   ├── AssetGrid.tsx   # Asset display grid
+│   │   ├── AssetUpload.tsx # File upload component
+│   │   ├── AIRemixPanel.tsx # AI generation interface
+│   │   ├── DesignToolsPanel.tsx # Tool integrations
+│   │   └── AssetPreview.tsx # Asset detail view
+│   ├── api/                # API routes
+│   │   ├── assets/         # Asset management
+│   │   └── ai/            # AI generation
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Main page
+├── scripts/               # Automation scripts
+├── mcps/                  # MCP server configurations
+├── public/               # Static assets
+├── next.config.js        # Next.js configuration
+├── tailwind.config.js    # TailwindCSS configuration
+├── tsconfig.json         # TypeScript configuration
+└── package.json          # Dependencies and scripts
 ```
 
-## 🚦 Getting Started Steps
+## 🎯 Key Components
 
-1. **Choose your path** based on time available and complexity needed
-2. **Follow the setup guide** that matches your needs
-3. **Copy the MCP configuration** and add your API keys
-4. **Test with example prompts** to verify everything works
-5. **Customize for your business** with your own context files
+### AssetGrid
+Displays assets in grid or list view with filtering and search capabilities.
 
-## 🎯 Success Metrics
+### AIRemixPanel
+Comprehensive AI generation interface with:
+- Tool selection (Midjourney, Stable Diffusion, etc.)
+- Style and quality settings
+- Real-time generation progress
+- Result management
 
-After setup, you should be able to:
-- ✅ Take automated screenshots and analyze UX
-- ✅ Extract competitor content for analysis
-- ✅ Research market trends with AI assistance
-- ✅ Generate financial reports from accounting data
-- ✅ Create comprehensive business intelligence reports
-- ✅ Run all operations from within Cursor
+### DesignToolsPanel
+Integration hub for design tools:
+- Connection management
+- Sync status monitoring
+- Workflow automation
+- Cross-platform asset sharing
 
-## 🤝 Support & Troubleshooting
+### AssetPreview
+Detailed asset viewer with:
+- Full metadata display
+- Source file access
+- Download options
+- Remix capabilities
 
-### Common Issues
-- **MCP server not starting**: Check Node.js installation and API keys
-- **Playwright browser issues**: Run `npx playwright install`
-- **API rate limits**: Monitor usage and implement delays
-- **Authentication errors**: Verify API key validity
+## 🔄 Workflows
 
-### Getting Help
-- Check the troubleshooting sections in the setup guides
-- Test individual MCPs with simple prompts first
-- Verify MCP server status in Cursor settings
+### Asset Creation Pipeline
+1. **Design Creation**: Create in Figma/Sketch/Adobe
+2. **Auto-Sync**: Automatically sync to asset archive
+3. **AI Enhancement**: Apply AI-powered improvements
+4. **Version Management**: Track all iterations
+5. **Distribution**: Share across teams and platforms
 
-## 🔄 Updates & Maintenance
+### AI-Powered Remixing
+1. **Asset Selection**: Choose base asset for remixing
+2. **AI Tool Selection**: Pick appropriate AI service
+3. **Style Configuration**: Set remix parameters
+4. **Batch Processing**: Generate multiple variations
+5. **Quality Control**: Review and approve results
 
-### Staying Current
-- Monitor MCP server updates (`npm update`)
-- Check for new Cursor versions with MCP improvements
-- Update API keys when they expire
-- Add new MCP servers as they become available
+### Cross-Platform Collaboration
+1. **Real-Time Sync**: Changes propagate instantly
+2. **Notification System**: Team alerts for updates
+3. **Version Conflicts**: Automated resolution
+4. **Asset Sharing**: Seamless cross-tool workflows
 
-### Expanding Your Setup
-- Add custom MCP servers for your specific tools
-- Create additional context files for different projects
-- Develop specialized prompts for your industry
-- Share successful workflows with your team
+## � Analytics & Monitoring
 
-## 🎉 What's Next?
+- **Usage Analytics**: Track tool usage and performance
+- **Cost Monitoring**: Monitor AI service costs
+- **Performance Metrics**: Asset generation times
+- **User Activity**: Collaboration and workflow insights
 
-Once you have the basic setup working:
+## 🔐 Security
 
-1. **Automate Daily Operations**: Create morning briefs, status checks
-2. **Build Custom Workflows**: Combine multiple MCPs for complex tasks
-3. **Scale Team Usage**: Share configurations and prompts with colleagues
-4. **Monitor & Optimize**: Track which workflows provide the most value
+- **API Key Management**: Secure storage of service credentials
+- **Access Control**: Role-based permissions
+- **Data Encryption**: Secure asset storage
+- **Audit Logging**: Track all system activities
 
-## 📈 Advanced Use Cases
+## 🚀 Deployment
 
-As you get comfortable with the basics, explore:
-- Custom MCP server development for your proprietary tools
-- Automated reporting pipelines that run on schedules
-- Integration with your existing business intelligence tools
-- Team collaboration workflows with shared contexts
+### Development
+```bash
+npm run dev
+```
+
+### Production Build
+```bash
+npm run build
+npm run start
+```
+
+### Docker Deployment
+```bash
+docker build -t design-ai-hub .
+docker run -p 3000:3000 design-ai-hub
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## � License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🎉 Acknowledgments
+
+- Built with Next.js and React
+- Powered by various AI and design APIs
+- Styled with TailwindCSS
+- Icons from Lucide React
+- Animation by Framer Motion
 
 ---
 
-**Ready to transform Cursor into your business operations command center?** 
+## 🔮 Future Enhancements
 
-Choose your starting point above and begin building your AI-powered business workflow today!
+- **Advanced AI Models**: Integration with latest AI technologies
+- **Mobile App**: iOS and Android companion apps
+- **Plugin System**: Custom plugin development
+- **Advanced Analytics**: Machine learning insights
+- **Enterprise Features**: SSO, advanced permissions, audit trails
+
+For questions, support, or feature requests, please open an issue on GitHub or contact the development team.
+
+**Happy Designing! 🎨✨**
