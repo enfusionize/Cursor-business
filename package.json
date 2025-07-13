@@ -81,7 +81,10 @@
     "sandbox-list": "node sandbox/cli.js list",
     "sandbox-promote": "node sandbox/cli.js promote",
     "sandbox-interactive": "node sandbox/cli.js interactive",
-    "sandbox-cleanup": "node sandbox/cli.js cleanup"
+    "sandbox-cleanup": "node sandbox/cli.js cleanup",
+    "grok-debug": "node sandbox/integrations/grok-debug-mcp.js",
+    "grok-debug-daemon": "bash sandbox/start-grok-debug.sh --daemon",
+    "grok-debug-widget": "open sandbox/dashboard/grok-debug-widget.html"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -98,9 +101,10 @@
     "axios": "^1.6.0",
     "body-parser": "^1.20.0",
     "ws": "^8.14.0",
-    "axios": "^1.6.0",
     "google-auth-library": "^9.4.0",
-    "chart.js": "^4.4.0"
+    "chart.js": "^4.4.0",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.10"
   },
   "devDependencies": {
     "vercel": "^32.0.0",

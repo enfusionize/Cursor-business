@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grok Debug Widget</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+        .code-editor {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .grok-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div x-data="grokDebugWidget()" x-init="init()" class="max-w-6xl mx-auto p-6">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md mb-6">
+            <div class="grok-gradient text-white p-6 rounded-t-lg">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-bug text-2xl mr-3"></i>
+                        <div>
+                            <h1 class="text-2xl font-bold">Grok Debug MCP</h1>
+                            <p class="text-blue-100">One-click code debugging with AI redundancy</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm">
+                            <span class="opacity-75">Status:</span>
+                            <span x-text="status.grokAPI" class="font-semibold" :class="status.grokAPI === 'available' ? 'text-green-200' : 'text-yellow-200'"></span>
+                        </div>
+                        <button @click="checkHealth()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Check Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <button @click="activeTab = 'debug'" 
+                    class="p-4 rounded-lg text-center transition-colors"
+                    :class="activeTab === 'debug' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'">
+                <i class="fas fa-search text-2xl mb-2"></i>
+                <div class="font-medium">Debug Code</div>
+                <div class="text-sm opacity-75">Find & analyze issues</div>
+            </button>
+            
+            <button @click="activeTab = 'fix'" 
+                    class="p-4 rounded-lg text-center transition-colors"
+                    :class="activeTab === 'fix' ? 'bg-green-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'">
+                <i class="fas fa-wrench text-2xl mb-2"></i>
+                <div class="font-medium">Fix Code</div>
+                <div class="text-sm opacity-75">Auto-fix problems</div>
+            </button>
+            
+            <button @click="activeTab = 'optimize'" 
+                    class="p-4 rounded-lg text-center transition-colors"
+                    :class="activeTab === 'optimize' ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'">
+                <i class="fas fa-rocket text-2xl mb-2"></i>
+                <div class="font-medium">Optimize</div>
+                <div class="text-sm opacity-75">Improve performance</div>
+            </button>
+            
+            <button @click="activeTab = 'explain'" 
+                    class="p-4 rounded-lg text-center transition-colors"
+                    :class="activeTab === 'explain' ? 'bg-orange-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'">
+                <i class="fas fa-question-circle text-2xl mb-2"></i>
+                <div class="font-medium">Explain Error</div>
+                <div class="text-sm opacity-75">Understand issues</div>
+            </button>
+        </div>
+
+        <!-- Main Interface -->
+        <div class="bg-white rounded-lg shadow-md">
+            <!-- Debug Tab -->
+            <div x-show="activeTab === 'debug'" x-cloak class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Debug Code</h3>
+                <form @submit.prevent="debugCode()">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Debug</label>
+                            <textarea x-model="debugForm.code" 
+                                      class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
+                                      placeholder="Paste your code here..."
+                                      required></textarea>
+                            
+                            <div class="mt-4 grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                    <select x-model="debugForm.language" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                        <option value="typescript">TypeScript</option>
+                                        <option value="jsx">JSX</option>
+                                        <option value="tsx">TSX</option>
+                                        <option value="json">JSON</option>
+                                        <option value="yaml">YAML</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                                    <select x-model="debugForm.priority" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+                                <textarea x-model="debugForm.description" 
+                                          class="w-full h-20 p-3 border border-gray-300 rounded-md"
+                                          placeholder="Describe what the code should do or what issues you're experiencing..."></textarea>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Error Message (Optional)</label>
+                                <textarea x-model="debugForm.errorMessage" 
+                                          class="w-full h-20 p-3 border border-gray-300 rounded-md"
+                                          placeholder="Paste any error messages here..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gray-50 p-4 rounded-lg h-full">
+                                <h4 class="font-medium mb-3">Debug Results</h4>
+                                <div x-show="loading" class="text-center py-8">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                                    <p class="text-gray-600">Analyzing code with Grok...</p>
+                                </div>
+                                
+                                <div x-show="debugResult && !loading" class="space-y-4">
+                                    <div x-show="debugResult.issues && debugResult.issues.length > 0">
+                                        <h5 class="font-medium text-red-600 mb-2">Issues Found:</h5>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            <template x-for="issue in debugResult.issues" :key="issue">
+                                                <li class="text-sm text-gray-700" x-text="issue"></li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div x-show="debugResult.rootCause">
+                                        <h5 class="font-medium text-orange-600 mb-2">Root Cause:</h5>
+                                        <p class="text-sm text-gray-700" x-text="debugResult.rootCause"></p>
+                                    </div>
+                                    
+                                    <div x-show="debugResult.fixes && debugResult.fixes.length > 0">
+                                        <h5 class="font-medium text-green-600 mb-2">Recommended Fixes:</h5>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            <template x-for="fix in debugResult.fixes" :key="fix">
+                                                <li class="text-sm text-gray-700" x-text="fix"></li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!debugResult && !loading" class="text-center py-8 text-gray-500">
+                                    Results will appear here after debugging
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                            Clear
+                        </button>
+                        <button type="submit" :disabled="loading" 
+                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">
+                            <i class="fas fa-search mr-2"></i>
+                            Debug Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Fix Tab -->
+            <div x-show="activeTab === 'fix'" x-cloak class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Fix Code</h3>
+                <form @submit.prevent="fixCode()">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Fix</label>
+                            <textarea x-model="fixForm.code" 
+                                      class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
+                                      placeholder="Paste your broken code here..."
+                                      required></textarea>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                <select x-model="fixForm.language" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="typescript">TypeScript</option>
+                                    <option value="jsx">JSX</option>
+                                    <option value="tsx">TSX</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Issues to Address</label>
+                                <textarea x-model="fixForm.issues" 
+                                          class="w-full h-20 p-3 border border-gray-300 rounded-md"
+                                          placeholder="Describe the specific issues that need fixing..."
+                                          required></textarea>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Requirements (Optional)</label>
+                                <textarea x-model="fixForm.requirements" 
+                                          class="w-full h-20 p-3 border border-gray-300 rounded-md"
+                                          placeholder="Any specific requirements or constraints..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gray-50 p-4 rounded-lg h-full">
+                                <h4 class="font-medium mb-3">Fixed Code</h4>
+                                <div x-show="loading" class="text-center py-8">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
+                                    <p class="text-gray-600">Fixing code with Grok...</p>
+                                </div>
+                                
+                                <div x-show="fixResult && !loading">
+                                    <div x-show="fixResult.fixedCode">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h5 class="font-medium text-green-600">Fixed Code:</h5>
+                                            <button @click="copyToClipboard(fixResult.fixedCode)" 
+                                                    class="text-sm text-blue-600 hover:text-blue-800">
+                                                <i class="fas fa-copy mr-1"></i>Copy
+                                            </button>
+                                        </div>
+                                        <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto max-h-64" x-text="fixResult.fixedCode"></pre>
+                                    </div>
+                                    
+                                    <div x-show="fixResult.changes && fixResult.changes.length > 0" class="mt-4">
+                                        <h5 class="font-medium text-blue-600 mb-2">Changes Made:</h5>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            <template x-for="change in fixResult.changes" :key="change">
+                                                <li class="text-sm text-gray-700" x-text="change"></li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!fixResult && !loading" class="text-center py-8 text-gray-500">
+                                    Fixed code will appear here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                            Clear
+                        </button>
+                        <button type="submit" :disabled="loading" 
+                                class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50">
+                            <i class="fas fa-wrench mr-2"></i>
+                            Fix Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Optimize Tab -->
+            <div x-show="activeTab === 'optimize'" x-cloak class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Optimize Code</h3>
+                <form @submit.prevent="optimizeCode()">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Optimize</label>
+                            <textarea x-model="optimizeForm.code" 
+                                      class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
+                                      placeholder="Paste your code here for optimization..."
+                                      required></textarea>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                <select x-model="optimizeForm.language" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="typescript">TypeScript</option>
+                                    <option value="jsx">JSX</option>
+                                    <option value="tsx">TSX</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Optimization Goals</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="optimizeForm.goals" value="performance" class="mr-2">
+                                        <span class="text-sm">Performance</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="optimizeForm.goals" value="readability" class="mr-2">
+                                        <span class="text-sm">Readability</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="optimizeForm.goals" value="maintainability" class="mr-2">
+                                        <span class="text-sm">Maintainability</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="optimizeForm.goals" value="memory" class="mr-2">
+                                        <span class="text-sm">Memory Usage</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gray-50 p-4 rounded-lg h-full">
+                                <h4 class="font-medium mb-3">Optimized Code</h4>
+                                <div x-show="loading" class="text-center py-8">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-2"></div>
+                                    <p class="text-gray-600">Optimizing code with Grok...</p>
+                                </div>
+                                
+                                <div x-show="optimizeResult && !loading">
+                                    <div x-show="optimizeResult.optimizedCode">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h5 class="font-medium text-purple-600">Optimized Code:</h5>
+                                            <button @click="copyToClipboard(optimizeResult.optimizedCode)" 
+                                                    class="text-sm text-blue-600 hover:text-blue-800">
+                                                <i class="fas fa-copy mr-1"></i>Copy
+                                            </button>
+                                        </div>
+                                        <pre class="bg-gray-800 text-purple-400 p-3 rounded text-sm overflow-x-auto max-h-64" x-text="optimizeResult.optimizedCode"></pre>
+                                    </div>
+                                    
+                                    <div x-show="optimizeResult.performanceGains && optimizeResult.performanceGains.length > 0" class="mt-4">
+                                        <h5 class="font-medium text-green-600 mb-2">Performance Gains:</h5>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            <template x-for="gain in optimizeResult.performanceGains" :key="gain">
+                                                <li class="text-sm text-gray-700" x-text="gain"></li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!optimizeResult && !loading" class="text-center py-8 text-gray-500">
+                                    Optimized code will appear here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                            Clear
+                        </button>
+                        <button type="submit" :disabled="loading" 
+                                class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Optimize Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Explain Tab -->
+            <div x-show="activeTab === 'explain'" x-cloak class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Explain Error</h3>
+                <form @submit.prevent="explainError()">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Error Message</label>
+                            <textarea x-model="explainForm.errorMessage" 
+                                      class="w-full h-32 p-3 border border-gray-300 rounded-md"
+                                      placeholder="Paste the error message here..."
+                                      required></textarea>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Related Code (Optional)</label>
+                                <textarea x-model="explainForm.code" 
+                                          class="w-full h-32 p-3 border border-gray-300 rounded-md code-editor text-sm"
+                                          placeholder="Paste the code that's causing the error..."></textarea>
+                            </div>
+                            
+                            <div class="mt-4 grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                    <select x-model="explainForm.language" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                        <option value="typescript">TypeScript</option>
+                                        <option value="jsx">JSX</option>
+                                        <option value="tsx">TSX</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Context</label>
+                                    <select x-model="explainForm.context" class="w-full p-2 border border-gray-300 rounded-md">
+                                        <option value="general">General</option>
+                                        <option value="runtime">Runtime Error</option>
+                                        <option value="syntax">Syntax Error</option>
+                                        <option value="logic">Logic Error</option>
+                                        <option value="performance">Performance Issue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gray-50 p-4 rounded-lg h-full">
+                                <h4 class="font-medium mb-3">Error Explanation</h4>
+                                <div x-show="loading" class="text-center py-8">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-2"></div>
+                                    <p class="text-gray-600">Analyzing error with Grok...</p>
+                                </div>
+                                
+                                <div x-show="explainResult && !loading" class="space-y-4">
+                                    <div x-show="explainResult.explanation">
+                                        <h5 class="font-medium text-orange-600 mb-2">Explanation:</h5>
+                                        <p class="text-sm text-gray-700" x-text="explainResult.explanation"></p>
+                                    </div>
+                                    
+                                    <div x-show="explainResult.cause">
+                                        <h5 class="font-medium text-red-600 mb-2">Root Cause:</h5>
+                                        <p class="text-sm text-gray-700" x-text="explainResult.cause"></p>
+                                    </div>
+                                    
+                                    <div x-show="explainResult.solution">
+                                        <h5 class="font-medium text-green-600 mb-2">Solution:</h5>
+                                        <p class="text-sm text-gray-700" x-text="explainResult.solution"></p>
+                                    </div>
+                                    
+                                    <div x-show="explainResult.prevention">
+                                        <h5 class="font-medium text-blue-600 mb-2">Prevention:</h5>
+                                        <p class="text-sm text-gray-700" x-text="explainResult.prevention"></p>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="!explainResult && !loading" class="text-center py-8 text-gray-500">
+                                    Error explanation will appear here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                            Clear
+                        </button>
+                        <button type="submit" :disabled="loading" 
+                                class="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50">
+                            <i class="fas fa-question-circle mr-2"></i>
+                            Explain Error
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Recent Sessions -->
+        <div class="mt-6 bg-white rounded-lg shadow-md">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold">Recent Debug Sessions</h3>
+                    <button @click="loadSessions()" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-sync-alt mr-1"></i>Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div x-show="sessions.length === 0" class="text-center py-8 text-gray-500">
+                    No debug sessions yet
+                </div>
+                
+                <div x-show="sessions.length > 0" class="space-y-4">
+                    <template x-for="session in sessions" :key="session.id">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center mr-4"
+                                     :class="getSessionTypeClass(session.type)">
+                                    <i :class="getSessionTypeIcon(session.type)"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium" x-text="session.id"></div>
+                                    <div class="text-sm text-gray-500">
+                                        <span x-text="session.type"></span> • 
+                                        <span x-text="session.language"></span> • 
+                                        <span x-text="formatDate(session.timestamp)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button @click="viewSession(session.id)" 
+                                        class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                    View
+                                </button>
+                                <button @click="deleteSession(session.id)" 
+                                        class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function grokDebugWidget() {
+            return {
+                activeTab: 'debug',
+                loading: false,
+                status: {
+                    grokAPI: 'unknown'
+                },
+                sessions: [],
+                
+                // Form data
+                debugForm: {
+                    code: '',
+                    language: 'javascript',
+                    description: '',
+                    errorMessage: '',
+                    priority: 'medium'
+                },
+                
+                fixForm: {
+                    code: '',
+                    language: 'javascript',
+                    issues: '',
+                    requirements: ''
+                },
+                
+                optimizeForm: {
+                    code: '',
+                    language: 'javascript',
+                    goals: ['performance', 'readability']
+                },
+                
+                explainForm: {
+                    errorMessage: '',
+                    code: '',
+                    language: 'javascript',
+                    context: 'general'
+                },
+                
+                // Results
+                debugResult: null,
+                fixResult: null,
+                optimizeResult: null,
+                explainResult: null,
+
+                async init() {
+                    await this.checkHealth();
+                    await this.loadSessions();
+                },
+
+                async checkHealth() {
+                    try {
+                        const response = await fetch('/api/grok/health');
+                        const data = await response.json();
+                        this.status = data;
+                    } catch (error) {
+                        console.error('Health check failed:', error);
+                        this.status.grokAPI = 'unavailable';
+                    }
+                },
+
+                async debugCode() {
+                    this.loading = true;
+                    this.debugResult = null;
+                    
+                    try {
+                        const response = await fetch('/api/grok/debug-code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.debugForm)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.debugResult = data.result;
+                            await this.loadSessions();
+                        } else {
+                            alert('Debug failed: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Debug error:', error);
+                        alert('Debug failed: ' + error.message);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async fixCode() {
+                    this.loading = true;
+                    this.fixResult = null;
+                    
+                    try {
+                        const response = await fetch('/api/grok/fix-code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.fixForm)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.fixResult = data.result;
+                            await this.loadSessions();
+                        } else {
+                            alert('Fix failed: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Fix error:', error);
+                        alert('Fix failed: ' + error.message);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async optimizeCode() {
+                    this.loading = true;
+                    this.optimizeResult = null;
+                    
+                    const optimizationGoals = this.optimizeForm.goals.join(', ');
+                    
+                    try {
+                        const response = await fetch('/api/grok/optimize-code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                ...this.optimizeForm,
+                                optimizationGoals
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.optimizeResult = data.result;
+                            await this.loadSessions();
+                        } else {
+                            alert('Optimization failed: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Optimization error:', error);
+                        alert('Optimization failed: ' + error.message);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async explainError() {
+                    this.loading = true;
+                    this.explainResult = null;
+                    
+                    try {
+                        const response = await fetch('/api/grok/explain-error', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.explainForm)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.explainResult = data.result;
+                            await this.loadSessions();
+                        } else {
+                            alert('Explanation failed: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Explanation error:', error);
+                        alert('Explanation failed: ' + error.message);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async loadSessions() {
+                    try {
+                        const response = await fetch('/api/grok/sessions');
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.sessions = data.sessions.slice(0, 10); // Show latest 10
+                        }
+                    } catch (error) {
+                        console.error('Failed to load sessions:', error);
+                    }
+                },
+
+                async viewSession(sessionId) {
+                    try {
+                        const response = await fetch(`/api/grok/sessions/${sessionId}`);
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            // Display session details in a modal or new tab
+                            console.log('Session details:', data.session);
+                            alert('Session details logged to console');
+                        }
+                    } catch (error) {
+                        console.error('Failed to load session:', error);
+                    }
+                },
+
+                async deleteSession(sessionId) {
+                    if (!confirm('Delete this debug session?')) return;
+                    
+                    try {
+                        const response = await fetch(`/api/grok/sessions/${sessionId}`, {
+                            method: 'DELETE'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            await this.loadSessions();
+                        }
+                    } catch (error) {
+                        console.error('Failed to delete session:', error);
+                    }
+                },
+
+                clearForm() {
+                    switch (this.activeTab) {
+                        case 'debug':
+                            this.debugForm = {
+                                code: '',
+                                language: 'javascript',
+                                description: '',
+                                errorMessage: '',
+                                priority: 'medium'
+                            };
+                            this.debugResult = null;
+                            break;
+                        case 'fix':
+                            this.fixForm = {
+                                code: '',
+                                language: 'javascript',
+                                issues: '',
+                                requirements: ''
+                            };
+                            this.fixResult = null;
+                            break;
+                        case 'optimize':
+                            this.optimizeForm = {
+                                code: '',
+                                language: 'javascript',
+                                goals: ['performance', 'readability']
+                            };
+                            this.optimizeResult = null;
+                            break;
+                        case 'explain':
+                            this.explainForm = {
+                                errorMessage: '',
+                                code: '',
+                                language: 'javascript',
+                                context: 'general'
+                            };
+                            this.explainResult = null;
+                            break;
+                    }
+                },
+
+                async copyToClipboard(text) {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        // Show brief success message
+                        const originalText = event.target.textContent;
+                        event.target.textContent = 'Copied!';
+                        setTimeout(() => {
+                            event.target.textContent = originalText;
+                        }, 1000);
+                    } catch (error) {
+                        console.error('Failed to copy:', error);
+                    }
+                },
+
+                getSessionTypeClass(type) {
+                    const classes = {
+                        'debug': 'bg-blue-100 text-blue-600',
+                        'fix': 'bg-green-100 text-green-600',
+                        'optimize': 'bg-purple-100 text-purple-600',
+                        'explain': 'bg-orange-100 text-orange-600'
+                    };
+                    return classes[type] || 'bg-gray-100 text-gray-600';
+                },
+
+                getSessionTypeIcon(type) {
+                    const icons = {
+                        'debug': 'fas fa-search',
+                        'fix': 'fas fa-wrench',
+                        'optimize': 'fas fa-rocket',
+                        'explain': 'fas fa-question-circle'
+                    };
+                    return icons[type] || 'fas fa-code';
+                },
+
+                formatDate(dateString) {
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
