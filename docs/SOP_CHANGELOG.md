@@ -32,6 +32,7 @@
 - Modified docs/SOP_CHANGELOG.md
 - Modified docs/sop-version.json
 - Modified docs/sop-version.json
+- Modified docs/sop-version.json
 
 ### Added
 - Initial comprehensive SOP for Full-Stack Cursor Integration
@@ -96,6 +97,7 @@
 - Enhanced MCP integration in integration-report_backup.json
 - Added docs/sop-backups/sop-v1.2.0-1752428966090.md
 - Added docs/sop-backups/sop-v1.3.0-1752429047846.md
+- Added docs/sop-backups/sop-v1.4.0-1752429065695.md
 
 ### Infrastructure
 - Core platform components documentation
@@ -140,6 +142,14 @@
 
 
 ## Version 1.4.0 - 2025-07-13
+
+### Changed
+- Modified docs/SOP_CHANGELOG.md
+
+---
+
+
+## Version 1.5.0 - 2025-07-13
 
 ### Changed
 - Modified docs/SOP_CHANGELOG.md

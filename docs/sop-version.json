@@ -1,6 +1,6 @@
 {
-  "version": "1.5.0",
-  "lastUpdated": "2025-07-13T17:51:05.696Z",
+  "version": "1.6.0",
+  "lastUpdated": "2025-07-13T17:51:33.301Z",
   "changes": [
     {
       "timestamp": "2025-07-13T17:34:47.953Z",
@@ -796,6 +796,33 @@
     },
     {
       "timestamp": "2025-07-13T17:51:05.693Z",
+      "description": "Modified docs/sop-version.json",
+      "type": "changed",
+      "files": [
+        "docs/sop-version.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-13T17:51:33.296Z",
+      "description": "Modified docs/SOP_CHANGELOG.md",
+      "type": "changed",
+      "files": [
+        "docs/SOP_CHANGELOG.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-13T17:51:33.297Z",
+      "description": "Added docs/sop-backups/sop-v1.4.0-1752429065695.md",
+      "type": "added",
+      "files": [
+        "docs/sop-backups/sop-v1.4.0-1752429065695.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-13T17:51:33.298Z",
       "description": "Modified docs/sop-version.json",
       "type": "changed",
       "files": [
