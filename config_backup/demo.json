@@ -1,0 +1,37 @@
+{
+  "demo_space": {
+    "enabled": true,
+    "port": 3100,
+    "title": "Vibe Marketing Demo Environment",
+    "description": "Interactive demo space for showcasing platform capabilities"
+  },
+  "features": {
+    "interactive_tutorials": true,
+    "sample_data": true,
+    "guided_tours": true,
+    "reset_capability": true
+  },
+  "sample_data": {
+    "users": 50,
+    "campaigns": 10,
+    "analytics_data": "30_days",
+    "mock_integrations": ["ghl", "hubspot", "salesforce"]
+  },
+  "restrictions": {
+    "read_only": false,
+    "time_limit": 3600,
+    "max_concurrent_users": 10,
+    "data_reset_interval": "24h"
+  },
+  "branding": {
+    "logo": "/assets/demo-logo.png",
+    "primary_color": "#3B82F6",
+    "secondary_color": "#10B981",
+    "theme": "modern"
+  },
+  "contact": {
+    "support_email": "demo@vibe-marketing.com",
+    "sales_contact": "sales@vibe-marketing.com",
+    "documentation_url": "https://docs.vibe-marketing.com"
+  }
+}

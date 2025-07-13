@@ -1,0 +1,76 @@
+{
+  "monitoring": {
+    "enabled": true,
+    "collection_interval": 60,
+    "retention_days": 30,
+    "alert_channels": ["email", "webhook"]
+  },
+  "metrics": {
+    "system": {
+      "cpu_usage": true,
+      "memory_usage": true,
+      "disk_usage": true,
+      "network_io": true,
+      "load_average": true
+    },
+    "application": {
+      "response_time": true,
+      "request_count": true,
+      "error_rate": true,
+      "active_connections": true,
+      "queue_size": true
+    },
+    "business": {
+      "user_activity": true,
+      "conversion_rate": true,
+      "revenue_tracking": true,
+      "feature_usage": true
+    }
+  },
+  "alerting": {
+    "rules": [
+      {
+        "name": "High CPU Usage",
+        "condition": "cpu_usage > 80",
+        "severity": "warning",
+        "duration": "5m"
+      },
+      {
+        "name": "Memory Usage Critical",
+        "condition": "memory_usage > 90",
+        "severity": "critical",
+        "duration": "2m"
+      },
+      {
+        "name": "High Error Rate",
+        "condition": "error_rate > 5",
+        "severity": "warning",
+        "duration": "3m"
+      }
+    ]
+  },
+  "dashboards": {
+    "system_overview": {
+      "enabled": true,
+      "refresh_interval": 30
+    },
+    "application_metrics": {
+      "enabled": true,
+      "refresh_interval": 60
+    },
+    "business_intelligence": {
+      "enabled": true,
+      "refresh_interval": 300
+    }
+  },
+  "integrations": {
+    "prometheus": {
+      "enabled": false,
+      "endpoint": "http://localhost:9090"
+    },
+    "grafana": {
+      "enabled": false,
+      "endpoint": "http://localhost:3000"
+    }
+  }
+}

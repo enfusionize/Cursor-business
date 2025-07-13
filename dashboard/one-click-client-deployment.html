@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnfusionAIze | One-Click Client Deployment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-cyan: #06b6d4;
+            --accent-purple: #7c3aed;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --error-red: #ef4444;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(30, 64, 175, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .deployment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .icon-deployment {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+        }
+
+        .icon-clients {
+            background: linear-gradient(135deg, var(--accent-purple), #a855f7);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-preview:hover {
+            transform: scale(1.1);
+        }
+
+        .deployment-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deployment-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .deployment-button:hover::before {
+            left: 100%;
+        }
+
+        .deployment-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-green);
+            color: var(--success-green);
+            display: none;
+        }
+
+        .client-list {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .client-list-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .client-list-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .client-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .client-item:hover {
+            background: rgba(30, 64, 175, 0.05);
+        }
+
+        .client-item:last-child {
+            border-bottom: none;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .client-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .client-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+        }
+
+        .status-deploying {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-orange);
+        }
+
+        .client-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .demo-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), #a855f7);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .loading-animation {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .feature-tag {
+            background: rgba(30, 64, 175, 0.2);
+            color: var(--primary-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .deployment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                <span>EnfusionAIze | Client Deployment</span>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-chart-line"></i>
+                    Analytics
+                </a>
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title" data-i18n="oneclick_client_deployment">One-Click Client Deployment</h1>
+            <p class="page-subtitle" data-i18n="_instantly_deploy_customized_dashboard_environment">
+                Instantly deploy customized dashboard environments for newly signed clients using our demo environment as a foundation
+            </p>
+        </div>
+
+        <!-- Deployment Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="total-deployments">0</div>
+                <div class="metric-label">Total Deployments</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="active-clients">0</div>
+                <div class="metric-label">Active Clients</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="avg-deploy-time">45s</div>
+                <div class="metric-label">Avg Deploy Time</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="success-rate">99.8%</div>
+                <div class="metric-label">Success Rate</div>
+            </div>
+        </div>
+
+        <div class="deployment-grid">
+            <!-- New Client Deployment Form -->
+            <div class="card">
+                <div class="demo-badge">Demo-Based</div>
+                <div class="card-header">
+                    <div class="card-icon icon-deployment">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h2 class="card-title" data-i18n="deploy_new_client">Deploy New Client</h2>
+                        <p style="color: var(--text-secondary); margin: 0;" data-i18n="create_instant_dashboard_from_demo_environment">Create instant dashboard from demo environment</p>
+                    </div>
+                </div>
+
+                <form id="client-deployment-form">
+                    <div class="form-group">
+                        <label class="form-label" for="client-id" data-i18n="client_id_">Client ID *</label>
+                        <input type="text" id="client-id" class="form-input" placeholder="e.g., acme-corp-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="company-name" data-i18n="company_name_">Company Name *</label>
+                        <input type="text" id="company-name" class="form-input" placeholder="e.g., Acme Corporation" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subdomain" data-i18n="subdomain_">Subdomain *</label>
+                        <input type="text" id="subdomain" class="form-input" placeholder="e.g., acme (creates acme.enfusionaize.com)" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="primary-color" data-i18n="primary_brand_color">Primary Brand Color</label>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <input type="color" id="primary-color" class="color-preview" value="#1e40af">
+                                <input type="text" class="form-input" placeholder="#1e40af" id="primary-color-text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="secondary-color" data-i18n="secondary_brand_color">Secondary Brand Color</label>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <input type="color" id="secondary-color" class="color-preview" value="#06b6d4">
+                                <input type="text" class="form-input" placeholder="#06b6d4" id="secondary-color-text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="custom-domain" data-i18n="custom_domain_optional">Custom Domain (Optional)</label>
+                        <input type="text" id="custom-domain" class="form-input" placeholder="e.g., dashboard.acme.com">
+                    </div>
+
+                    <div class="feature-tags">
+                        <span class="feature-tag">6 AI Models</span>
+                        <span class="feature-tag">5 MCP Integrations</span>
+                        <span class="feature-tag">Analytics Dashboard</span>
+                        <span class="feature-tag">Business Tools</span>
+                        <span class="feature-tag">Cursor Build Stack</span>
+                        <span class="feature-tag">Real-time Monitoring</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success deployment-button">
+                        <i class="fas fa-rocket"></i>
+                        <span id="deploy-btn-text">Deploy Client Dashboard</span>
+                    </button>
+
+                    <div class="deployment-status" id="deployment-status">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="status-message">Deployment successful!</span>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Active Client Instances -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon icon-clients">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h2 class="card-title" data-i18n="active_client_instances">Active Client Instances</h2>
+                        <p style="color: var(--text-secondary); margin: 0;" data-i18n="manage_deployed_client_dashboards">Manage deployed client dashboards</p>
+                    </div>
+                </div>
+
+                <div style="max-height: 500px; overflow-y: auto;">
+                    <div id="client-instances-list">
+                        <!-- Client instances will be populated here -->
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button class="btn btn-primary" onclick="refreshClientList()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh List
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deployment History -->
+        <div class="client-list">
+            <div class="client-list-header">
+                <h3 class="client-list-title" data-i18n="recent_deployments">Recent Deployments</h3>
+                <p style="margin: 0; opacity: 0.9;" data-i18n="latest_client_dashboard_deployments_and_their_stat">Latest client dashboard deployments and their status</p>
+            </div>
+            <div id="deployment-history">
+                <!-- Deployment history will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Client Dashboard Deployment System
+        class ClientDeploymentManager {
+            constructor() {
+                this.deployments = new Map();
+                this.activeClients = new Map();
+                this.deploymentHistory = [];
+                
+                this.initializeSystem();
+                this.setupEventListeners();
+                this.loadDemoData();
+            }
+
+            initializeSystem() {
+                console.log('🚀 Initializing Client Deployment Manager...');
+                
+                // Update metrics display
+                this.updateMetrics();
+                
+                // Load existing client data
+                this.loadClientInstances();
+                
+                console.log('✅ Client Deployment Manager ready');
+            }
+
+            setupEventListeners() {
+                // Deployment form submission
+                document.getElementById('client-deployment-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.deployClient();
+                });
+
+                // Color picker synchronization
+                document.getElementById('primary-color').addEventListener('input', (e) => {
+                    document.getElementById('primary-color-text').value = e.target.value;
+                });
+
+                document.getElementById('secondary-color').addEventListener('input', (e) => {
+                    document.getElementById('secondary-color-text').value = e.target.value;
+                });
+
+                document.getElementById('primary-color-text').addEventListener('input', (e) => {
+                    if (this.isValidColor(e.target.value)) {
+                        document.getElementById('primary-color').value = e.target.value;
+                    }
+                });
+
+                document.getElementById('secondary-color-text').addEventListener('input', (e) => {
+                    if (this.isValidColor(e.target.value)) {
+                        document.getElementById('secondary-color').value = e.target.value;
+                    }
+                });
+            }
+
+            isValidColor(color) {
+                const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+                return colorRegex.test(color);
+            }
+
+            async deployClient() {
+                console.log('🎯 Starting client deployment...');
+                
+                // Get form data
+                const formData = this.getFormData();
+                
+                // Validate form data
+                if (!this.validateFormData(formData)) {
+                    return;
+                }
+
+                // Show deployment in progress
+                this.showDeploymentProgress();
+
+                try {
+                    // Simulate deployment process
+                    await this.executeDeployment(formData);
+                    
+                    // Show success
+                    this.showDeploymentSuccess(formData);
+                    
+                    // Update client list
+                    this.addClientInstance(formData);
+                    
+                    // Reset form
+                    this.resetForm();
+                    
+                    // Update metrics
+                    this.updateMetrics();
+                    
+                } catch (error) {
+                    console.error('❌ Deployment failed:', error);
+                    this.showDeploymentError(error);
+                }
+            }
+
+            getFormData() {
+                return {
+                    clientId: document.getElementById('client-id').value.trim(),
+                    companyName: document.getElementById('company-name').value.trim(),
+                    subdomain: document.getElementById('subdomain').value.trim(),
+                    primaryColor: document.getElementById('primary-color').value,
+                    secondaryColor: document.getElementById('secondary-color').value,
+                    customDomain: document.getElementById('custom-domain').value.trim()
+                };
+            }
+
+            validateFormData(data) {
+                if (!data.clientId || !data.companyName || !data.subdomain) {
+                    alert('❌ Please fill in all required fields');
+                    return false;
+                }
+
+                if (this.activeClients.has(data.clientId)) {
+                    alert('❌ Client ID already exists');
+                    return false;
+                }
+
+                if (!/^[a-z0-9-]+$/.test(data.subdomain)) {
+                    alert('❌ Subdomain must contain only lowercase letters, numbers, and hyphens');
+                    return false;
+                }
+
+                return true;
+            }
+
+            showDeploymentProgress() {
+                const button = document.getElementById('deploy-btn-text');
+                const statusDiv = document.getElementById('deployment-status');
+                
+                button.innerHTML = '<span class="loading-animation"></span> Deploying...';
+                statusDiv.style.display = 'none';
+            }
+
+            async executeDeployment(formData) {
+                // Simulate deployment steps
+                const steps = [
+                    'Creating client instance...',
+                    'Customizing dashboard with branding...',
+                    'Setting up integrations...',
+                    'Deploying to production...',
+                    'Configuring monitoring...',
+                    'Generating access credentials...'
+                ];
+
+                for (const step of steps) {
+                    console.log('  📋', step);
+                    await this.delay(800); // Simulate processing time
+                }
+
+                // Generate deployment result
+                const deployment = {
+                    instanceId: `client_${formData.clientId}_${Date.now()}`,
+                    clientId: formData.clientId,
+                    companyName: formData.companyName,
+                    url: `https://${formData.subdomain}.enfusionaize.com`,
+                    status: 'deployed',
+                    deployedAt: new Date().toISOString(),
+                    features: [
+                        'responsive-tools-dashboard',
+                        'analytics-integration',
+                        'cursor-build-stack',
+                        'business-automation',
+                        'one-click-remix',
+                        'figma-integration',
+                        'minimax-builder'
+                    ],
+                    integrations: {
+                        aiModels: ['claude', 'minimax', 'doraAI', 'emergentMind', 'orchidsAI', 'runwayML'],
+                        mcps: ['xero', 'playwright', 'perplexity', 'firecrawl', 'humblytics'],
+                        analytics: ['google', 'humblytics']
+                    }
+                };
+
+                this.deployments.set(formData.clientId, deployment);
+                return deployment;
+            }
+
+            showDeploymentSuccess(formData) {
+                const button = document.getElementById('deploy-btn-text');
+                const statusDiv = document.getElementById('deployment-status');
+                const statusMessage = document.getElementById('status-message');
+                
+                button.innerHTML = '<i class="fas fa-rocket"></i> Deploy Client Dashboard';
+                statusMessage.innerHTML = `
+                    <strong>Deployment Successful!</strong><br>
+                    Client: ${formData.companyName}<br>
+                    URL: <a href="https://${formData.subdomain}.enfusionaize.com" target="_blank" style="color: var(--success-green);">
+                        https://${formData.subdomain}.enfusionaize.com
+                    </a>
+                `;
+                statusDiv.style.display = 'block';
+
+                // Add to deployment history
+                this.addToDeploymentHistory(formData);
+            }
+
+            showDeploymentError(error) {
+                const button = document.getElementById('deploy-btn-text');
+                const statusDiv = document.getElementById('deployment-status');
+                const statusMessage = document.getElementById('status-message');
+                
+                button.innerHTML = '<i class="fas fa-rocket"></i> Deploy Client Dashboard';
+                statusDiv.style.background = 'rgba(239, 68, 68, 0.1)';
+                statusDiv.style.borderColor = 'var(--error-red)';
+                statusDiv.style.color = 'var(--error-red)';
+                statusMessage.innerHTML = `<strong>Deployment Failed:</strong> ${error.message}`;
+                statusDiv.style.display = 'block';
+            }
+
+            addClientInstance(formData) {
+                const clientData = {
+                    ...formData,
+                    status: 'active',
+                    deployedAt: new Date(),
+                    url: `https://${formData.subdomain}.enfusionaize.com`,
+                    uptime: '0d 0h 0m'
+                };
+
+                this.activeClients.set(formData.clientId, clientData);
+                this.renderClientInstances();
+            }
+
+            renderClientInstances() {
+                const container = document.getElementById('client-instances-list');
+                
+                if (this.activeClients.size === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                            <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i><br>
+                            No client instances deployed yet
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = Array.from(this.activeClients.values())
+                    .map(client => `
+                        <div class="client-item">
+                            <div class="client-info">
+                                <div class="client-name">${client.companyName}</div>
+                                <div class="client-details">
+                                    ID: ${client.clientId} • 
+                                    <a href="${client.url}" target="_blank" style="color: var(--secondary-cyan);">
+                                        ${client.url}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="client-status status-active">Active</div>
+                            <div class="client-actions">
+                                <button class="btn btn-primary btn-sm" onclick="viewClientDashboard('${client.clientId}')">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="showClientStatus('${client.clientId}')">
+                                    <i class="fas fa-chart-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+            }
+
+            addToDeploymentHistory(formData) {
+                const historyItem = {
+                    clientId: formData.clientId,
+                    companyName: formData.companyName,
+                    subdomain: formData.subdomain,
+                    deployedAt: new Date(),
+                    status: 'success'
+                };
+
+                this.deploymentHistory.unshift(historyItem);
+                this.renderDeploymentHistory();
+            }
+
+            renderDeploymentHistory() {
+                const container = document.getElementById('deployment-history');
+                
+                if (this.deploymentHistory.length === 0) {
+                    container.innerHTML = `
+                        <div class="client-item">
+                            <div style="text-align: center; width: 100%; padding: 1rem; color: var(--text-secondary);">
+                                No deployments yet
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = this.deploymentHistory
+                    .slice(0, 10) // Show last 10 deployments
+                    .map(item => `
+                        <div class="client-item">
+                            <div class="client-info">
+                                <div class="client-name">${item.companyName}</div>
+                                <div class="client-details">
+                                    Deployed: ${item.deployedAt.toLocaleString()} • 
+                                    ${item.subdomain}.enfusionaize.com
+                                </div>
+                            </div>
+                            <div class="client-status status-active">Success</div>
+                        </div>
+                    `).join('');
+            }
+
+            updateMetrics() {
+                document.getElementById('total-deployments').textContent = this.deploymentHistory.length;
+                document.getElementById('active-clients').textContent = this.activeClients.size;
+                
+                // Simulate dynamic metrics
+                const avgTime = Math.floor(Math.random() * 20 + 30);
+                document.getElementById('avg-deploy-time').textContent = `${avgTime}s`;
+                
+                const successRate = (99.5 + Math.random() * 0.5).toFixed(1);
+                document.getElementById('success-rate').textContent = `${successRate}%`;
+            }
+
+            resetForm() {
+                document.getElementById('client-deployment-form').reset();
+                document.getElementById('primary-color').value = '#1e40af';
+                document.getElementById('secondary-color').value = '#06b6d4';
+                document.getElementById('primary-color-text').value = '#1e40af';
+                document.getElementById('secondary-color-text').value = '#06b6d4';
+            }
+
+            loadDemoData() {
+                // Add some demo client instances
+                const demoClients = [
+                    {
+                        clientId: 'demo-tech-solutions',
+                        companyName: 'Demo Tech Solutions',
+                        subdomain: 'demotech',
+                        primaryColor: '#7c3aed',
+                        secondaryColor: '#a855f7'
+                    },
+                    {
+                        clientId: 'sample-corp-inc',
+                        companyName: 'Sample Corp Inc',
+                        subdomain: 'samplecorp',
+                        primaryColor: '#059669',
+                        secondaryColor: '#10b981'
+                    }
+                ];
+
+                // Add demo clients with delay
+                setTimeout(() => {
+                    demoClients.forEach(client => {
+                        this.addClientInstance(client);
+                        this.addToDeploymentHistory(client);
+                    });
+                    this.updateMetrics();
+                }, 1000);
+            }
+
+            loadClientInstances() {
+                // Load from localStorage or API
+                console.log('📋 Loading existing client instances...');
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Global functions for client actions
+        function viewClientDashboard(clientId) {
+            const client = deploymentManager.activeClients.get(clientId);
+            if (client) {
+                window.open(client.url, '_blank');
+            }
+        }
+
+        function showClientStatus(clientId) {
+            const client = deploymentManager.activeClients.get(clientId);
+            if (client) {
+                alert(`Client Status: ${client.companyName}\n\nStatus: Active\nDeployed: ${client.deployedAt.toLocaleString()}\nURL: ${client.url}\n\nFeatures:\n• 6 AI Models Integration\n• 5 MCP Tools\n• Real-time Analytics\n• Business Automation\n• Cursor Build Stack\n• One-click Remix`);
+            }
+        }
+
+        function refreshClientList() {
+            deploymentManager.renderClientInstances();
+            deploymentManager.updateMetrics();
+            
+            // Show refresh animation
+            const btn = event.target;
+            const icon = btn.querySelector('i');
+            icon.style.animation = 'spin 1s ease-in-out';
+            setTimeout(() => {
+                icon.style.animation = '';
+            }, 1000);
+        }
+
+        // Initialize the deployment manager
+        const deploymentManager = new ClientDeploymentManager();
+
+        // Auto-refresh metrics every 30 seconds
+        setInterval(() => {
+            deploymentManager.updateMetrics();
+        }, 30000);
+    </script>
+<script src="scripts/i18n-integration.js"></script>
+</body>
+</html>

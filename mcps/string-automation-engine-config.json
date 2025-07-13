@@ -1,0 +1,8 @@
+{
+  "name": "string-automation-engine",
+  "enabled": true,
+  "port": 3002,
+  "endpoints": [
+    "/api/mcp/string-automation-engine"
+  ]
+}

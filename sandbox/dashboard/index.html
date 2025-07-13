@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfusionize™ Sandbox Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .running { background-color: #10b981; }
+        .stopped { background-color: #ef4444; }
+        .pending { background-color: #f59e0b; }
+        .healthy { color: #10b981; }
+        .unhealthy { color: #ef4444; }
+        .degraded { color: #f59e0b; }
+        .unknown { color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="sandboxDashboard()" x-init="init()" class="min-h-screen">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-cube text-2xl mr-3"></i>
+                        <h1 class="text-2xl font-bold" data-i18n="enfusionize_sandbox">Enfusionize™ Sandbox</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm">
+                            <span class="opacity-75">Live System:</span>
+                            <span x-text="liveSystemStatus" class="font-semibold"></span>
+                        </div>
+                        <button @click="refreshData()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-server text-3xl text-blue-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500" data-i18n="total_environments">Total Environments</p>
+                            <p class="text-2xl font-semibold text-gray-900" x-text="stats.total"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-play-circle text-3xl text-green-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500" data-i18n="running">Running</p>
+                            <p class="text-2xl font-semibold text-gray-900" x-text="stats.running"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-heart text-3xl text-red-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500" data-i18n="healthy">Healthy</p>
+                            <p class="text-2xl font-semibold text-gray-900" x-text="stats.healthy"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-rocket text-3xl text-purple-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500" data-i18n="deployments">Deployments</p>
+                            <p class="text-2xl font-semibold text-gray-900" x-text="stats.deployments"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 mb-8">
+                <button @click="showCreateEnvironmentModal = true" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-plus mr-2"></i>
+                    Create Environment
+                </button>
+                <button @click="showBulkOperationsModal = true" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-layer-group mr-2"></i>
+                    Bulk Operations
+                </button>
+                <button @click="cleanupEnvironments()" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-broom mr-2"></i>
+                    Cleanup
+                </button>
+            </div>
+
+            <!-- Environments Table -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900" data-i18n="sandbox_environments">Sandbox Environments</h3>
+                        <div class="flex items-center space-x-4">
+                            <input type="text" x-model="searchTerm" placeholder="Search environments..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                            <select x-model="statusFilter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option value="">All Status</option>
+                                <option value="running">Running</option>
+                                <option value="stopped">Stopped</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Environment</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Health</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resources</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <template x-for="environment in filteredEnvironments" :key="environment.id">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                                    <i class="fas fa-cube text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900" x-text="environment.id"></div>
+                                                <div class="text-sm text-gray-500" x-text="environment.type"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-dot" :class="environment.status"></span>
+                                        <span class="text-sm font-medium capitalize" x-text="environment.status"></span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <i class="fas fa-heart" :class="environment.health"></i>
+                                        <span class="text-sm ml-2 capitalize" x-text="environment.health"></span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div>CPU: <span x-text="environment.metrics?.cpu?.toFixed(1) || 'N/A'"></span>%</div>
+                                        <div>Memory: <span x-text="environment.metrics?.memory?.toFixed(1) || 'N/A'"></span>%</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span x-text="formatDate(environment.created)"></span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex space-x-2">
+                                            <button @click="viewEnvironment(environment)" class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button @click="promoteEnvironment(environment)" class="text-green-600 hover:text-green-900">
+                                                <i class="fas fa-rocket"></i>
+                                            </button>
+                                            <button @click="deleteEnvironment(environment)" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Deployments -->
+            <div class="mt-8 bg-white rounded-lg shadow-md">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900" data-i18n="recent_deployments">Recent Deployments</h3>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <template x-for="deployment in recentDeployments" :key="deployment.id">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-rocket text-2xl" :class="deployment.status === 'completed' ? 'text-green-500' : deployment.status === 'failed' ? 'text-red-500' : 'text-blue-500'"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900" x-text="deployment.id"></div>
+                                        <div class="text-sm text-gray-500">
+                                            <span x-text="deployment.environmentId"></span> → Production
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm font-medium" :class="deployment.status === 'completed' ? 'text-green-600' : deployment.status === 'failed' ? 'text-red-600' : 'text-blue-600'" x-text="deployment.status"></div>
+                                    <div class="text-sm text-gray-500" x-text="formatDate(deployment.startTime)"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Create Environment Modal -->
+        <div x-show="showCreateEnvironmentModal" x-cloak class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="mt-3">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4" data-i18n="create_new_environment">Create New Environment</h3>
+                    <form @submit.prevent="createEnvironment()">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="environment_name">Environment Name</label>
+                            <input type="text" x-model="newEnvironment.name" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="type">Type</label>
+                            <select x-model="newEnvironment.type" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                                <option value="">Select Type</option>
+                                <option value="staging">Staging</option>
+                                <option value="integration">Integration</option>
+                                <option value="feature">Feature</option>
+                                <option value="experimental">Experimental</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="newEnvironment.database" class="mr-2">
+                                <span class="text-sm text-gray-700">Include Database</span>
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="newEnvironment.redis" class="mr-2">
+                                <span class="text-sm text-gray-700">Include Redis</span>
+                            </label>
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" @click="showCreateEnvironmentModal = false" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300" data-i18n="_cancel_">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700" data-i18n="_create_">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promotion Modal -->
+        <div x-show="showPromotionModal" x-cloak class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="mt-3">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4" data-i18n="promote_to_production">Promote to Production</h3>
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600 mb-4">
+                            Promoting environment: <strong x-text="selectedEnvironment?.id"></strong>
+                        </p>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="deployment_strategy">Deployment Strategy</label>
+                            <select x-model="promotionConfig.strategy" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="blue-green">Blue-Green</option>
+                                <option value="canary">Canary</option>
+                                <option value="rolling">Rolling</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="validation_suite">Validation Suite</label>
+                            <select x-model="promotionConfig.validationSuite" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="comprehensive">Comprehensive</option>
+                                <option value="quick">Quick</option>
+                                <option value="security">Security</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="promotionConfig.backup" class="mr-2">
+                                <span class="text-sm text-gray-700">Create Backup</span>
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="promotionConfig.validate" class="mr-2">
+                                <span class="text-sm text-gray-700">Run Validation</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" @click="showPromotionModal = false" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300" data-i18n="_cancel_">
+                            Cancel
+                        </button>
+                        <button type="button" @click="executePromotion()" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700" data-i18n="_promote_">
+                            Promote
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div x-show="loading" x-cloak class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+                <div class="flex items-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-4"></div>
+                    <span class="text-lg font-medium" x-text="loadingMessage"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sandboxDashboard() {
+            return {
+                environments: [],
+                deployments: [],
+                liveSystemStatus: 'Healthy',
+                stats: {
+                    total: 0,
+                    running: 0,
+                    healthy: 0,
+                    deployments: 0
+                },
+                searchTerm: '',
+                statusFilter: '',
+                loading: false,
+                loadingMessage: '',
+                showCreateEnvironmentModal: false,
+                showPromotionModal: false,
+                showBulkOperationsModal: false,
+                selectedEnvironment: null,
+                newEnvironment: {
+                    name: '',
+                    type: '',
+                    database: true,
+                    redis: false
+                },
+                promotionConfig: {
+                    strategy: 'blue-green',
+                    validationSuite: 'comprehensive',
+                    backup: true,
+                    validate: true
+                },
+                ws: null,
+
+                async init() {
+                    await this.loadData();
+                    this.connectWebSocket();
+                    this.startPeriodicRefresh();
+                },
+
+                async loadData() {
+                    this.loading = true;
+                    this.loadingMessage = 'Loading environments...';
+                    
+                    try {
+                        const response = await fetch('/api/sandbox/environments');
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.environments = data.environments;
+                            this.updateStats();
+                        }
+                        
+                        // Load recent deployments
+                        const deploymentsResponse = await fetch('/api/sandbox/deployments');
+                        if (deploymentsResponse.ok) {
+                            const deploymentsData = await deploymentsResponse.json();
+                            this.deployments = deploymentsData.deployments || [];
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error loading data:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                connectWebSocket() {
+                    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                    this.ws = new WebSocket(`${protocol}//${window.location.host}`);
+                    
+                    this.ws.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.handleWebSocketMessage(data);
+                    };
+                    
+                    this.ws.onclose = () => {
+                        // Reconnect after 5 seconds
+                        setTimeout(() => this.connectWebSocket(), 5000);
+                    };
+                },
+
+                handleWebSocketMessage(data) {
+                    switch (data.type) {
+                        case 'environment:created':
+                            this.environments.push(data.data);
+                            this.updateStats();
+                            break;
+                        case 'environment:metrics':
+                            this.updateEnvironmentMetrics(data.data);
+                            break;
+                        case 'deployment:completed':
+                            this.deployments.unshift(data.data);
+                            this.updateStats();
+                            break;
+                        case 'initial-state':
+                            this.environments = data.environments;
+                            this.deployments = data.deployments;
+                            this.updateStats();
+                            break;
+                    }
+                },
+
+                updateEnvironmentMetrics(metricsData) {
+                    const env = this.environments.find(e => e.id === metricsData.environmentId);
+                    if (env) {
+                        env.metrics = metricsData.metrics;
+                    }
+                },
+
+                updateStats() {
+                    this.stats.total = this.environments.length;
+                    this.stats.running = this.environments.filter(e => e.status === 'running').length;
+                    this.stats.healthy = this.environments.filter(e => e.health === 'healthy').length;
+                    this.stats.deployments = this.deployments.length;
+                },
+
+                get filteredEnvironments() {
+                    return this.environments.filter(env => {
+                        const matchesSearch = !this.searchTerm || 
+                            env.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                            env.type.toLowerCase().includes(this.searchTerm.toLowerCase());
+                        
+                        const matchesStatus = !this.statusFilter || env.status === this.statusFilter;
+                        
+                        return matchesSearch && matchesStatus;
+                    });
+                },
+
+                get recentDeployments() {
+                    return this.deployments.slice(0, 5);
+                },
+
+                async createEnvironment() {
+                    this.loading = true;
+                    this.loadingMessage = 'Creating environment...';
+                    
+                    try {
+                        const response = await fetch('/api/sandbox/environments', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.newEnvironment)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.environments.push(data.environment);
+                            this.updateStats();
+                            this.showCreateEnvironmentModal = false;
+                            this.newEnvironment = {
+                                name: '',
+                                type: '',
+                                database: true,
+                                redis: false
+                            };
+                        } else {
+                            alert('Error creating environment: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Error creating environment:', error);
+                        alert('Error creating environment');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                promoteEnvironment(environment) {
+                    this.selectedEnvironment = environment;
+                    this.showPromotionModal = true;
+                },
+
+                async executePromotion() {
+                    this.loading = true;
+                    this.loadingMessage = 'Promoting to production...';
+                    
+                    try {
+                        const response = await fetch(`/api/sandbox/environments/${this.selectedEnvironment.id}/promote`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.promotionConfig)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.deployments.unshift(data.promotion);
+                            this.updateStats();
+                            this.showPromotionModal = false;
+                            alert('Promotion completed successfully!');
+                        } else {
+                            alert('Error promoting environment: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Error promoting environment:', error);
+                        alert('Error promoting environment');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async deleteEnvironment(environment) {
+                    if (!confirm(`Are you sure you want to delete environment ${environment.id}?`)) {
+                        return;
+                    }
+                    
+                    this.loading = true;
+                    this.loadingMessage = 'Deleting environment...';
+                    
+                    try {
+                        const response = await fetch(`/api/sandbox/environments/${environment.id}`, {
+                            method: 'DELETE'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            this.environments = this.environments.filter(e => e.id !== environment.id);
+                            this.updateStats();
+                        } else {
+                            alert('Error deleting environment: ' + data.error);
+                        }
+                    } catch (error) {
+                        console.error('Error deleting environment:', error);
+                        alert('Error deleting environment');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async refreshData() {
+                    await this.loadData();
+                },
+
+                startPeriodicRefresh() {
+                    setInterval(() => {
+                        this.refreshData();
+                    }, 30000); // Refresh every 30 seconds
+                },
+
+                formatDate(dateString) {
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                },
+
+                viewEnvironment(environment) {
+                    window.open(`/dashboard/environment/${environment.id}`, '_blank');
+                }
+            }
+        }
+    </script>
+<script src="scripts/i18n-integration.js"></script>
+</body>
+</html>

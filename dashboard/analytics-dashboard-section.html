@@ -1,0 +1,1070 @@
+<!-- Analytics Dashboard Section -->
+<div id="analytics-tab" class="tab-content hidden">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold" data-i18n="_analytics_metrics_dashboard">📊 Analytics & Metrics Dashboard</h2>
+        <div class="flex space-x-3">
+            <button onclick="refreshAnalytics()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                Refresh Data
+            </button>
+            <button onclick="createCustomReport()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                Custom Report
+            </button>
+            <button onclick="exportAnalytics()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                Export
+            </button>
+        </div>
+    </div>
+
+    <!-- Analytics Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm opacity-90" data-i18n="total_revenue">Total Revenue</p>
+                    <p class="text-3xl font-bold" id="totalRevenue" data-i18n="">$--</p>
+                    <p class="text-sm opacity-75" id="revenueChange" data-i18n="0_vs_last_month">+0% vs last month</p>
+                </div>
+                <i data-lucide="dollar-sign" class="w-8 h-8 opacity-80"></i>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm opacity-90" data-i18n="conversions">Conversions</p>
+                    <p class="text-3xl font-bold" id="totalConversions" data-i18n="">--</p>
+                    <p class="text-sm opacity-75" id="conversionChange" data-i18n="0_vs_last_month">+0% vs last month</p>
+                </div>
+                <i data-lucide="target" class="w-8 h-8 opacity-80"></i>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm opacity-90" data-i18n="active_users">Active Users</p>
+                    <p class="text-3xl font-bold" id="activeUsers" data-i18n="">--</p>
+                    <p class="text-sm opacity-75" id="usersChange" data-i18n="0_vs_last_month">+0% vs last month</p>
+                </div>
+                <i data-lucide="users" class="w-8 h-8 opacity-80"></i>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm opacity-90" data-i18n="roi">ROI</p>
+                    <p class="text-3xl font-bold" id="averageROI" data-i18n="">--%</p>
+                    <p class="text-sm opacity-75" id="roiChange" data-i18n="0_vs_last_month">+0% vs last month</p>
+                </div>
+                <i data-lucide="trending-up" class="w-8 h-8 opacity-80"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Platform Integration Status -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold mb-4" data-i18n="_connected_analytics_platforms">📈 Connected Analytics Platforms</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="platformStatus">
+            <!-- Platform status cards will be populated here -->
+        </div>
+    </div>
+
+    <!-- Real-Time Analytics -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Google Analytics Real-Time -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold" data-i18n="_realtime_visitors_ga4">🔴 Real-Time Visitors (GA4)</h3>
+                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full" id="gaStatus">Connected</span>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold text-blue-600 mb-2" id="realtimeUsers">--</div>
+                <p class="text-gray-600" data-i18n="active_users_right_now">Active users right now</p>
+                <div class="mt-4">
+                    <canvas id="realtimeChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wicked Reports ROI -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold" data-i18n="_campaign_roi_wicked_reports">💰 Campaign ROI (Wicked Reports)</h3>
+                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full" id="wrStatus">Connected</span>
+            </div>
+            <div id="roiMetrics">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-600">Facebook Ads</span>
+                        <span class="font-semibold text-green-600" id="fbROI">--</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-600">Google Ads</span>
+                        <span class="font-semibold text-green-600" id="googleROI">--</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-600">Email Marketing</span>
+                        <span class="font-semibold text-green-600" id="emailROI">--</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <canvas id="roiChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analytics Tabs -->
+    <div class="bg-white rounded-lg shadow-md">
+        <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8 px-6">
+                <button onclick="switchAnalyticsTab('google')" class="analytics-tab-btn active py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium" data-i18n="_google_analytics_">
+                    Google Analytics
+                </button>
+                <button onclick="switchAnalyticsTab('wicked')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_wicked_reports_">
+                    Wicked Reports
+                </button>
+                <button onclick="switchAnalyticsTab('hubspot')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_hubspot_">
+                    HubSpot
+                </button>
+                <button onclick="switchAnalyticsTab('salesforce')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_salesforce_">
+                    Salesforce
+                </button>
+                <button onclick="switchAnalyticsTab('humblytics')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_humblytics_">
+                    Humblytics
+                </button>
+                <button onclick="switchAnalyticsTab('unified')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_unified_view_">
+                    Unified View
+                </button>
+            </nav>
+        </div>
+
+        <!-- Google Analytics Tab -->
+        <div id="google-analytics-tab" class="analytics-tab-content p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_page_views_sessions">📊 Page Views & Sessions</h4>
+                    <canvas id="gaPageViewsChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_conversion_funnel">🎯 Conversion Funnel</h4>
+                    <canvas id="gaConversionsChart" width="400" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_top_pages_performance">📈 Top Pages Performance</h4>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Page</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Views</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sessions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bounce Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gaTopPages" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wicked Reports Tab -->
+        <div id="wicked-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_revenue_attribution">💰 Revenue Attribution</h4>
+                    <canvas id="wrAttributionChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_campaign_performance">📊 Campaign Performance</h4>
+                    <canvas id="wrCampaignChart" width="400" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_attribution_model_comparison">🎯 Attribution Model Comparison</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="first_click_attribution">First Click Attribution</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="firstClickRevenue" data-i18n="">$--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="last_click_attribution">Last Click Attribution</h5>
+                        <p class="text-2xl font-bold text-green-600" id="lastClickRevenue" data-i18n="">$--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="multitouch_attribution">Multi-Touch Attribution</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="multiTouchRevenue" data-i18n="">$--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HubSpot Tab -->
+        <div id="hubspot-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_contact_analytics">👥 Contact Analytics</h4>
+                    <canvas id="hsContactsChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_deal_pipeline">💼 Deal Pipeline</h4>
+                    <canvas id="hsDealsChart" width="400" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_marketing_performance">📈 Marketing Performance</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="email_opens">Email Opens</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="hsEmailOpens" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="click_rate">Click Rate</h5>
+                        <p class="text-2xl font-bold text-green-600" id="hsClickRate" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="lead_conversion">Lead Conversion</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="hsLeadConversion" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="deal_close_rate">Deal Close Rate</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="hsDealCloseRate" data-i18n="">--%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salesforce Tab -->
+        <div id="salesforce-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_pipeline_analytics">🏢 Pipeline Analytics</h4>
+                    <canvas id="sfPipelineChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_lead_sources">📊 Lead Sources</h4>
+                    <canvas id="sfLeadSourceChart" width="400" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_sales_performance">📈 Sales Performance</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="qualified_leads">Qualified Leads</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="sfQualifiedLeads" data-i18n="">--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="opportunities">Opportunities</h5>
+                        <p class="text-2xl font-bold text-green-600" id="sfOpportunities" data-i18n="">--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="win_rate">Win Rate</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="sfWinRate" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="avg_deal_size">Avg Deal Size</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="sfAvgDealSize" data-i18n="">$--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Humblytics Tab -->
+        <div id="humblytics-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_privacyfirst_analytics">📊 Privacy-First Analytics</h4>
+                    <canvas id="humblyticsTrafficChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_heatmap_insights">🔥 Heatmap Insights</h4>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2" data-i18n="click_heatmap">Click Heatmap</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Most clicked element</span>
+                                <span class="font-semibold text-blue-600" id="topClickElement">--</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2" data-i18n="scroll_depth">Scroll Depth</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Average scroll depth</span>
+                                <span class="font-semibold text-green-600" id="avgScrollDepth">--%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2" data-i18n="engagement_zones">Engagement Zones</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Hot zones detected</span>
+                                <span class="font-semibold text-purple-600" id="hotZones">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_funnel_performance">🎯 Funnel Performance</h4>
+                    <canvas id="humblyticsFunnelChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_ab_test_results">🧪 A/B Test Results</h4>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <h5 class="font-medium" data-i18n="landing_page_test">Landing Page Test</h5>
+                                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Winner</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Variant B conversion</span>
+                                <span class="font-semibold text-green-600" id="abTestWinner">+--% vs control</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium mb-2" data-i18n="statistical_significance">Statistical Significance</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Confidence level</span>
+                                <span class="font-semibold text-blue-600" id="confidenceLevel">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_privacyfirst_features">🔒 Privacy-First Features</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+                        <h5 class="font-medium mb-2 text-green-800" data-i18n="cookieless_tracking">Cookieless Tracking</h5>
+                        <p class="text-sm text-green-600" data-i18n="_gdpr_compliant">✓ GDPR Compliant</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+                        <h5 class="font-medium mb-2 text-blue-800" data-i18n="realtime_data">Real-Time Data</h5>
+                        <p class="text-sm text-blue-600" data-i18n="_36kb_script">✓ 36KB Script</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+                        <h5 class="font-medium mb-2 text-purple-800" data-i18n="no_consent_banner">No Consent Banner</h5>
+                        <p class="text-sm text-purple-600" data-i18n="_privacyfirst">✓ Privacy-First</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+                        <h5 class="font-medium mb-2 text-orange-800" data-i18n="1click_ab_tests">1-Click A/B Tests</h5>
+                        <p class="text-sm text-orange-600" data-i18n="_no_dev_required">✓ No Dev Required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified View Tab -->
+        <div id="unified-analytics-tab" class="analytics-tab-content p-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_crossplatform_revenue">🌟 Cross-Platform Revenue</h4>
+                    <canvas id="unifiedRevenueChart" width="400" height="250"></canvas>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_platform_comparison">📊 Platform Comparison</h4>
+                    <canvas id="platformComparisonChart" width="400" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_unified_kpis">🎯 Unified KPIs</h4>
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="total_leads">Total Leads</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="unifiedLeads" data-i18n="">--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="conversion_rate">Conversion Rate</h5>
+                        <p class="text-2xl font-bold text-green-600" id="unifiedConversionRate" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="customer_ltv">Customer LTV</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="unifiedLTV" data-i18n="">$--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="cac">CAC</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="unifiedCAC" data-i18n="">$--</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="churn_rate">Churn Rate</h5>
+                        <p class="text-2xl font-bold text-red-600" id="unifiedChurn" data-i18n="">--%</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h5 class="font-medium mb-2" data-i18n="mrr_growth">MRR Growth</h5>
+                        <p class="text-2xl font-bold text-indigo-600" id="unifiedMRR" data-i18n="">--%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Analytics Dashboard JavaScript
+let analyticsCharts = {};
+let analyticsData = {
+    google: {},
+    wickedReports: {},
+    hubspot: {},
+    salesforce: {},
+    unified: {}
+};
+
+// Initialize analytics dashboard
+function initializeAnalyticsDashboard() {
+    setupAnalyticsCharts();
+    loadAnalyticsData();
+    setupAnalyticsEventListeners();
+    
+    // Auto-refresh every 5 minutes
+    setInterval(refreshAnalytics, 5 * 60 * 1000);
+}
+
+function setupAnalyticsCharts() {
+    // Real-time chart
+    const realtimeCtx = document.getElementById('realtimeChart').getContext('2d');
+    analyticsCharts.realtime = new Chart(realtimeCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Active Users',
+                data: [],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // ROI chart
+    const roiCtx = document.getElementById('roiChart').getContext('2d');
+    analyticsCharts.roi = new Chart(roiCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Facebook Ads', 'Google Ads', 'Email Marketing'],
+            datasets: [{
+                data: [0, 0, 0],
+                backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // Initialize other charts
+    initializeGoogleAnalyticsCharts();
+    initializeWickedReportsCharts();
+    initializeHubSpotCharts();
+    initializeSalesforceCharts();
+    initializeHumblyticsCharts();
+    initializeUnifiedCharts();
+}
+
+function initializeGoogleAnalyticsCharts() {
+    // GA Page Views Chart
+    const gaPageViewsCtx = document.getElementById('gaPageViewsChart').getContext('2d');
+    analyticsCharts.gaPageViews = new Chart(gaPageViewsCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Page Views',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                },
+                {
+                    label: 'Sessions',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } }
+        }
+    });
+
+    // GA Conversions Chart
+    const gaConversionsCtx = document.getElementById('gaConversionsChart').getContext('2d');
+    analyticsCharts.gaConversions = new Chart(gaConversionsCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Conversions',
+                data: [],
+                backgroundColor: '#10b981'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+function initializeWickedReportsCharts() {
+    // WR Attribution Chart
+    const wrAttributionCtx = document.getElementById('wrAttributionChart').getContext('2d');
+    analyticsCharts.wrAttribution = new Chart(wrAttributionCtx, {
+        type: 'pie',
+        data: {
+            labels: ['First Click', 'Last Click', 'Multi-Touch'],
+            datasets: [{
+                data: [0, 0, 0],
+                backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // WR Campaign Chart
+    const wrCampaignCtx = document.getElementById('wrCampaignChart').getContext('2d');
+    analyticsCharts.wrCampaign = new Chart(wrCampaignCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'ROI %',
+                data: [],
+                backgroundColor: '#f59e0b'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+function initializeHubSpotCharts() {
+    // HS Contacts Chart
+    const hsContactsCtx = document.getElementById('hsContactsChart').getContext('2d');
+    analyticsCharts.hsContacts = new Chart(hsContactsCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'New Contacts',
+                data: [],
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // HS Deals Chart
+    const hsDealsCtx = document.getElementById('hsDealsChart').getContext('2d');
+    analyticsCharts.hsDeals = new Chart(hsDealsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Qualified', 'Proposal', 'Negotiation', 'Closed Won'],
+            datasets: [{
+                data: [0, 0, 0, 0],
+                backgroundColor: ['#3b82f6', '#f59e0b', '#ef4444', '#10b981']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+}
+
+function initializeSalesforceCharts() {
+    // SF Pipeline Chart
+    const sfPipelineCtx = document.getElementById('sfPipelineChart').getContext('2d');
+    analyticsCharts.sfPipeline = new Chart(sfPipelineCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Opportunity Value',
+                data: [],
+                backgroundColor: '#1e40af'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // SF Lead Source Chart
+    const sfLeadSourceCtx = document.getElementById('sfLeadSourceChart').getContext('2d');
+    analyticsCharts.sfLeadSource = new Chart(sfLeadSourceCtx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+}
+
+function initializeHumblyticsCharts() {
+    // Humblytics Traffic Chart
+    const humblyticsTrafficCtx = document.getElementById('humblyticsTrafficChart').getContext('2d');
+    analyticsCharts.humblyticsTraffic = new Chart(humblyticsTrafficCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Visitors',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                },
+                {
+                    label: 'Sessions',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'top' },
+                title: {
+                    display: true,
+                    text: 'Privacy-First Analytics (Cookieless)'
+                }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Humblytics Funnel Chart
+    const humblyticsFunnelCtx = document.getElementById('humblyticsFunnelChart').getContext('2d');
+    analyticsCharts.humblyticsFunnel = new Chart(humblyticsFunnelCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Landing Page', 'Product View', 'Add to Cart', 'Checkout', 'Purchase'],
+            datasets: [{
+                label: 'Conversion Rate',
+                data: [100, 45, 28, 15, 12],
+                backgroundColor: [
+                    '#10b981',
+                    '#3b82f6', 
+                    '#f59e0b',
+                    '#ef4444',
+                    '#8b5cf6'
+                ],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Conversion Funnel Analysis'
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeUnifiedCharts() {
+    // Unified Revenue Chart
+    const unifiedRevenueCtx = document.getElementById('unifiedRevenueChart').getContext('2d');
+    analyticsCharts.unifiedRevenue = new Chart(unifiedRevenueCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Google Analytics',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                },
+                {
+                    label: 'Wicked Reports',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)'
+                },
+                {
+                    label: 'HubSpot',
+                    data: [],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } }
+        }
+    });
+
+    // Platform Comparison Chart
+    const platformComparisonCtx = document.getElementById('platformComparisonChart').getContext('2d');
+    analyticsCharts.platformComparison = new Chart(platformComparisonCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Revenue', 'Conversions', 'ROI', 'Leads', 'Efficiency'],
+            datasets: [
+                {
+                    label: 'Google Analytics',
+                    data: [0, 0, 0, 0, 0],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)'
+                },
+                {
+                    label: 'Wicked Reports',
+                    data: [0, 0, 0, 0, 0],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+}
+
+function loadAnalyticsData() {
+    // Simulate loading analytics data
+    updateAnalyticsOverview();
+    updatePlatformStatus();
+    updateRealtimeData();
+    loadGoogleAnalyticsData();
+    loadWickedReportsData();
+    loadHubSpotData();
+    loadSalesforceData();
+    loadHumblyticsData();
+    loadUnifiedData();
+}
+
+function updateAnalyticsOverview() {
+    // Mock data - in real implementation, fetch from MCP servers
+    document.getElementById('totalRevenue').textContent = '$127,450';
+    document.getElementById('revenueChange').textContent = '+15.3% vs last month';
+    
+    document.getElementById('totalConversions').textContent = '1,247';
+    document.getElementById('conversionChange').textContent = '+8.7% vs last month';
+    
+    document.getElementById('activeUsers').textContent = '89';
+    document.getElementById('usersChange').textContent = '+23.1% vs last month';
+    
+    document.getElementById('averageROI').textContent = '425%';
+    document.getElementById('roiChange').textContent = '+12.4% vs last month';
+}
+
+function updatePlatformStatus() {
+    const platforms = [
+        { name: 'Google Analytics', status: 'connected', color: 'green' },
+        { name: 'Wicked Reports', status: 'connected', color: 'green' },
+        { name: 'HubSpot', status: 'connected', color: 'green' },
+        { name: 'Salesforce', status: 'error', color: 'red' },
+        { name: 'Humblytics', status: 'connected', color: 'green' }
+    ];
+
+    const platformStatusHtml = platforms.map(platform => `
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <span class="font-medium">${platform.name}</span>
+            <span class="px-2 py-1 text-xs bg-${platform.color}-100 text-${platform.color}-800 rounded-full">
+                ${platform.status}
+            </span>
+        </div>
+    `).join('');
+
+    document.getElementById('platformStatus').innerHTML = platformStatusHtml;
+}
+
+function updateRealtimeData() {
+    // Mock real-time users
+    const currentUsers = Math.floor(Math.random() * 100) + 50;
+    document.getElementById('realtimeUsers').textContent = currentUsers;
+
+    // Update real-time chart
+    const now = new Date();
+    const timeLabel = now.toLocaleTimeString();
+    
+    analyticsCharts.realtime.data.labels.push(timeLabel);
+    analyticsCharts.realtime.data.datasets[0].data.push(currentUsers);
+    
+    // Keep only last 20 data points
+    if (analyticsCharts.realtime.data.labels.length > 20) {
+        analyticsCharts.realtime.data.labels.shift();
+        analyticsCharts.realtime.data.datasets[0].data.shift();
+    }
+    
+    analyticsCharts.realtime.update();
+
+    // Update ROI metrics
+    document.getElementById('fbROI').textContent = '320%';
+    document.getElementById('googleROI').textContent = '185%';
+    document.getElementById('emailROI').textContent = '450%';
+
+    // Update ROI chart
+    analyticsCharts.roi.data.datasets[0].data = [320, 185, 450];
+    analyticsCharts.roi.update();
+}
+
+function loadGoogleAnalyticsData() {
+    // Mock GA data
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const pageViews = [1200, 1450, 1300, 1600, 1800, 2100, 1900];
+    const sessions = [800, 950, 850, 1100, 1200, 1400, 1250];
+
+    analyticsCharts.gaPageViews.data.labels = labels;
+    analyticsCharts.gaPageViews.data.datasets[0].data = pageViews;
+    analyticsCharts.gaPageViews.data.datasets[1].data = sessions;
+    analyticsCharts.gaPageViews.update();
+
+    const conversionLabels = ['Purchase', 'Sign Up', 'Contact', 'Download'];
+    const conversions = [45, 128, 67, 234];
+
+    analyticsCharts.gaConversions.data.labels = conversionLabels;
+    analyticsCharts.gaConversions.data.datasets[0].data = conversions;
+    analyticsCharts.gaConversions.update();
+
+    // Update top pages table
+    const topPages = [
+        { page: '/home', views: 2100, sessions: 1400, bounceRate: '45%' },
+        { page: '/products', views: 1800, sessions: 1200, bounceRate: '38%' },
+        { page: '/about', views: 950, sessions: 650, bounceRate: '52%' },
+        { page: '/contact', views: 780, sessions: 520, bounceRate: '41%' }
+    ];
+
+    document.getElementById('gaTopPages').innerHTML = topPages.map(page => `
+        <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${page.page}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${page.views}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${page.sessions}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${page.bounceRate}</td>
+        </tr>
+    `).join('');
+}
+
+function loadWickedReportsData() {
+    // Mock WR data
+    analyticsCharts.wrAttribution.data.datasets[0].data = [45000, 32000, 28000];
+    analyticsCharts.wrAttribution.update();
+
+    const campaignLabels = ['Facebook Campaign A', 'Google Campaign B', 'Email Campaign C'];
+    const roiData = [320, 185, 450];
+
+    analyticsCharts.wrCampaign.data.labels = campaignLabels;
+    analyticsCharts.wrCampaign.data.datasets[0].data = roiData;
+    analyticsCharts.wrCampaign.update();
+
+    document.getElementById('firstClickRevenue').textContent = '$45,000';
+    document.getElementById('lastClickRevenue').textContent = '$32,000';
+    document.getElementById('multiTouchRevenue').textContent = '$28,000';
+}
+
+function loadHubSpotData() {
+    // Mock HS data
+    const contactLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+    const contactData = [45, 52, 38, 67];
+
+    analyticsCharts.hsContacts.data.labels = contactLabels;
+    analyticsCharts.hsContacts.data.datasets[0].data = contactData;
+    analyticsCharts.hsContacts.update();
+
+    analyticsCharts.hsDeals.data.datasets[0].data = [25, 15, 8, 12];
+    analyticsCharts.hsDeals.update();
+
+    document.getElementById('hsEmailOpens').textContent = '24.5%';
+    document.getElementById('hsClickRate').textContent = '3.2%';
+    document.getElementById('hsLeadConversion').textContent = '8.7%';
+    document.getElementById('hsDealCloseRate').textContent = '15.3%';
+}
+
+function loadSalesforceData() {
+    // Mock SF data
+    const pipelineLabels = ['Prospecting', 'Qualification', 'Proposal', 'Negotiation'];
+    const pipelineData = [125000, 89000, 67000, 145000];
+
+    analyticsCharts.sfPipeline.data.labels = pipelineLabels;
+    analyticsCharts.sfPipeline.data.datasets[0].data = pipelineData;
+    analyticsCharts.sfPipeline.update();
+
+    const leadSourceLabels = ['Website', 'Referral', 'Social Media', 'Paid Ads', 'Events'];
+    const leadSourceData = [35, 28, 15, 12, 10];
+
+    analyticsCharts.sfLeadSource.data.labels = leadSourceLabels;
+    analyticsCharts.sfLeadSource.data.datasets[0].data = leadSourceData;
+    analyticsCharts.sfLeadSource.update();
+
+    document.getElementById('sfQualifiedLeads').textContent = '234';
+    document.getElementById('sfOpportunities').textContent = '89';
+    document.getElementById('sfWinRate').textContent = '23%';
+    document.getElementById('sfAvgDealSize').textContent = '$4,750';
+}
+
+function loadHumblyticsData() {
+    // Mock Humblytics data
+    const trafficLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const visitorsData = [1850, 2140, 1980, 2350, 2780, 3250, 2890];
+    const sessionsData = [1420, 1680, 1550, 1920, 2180, 2540, 2280];
+
+    analyticsCharts.humblyticsTraffic.data.labels = trafficLabels;
+    analyticsCharts.humblyticsTraffic.data.datasets[0].data = visitorsData;
+    analyticsCharts.humblyticsTraffic.data.datasets[1].data = sessionsData;
+    analyticsCharts.humblyticsTraffic.update();
+
+    // Update heatmap insights
+    document.getElementById('topClickElement').textContent = 'CTA Button (34%)';
+    document.getElementById('avgScrollDepth').textContent = '68%';
+    document.getElementById('hotZones').textContent = '3 zones';
+
+    // Update A/B test results
+    document.getElementById('abTestWinner').textContent = '+23.5% vs control';
+    document.getElementById('confidenceLevel').textContent = '95%';
+
+    // Funnel data is already set in chart initialization
+    analyticsCharts.humblyticsFunnel.update();
+}
+
+function loadUnifiedData() {
+    // Mock unified data
+    const unifiedLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    
+    analyticsCharts.unifiedRevenue.data.labels = unifiedLabels;
+    analyticsCharts.unifiedRevenue.data.datasets[0].data = [45000, 52000, 48000, 61000, 58000, 67000];
+    analyticsCharts.unifiedRevenue.data.datasets[1].data = [38000, 42000, 45000, 48000, 52000, 55000];
+    analyticsCharts.unifiedRevenue.data.datasets[2].data = [28000, 31000, 35000, 39000, 42000, 45000];
+    analyticsCharts.unifiedRevenue.update();
+
+    analyticsCharts.platformComparison.data.datasets[0].data = [85, 78, 92, 67, 74];
+    analyticsCharts.platformComparison.data.datasets[1].data = [78, 85, 88, 72, 81];
+    analyticsCharts.platformComparison.update();
+
+    document.getElementById('unifiedLeads').textContent = '2,847';
+    document.getElementById('unifiedConversionRate').textContent = '12.3%';
+    document.getElementById('unifiedLTV').textContent = '$4,250';
+    document.getElementById('unifiedCAC').textContent = '$185';
+    document.getElementById('unifiedChurn').textContent = '3.2%';
+    document.getElementById('unifiedMRR').textContent = '+18.5%';
+}
+
+function setupAnalyticsEventListeners() {
+    // Real-time updates for demo
+    setInterval(updateRealtimeData, 30000); // Update every 30 seconds
+}
+
+function switchAnalyticsTab(tabName) {
+    // Remove active classes
+    document.querySelectorAll('.analytics-tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'border-blue-500', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-gray-500');
+    });
+
+    // Hide all tab contents
+    document.querySelectorAll('.analytics-tab-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+
+    // Show selected tab
+    event.target.classList.add('active', 'border-blue-500', 'text-blue-600');
+    event.target.classList.remove('border-transparent', 'text-gray-500');
+    document.getElementById(tabName + '-analytics-tab').classList.remove('hidden');
+}
+
+function refreshAnalytics() {
+    console.log('Refreshing analytics data...');
+    loadAnalyticsData();
+    showNotification('Analytics data refreshed', 'success');
+}
+
+function createCustomReport() {
+    console.log('Creating custom report...');
+    // Open custom report modal
+    showNotification('Custom report builder coming soon', 'info');
+}
+
+function exportAnalytics() {
+    console.log('Exporting analytics data...');
+    showNotification('Analytics export started', 'info');
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(initializeAnalyticsDashboard, 1000);
+});
+</script>

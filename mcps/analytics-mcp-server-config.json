@@ -1,0 +1,8 @@
+{
+  "name": "analytics-mcp-server",
+  "enabled": true,
+  "port": 3004,
+  "endpoints": [
+    "/api/mcp/analytics-mcp-server"
+  ]
+}

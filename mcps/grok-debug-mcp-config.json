@@ -1,0 +1,8 @@
+{
+  "name": "grok-debug-mcp",
+  "enabled": true,
+  "port": 3003,
+  "endpoints": [
+    "/api/mcp/grok-debug-mcp"
+  ]
+}

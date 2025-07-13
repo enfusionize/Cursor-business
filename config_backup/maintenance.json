@@ -1,0 +1,91 @@
+{
+  "maintenance": {
+    "enabled": true,
+    "schedule_type": "automated",
+    "maintenance_window": {
+      "start_time": "02:00",
+      "end_time": "04:00",
+      "timezone": "UTC",
+      "days": ["sunday"]
+    }
+  },
+  "tasks": {
+    "daily": [
+      {
+        "name": "Health Check",
+        "command": "npm run health-check",
+        "time": "06:00",
+        "enabled": true
+      },
+      {
+        "name": "Log Rotation",
+        "command": "npm run log-rotation",
+        "time": "01:00",
+        "enabled": true
+      },
+      {
+        "name": "Cache Cleanup",
+        "command": "npm run cache-cleanup",
+        "time": "03:00",
+        "enabled": true
+      }
+    ],
+    "weekly": [
+      {
+        "name": "Database Backup",
+        "command": "npm run backup-config",
+        "day": "sunday",
+        "time": "02:00",
+        "enabled": true
+      },
+      {
+        "name": "Security Audit",
+        "command": "npm audit",
+        "day": "monday",
+        "time": "08:00",
+        "enabled": true
+      },
+      {
+        "name": "Performance Report",
+        "command": "npm run performance-analytics",
+        "day": "friday",
+        "time": "18:00",
+        "enabled": true
+      }
+    ],
+    "monthly": [
+      {
+        "name": "Dependency Update",
+        "command": "npm update",
+        "day": 1,
+        "time": "02:30",
+        "enabled": false
+      },
+      {
+        "name": "System Analysis",
+        "command": "npm run system-diagnostics",
+        "day": 15,
+        "time": "02:00",
+        "enabled": true
+      }
+    ]
+  },
+  "notifications": {
+    "email": {
+      "enabled": true,
+      "recipients": ["admin@vibe-marketing.com"],
+      "send_on": ["start", "complete", "error"]
+    },
+    "webhook": {
+      "enabled": false,
+      "url": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+    }
+  },
+  "backup": {
+    "enabled": true,
+    "retention_days": 30,
+    "compression": true,
+    "encrypt": false,
+    "storage_path": "./backups"
+  }
+}

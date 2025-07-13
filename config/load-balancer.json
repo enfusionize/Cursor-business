@@ -1,0 +1,61 @@
+{
+  "load_balancer": {
+    "enabled": false,
+    "algorithm": "round_robin",
+    "health_check_interval": 30,
+    "max_retries": 3
+  },
+  "upstream_servers": {
+    "dashboard": [
+      {
+        "host": "localhost",
+        "port": 3001,
+        "weight": 1,
+        "max_fails": 3,
+        "fail_timeout": 30
+      }
+    ],
+    "admin": [
+      {
+        "host": "localhost",
+        "port": 3002,
+        "weight": 1,
+        "max_fails": 3,
+        "fail_timeout": 30
+      }
+    ],
+    "api": [
+      {
+        "host": "localhost",
+        "port": 8080,
+        "weight": 1,
+        "max_fails": 3,
+        "fail_timeout": 30
+      }
+    ]
+  },
+  "ssl": {
+    "enabled": false,
+    "certificate": "/path/to/cert.pem",
+    "private_key": "/path/to/key.pem",
+    "redirect_http": true
+  },
+  "caching": {
+    "enabled": true,
+    "static_files": {
+      "enabled": true,
+      "cache_time": 3600,
+      "extensions": [".css", ".js", ".png", ".jpg", ".ico"]
+    },
+    "api_responses": {
+      "enabled": false,
+      "cache_time": 300
+    }
+  },
+  "rate_limiting": {
+    "enabled": true,
+    "requests_per_minute": 1000,
+    "burst_size": 100,
+    "ban_duration": 300
+  }
+}

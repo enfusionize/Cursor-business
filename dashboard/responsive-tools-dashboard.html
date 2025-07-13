@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Responsive Tools Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'xs': '475px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '88': '22rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Mobile-first responsive design */
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Touch-friendly interactions */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+
+        .tap-highlight {
+            -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Responsive grid system */
+        .dashboard-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Tool cards */
+        .tool-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Status indicators */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .status-active { background-color: var(--secondary-color); }
+        .status-inactive { background-color: var(--text-secondary); }
+        .status-error { background-color: var(--danger-color); }
+        .status-warning { background-color: var(--accent-color); }
+
+        /* Mobile navigation */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-background);
+            border-top: 1px solid var(--border-color);
+            padding: 0.75rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            min-width: 60px;
+        }
+
+        .mobile-nav-item:hover,
+        .mobile-nav-item.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+        }
+
+        .mobile-nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-nav-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Responsive header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Responsive button */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #059669;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--background-color);
+        }
+
+        /* Tool categories */
+        .tool-category {
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+        }
+
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: auto;
+        }
+
+        /* Metrics display */
+        .metric-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Loading states */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Progress bars */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive utilities */
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .hide-mobile {
+                display: block;
+            }
+            .show-mobile {
+                display: none;
+            }
+        }
+
+        .main-content {
+            padding: 1rem;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding-bottom: 6rem; /* Space for mobile nav */
+        }
+
+        @media (min-width: 640px) {
+            .main-content {
+                padding: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
+
+        /* Swipe gestures for mobile */
+        .swipeable {
+            touch-action: pan-y;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #0f172a;
+                --card-background: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --border-color: #334155;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states */
+        .btn:focus,
+        .tool-card:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Tool action buttons */
+        .tool-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-action-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .tool-action-btn.start {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .tool-action-btn.stop {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .tool-action-btn.configure {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .tool-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Search and filter */
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--card-background);
+            color: var(--text-primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* Filter chips */
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+
+        .filter-chip {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filter-chip.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Notification system */
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: var(--secondary-color);
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            background-color: var(--accent-color);
+        }
+
+        /* Responsive tables */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-background);
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table th {
+            background-color: var(--background-color);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Modal for mobile */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* Responsive charts */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="flex items-center">
+                <h1 class="header-title" data-i18n="tools_dashboard">Tools Dashboard</h1>
+                <div class="status-dot status-active ml-2"></div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline hide-mobile" onclick="toggleView()">
+                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                    <span>Grid</span>
+                </button>
+                <button class="btn btn-primary" onclick="refreshDashboard()">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    <span class="hide-mobile">Refresh</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Search and Filter -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search tools..." id="searchInput">
+            <i data-lucide="search" class="search-icon"></i>
+        </div>
+
+        <div class="filter-chips" id="filterChips">
+            <div class="filter-chip active" data-filter="all">All Tools</div>
+            <div class="filter-chip" data-filter="mcp">MCP Servers</div>
+            <div class="filter-chip" data-filter="automation">Automation</div>
+            <div class="filter-chip" data-filter="monitoring">Monitoring</div>
+            <div class="filter-chip" data-filter="development">Development</div>
+            <div class="filter-chip" data-filter="business">Business</div>
+        </div>
+
+        <!-- Quick Metrics -->
+        <div class="dashboard-grid mb-8">
+            <div class="metric-card">
+                <div class="metric-value" id="totalTools">--</div>
+                <div class="metric-label">Total Tools</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="activeTools">--</div>
+                <div class="metric-label">Active Tools</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="cpuUsage">--%</div>
+                <div class="metric-label">CPU Usage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="memoryUsage">--%</div>
+                <div class="metric-label">Memory Usage</div>
+            </div>
+        </div>
+
+        <!-- MCP Servers -->
+        <div class="tool-category">
+            <div class="category-header">
+                <i data-lucide="server" class="category-icon"></i>
+                <h2 class="category-title" data-i18n="mcp_servers">MCP Servers</h2>
+                <span class="category-count" id="mcpCount">0</span>
+            </div>
+            <div class="dashboard-grid" id="mcpServers">
+                <!-- MCP servers will be populated here -->
+            </div>
+        </div>
+
+        <!-- Automation Tools -->
+        <div class="tool-category">
+            <div class="category-header">
+                <i data-lucide="zap" class="category-icon"></i>
+                <h2 class="category-title" data-i18n="automation_tools">Automation Tools</h2>
+                <span class="category-count" id="automationCount">0</span>
+            </div>
+            <div class="dashboard-grid" id="automationTools">
+                <!-- Automation tools will be populated here -->
+            </div>
+        </div>
+
+        <!-- Monitoring Tools -->
+        <div class="tool-category">
+            <div class="category-header">
+                <i data-lucide="activity" class="category-icon"></i>
+                <h2 class="category-title" data-i18n="monitoring_analytics">Monitoring & Analytics</h2>
+                <span class="category-count" id="monitoringCount">0</span>
+            </div>
+            <div class="dashboard-grid" id="monitoringTools">
+                <!-- Monitoring tools will be populated here -->
+            </div>
+        </div>
+
+        <!-- Development Tools -->
+        <div class="tool-category">
+            <div class="category-header">
+                <i data-lucide="code" class="category-icon"></i>
+                <h2 class="category-title" data-i18n="development_tools">Development Tools</h2>
+                <span class="category-count" id="developmentCount">0</span>
+            </div>
+            <div class="dashboard-grid" id="developmentTools">
+                <!-- Development tools will be populated here -->
+            </div>
+        </div>
+
+        <!-- Business Tools -->
+        <div class="tool-category">
+            <div class="category-header">
+                <i data-lucide="briefcase" class="category-icon"></i>
+                <h2 class="category-title" data-i18n="business_tools">Business Tools</h2>
+                <span class="category-count" id="businessCount">0</span>
+            </div>
+            <div class="dashboard-grid" id="businessTools">
+                <!-- Business tools will be populated here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Analytics Dashboard Section (Include the analytics content here) -->
+    <script src="analytics-dashboard-section.html"></script>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav show-mobile">
+        <div class="mobile-nav-item active" data-tab="dashboard">
+            <i data-lucide="home" class="mobile-nav-icon"></i>
+            <span class="mobile-nav-text">Dashboard</span>
+        </div>
+        <div class="mobile-nav-item" data-tab="tools">
+            <i data-lucide="wrench" class="mobile-nav-icon"></i>
+            <span class="mobile-nav-text">Tools</span>
+        </div>
+        <div class="mobile-nav-item" data-tab="monitoring">
+            <i data-lucide="activity" class="mobile-nav-icon"></i>
+            <span class="mobile-nav-text">Monitor</span>
+        </div>
+        <div class="mobile-nav-item" data-tab="analytics">
+            <i data-lucide="bar-chart-3" class="mobile-nav-icon"></i>
+            <span class="mobile-nav-text">Analytics</span>
+        </div>
+        <div class="mobile-nav-item" data-tab="settings">
+            <i data-lucide="settings" class="mobile-nav-icon"></i>
+            <span class="mobile-nav-text">Settings</span>
+        </div>
+    </nav>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <!-- Tool Configuration Modal -->
+    <div id="toolModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle" data-i18n="tool_configuration">Tool Configuration</h3>
+                <button class="modal-close" onclick="closeModal()" data-i18n="times">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Dashboard state
+        let dashboardData = {
+            tools: [],
+            metrics: {},
+            currentView: 'grid',
+            activeFilter: 'all'
+        };
+
+        // Tool definitions
+        const toolDefinitions = {
+            mcp: [
+                {
+                    id: 'playwright-mcp',
+                    name: 'Playwright MCP',
+                    description: 'Web automation and testing',
+                    status: 'active',
+                    category: 'mcp',
+                    icon: 'globe',
+                    actions: ['start', 'stop', 'configure', 'logs']
+                },
+                {
+                    id: 'firecrawl-mcp',
+                    name: 'Firecrawl MCP',
+                    description: 'Web scraping and data extraction',
+                    status: 'active',
+                    category: 'mcp',
+                    icon: 'search',
+                    actions: ['start', 'stop', 'configure', 'logs']
+                },
+                {
+                    id: 'perplexity-mcp',
+                    name: 'Perplexity MCP',
+                    description: 'AI-powered research and analysis',
+                    status: 'active',
+                    category: 'mcp',
+                    icon: 'brain',
+                    actions: ['start', 'stop', 'configure', 'test']
+                },
+                {
+                    id: 'clickup-mcp',
+                    name: 'ClickUp MCP',
+                    description: 'Project management integration',
+                    status: 'active',
+                    category: 'mcp',
+                    icon: 'clipboard',
+                    actions: ['start', 'stop', 'configure', 'sync']
+                },
+                {
+                    id: 'figma-mcp',
+                    name: 'Figma MCP',
+                    description: 'Design workflow automation',
+                    status: 'inactive',
+                    category: 'mcp',
+                    icon: 'figma',
+                    actions: ['start', 'stop', 'configure', 'sync']
+                }
+            ],
+            automation: [
+                {
+                    id: 'string-automation',
+                    name: 'String Automation Engine',
+                    description: 'Natural language automation',
+                    status: 'active',
+                    category: 'automation',
+                    icon: 'zap',
+                    actions: ['create', 'templates', 'bi', 'test']
+                },
+                {
+                    id: 'clickup-daemon',
+                    name: 'ClickUp Automation Daemon',
+                    description: 'Automated project management',
+                    status: 'active',
+                    category: 'automation',
+                    icon: 'repeat',
+                    actions: ['start', 'stop', 'status', 'configure']
+                },
+                {
+                    id: 'learning-daemon',
+                    name: 'Automated Learning Daemon',
+                    description: 'Continuous learning and optimization',
+                    status: 'active',
+                    category: 'automation',
+                    icon: 'graduation-cap',
+                    actions: ['start', 'stop', 'status', 'configure']
+                }
+            ],
+            monitoring: [
+                {
+                    id: 'health-monitor',
+                    name: 'Health Monitor',
+                    description: 'System health and performance monitoring',
+                    status: 'active',
+                    category: 'monitoring',
+                    icon: 'heart',
+                    actions: ['start', 'stop', 'verbose', 'continuous']
+                },
+                {
+                    id: 'auto-fix-engine',
+                    name: 'Auto-Fix Engine',
+                    description: 'Automated issue detection and resolution',
+                    status: 'active',
+                    category: 'monitoring',
+                    icon: 'wrench',
+                    actions: ['run', 'dry-run', 'interactive', 'continuous']
+                },
+                {
+                    id: 'performance-analytics',
+                    name: 'Performance Analytics',
+                    description: 'Advanced performance metrics and insights',
+                    status: 'active',
+                    category: 'monitoring',
+                    icon: 'bar-chart',
+                    actions: ['start', 'report', 'configure', 'export']
+                }
+            ],
+            development: [
+                {
+                    id: 'multi-model-test',
+                    name: 'Multi-Model Testing',
+                    description: 'Test multiple AI models simultaneously',
+                    status: 'active',
+                    category: 'development',
+                    icon: 'cpu',
+                    actions: ['run', 'configure', 'results', 'compare']
+                },
+                {
+                    id: 'claude-workflow',
+                    name: 'Claude Code Workflow',
+                    description: 'Advanced Claude coding workflows',
+                    status: 'active',
+                    category: 'development',
+                    icon: 'code',
+                    actions: ['start', 'configure', 'templates', 'test']
+                },
+                {
+                    id: 'figma-plugin',
+                    name: 'Figma Plugin Creator',
+                    description: 'Create and deploy Figma plugins',
+                    status: 'inactive',
+                    category: 'development',
+                    icon: 'puzzle',
+                    actions: ['create', 'deploy', 'configure', 'test']
+                }
+            ],
+            business: [
+                {
+                    id: 'knowledge-engine',
+                    name: 'Knowledge Base Engine',
+                    description: 'Intelligent knowledge management',
+                    status: 'active',
+                    category: 'business',
+                    icon: 'book',
+                    actions: ['start', 'index', 'search', 'configure']
+                },
+                {
+                    id: 'business-intelligence',
+                    name: 'Business Intelligence',
+                    description: 'Advanced business analytics and insights',
+                    status: 'active',
+                    category: 'business',
+                    icon: 'trending-up',
+                    actions: ['generate', 'report', 'configure', 'export']
+                },
+                {
+                    id: 'miro-dashboard',
+                    name: 'Miro Dashboard',
+                    description: 'Real-time visual dashboards',
+                    status: 'active',
+                    category: 'business',
+                    icon: 'layout',
+                    actions: ['start', 'create', 'configure', 'export']
+                }
+            ]
+        };
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            // Flatten all tools
+            dashboardData.tools = [
+                ...toolDefinitions.mcp,
+                ...toolDefinitions.automation,
+                ...toolDefinitions.monitoring,
+                ...toolDefinitions.development,
+                ...toolDefinitions.business
+            ];
+
+            // Update metrics
+            updateMetrics();
+
+            // Render tools
+            renderTools();
+
+            // Setup event listeners
+            setupEventListeners();
+
+            // Start periodic updates
+            setInterval(updateDashboard, 5000);
+
+            showNotification('Dashboard initialized successfully', 'success');
+        }
+
+        // Update metrics
+        function updateMetrics() {
+            const totalTools = dashboardData.tools.length;
+            const activeTools = dashboardData.tools.filter(tool => tool.status === 'active').length;
+            
+            document.getElementById('totalTools').textContent = totalTools;
+            document.getElementById('activeTools').textContent = activeTools;
+            document.getElementById('cpuUsage').textContent = Math.floor(Math.random() * 100) + '%';
+            document.getElementById('memoryUsage').textContent = Math.floor(Math.random() * 100) + '%';
+
+            // Update category counts
+            const categories = ['mcp', 'automation', 'monitoring', 'development', 'business'];
+            categories.forEach(category => {
+                const count = dashboardData.tools.filter(tool => tool.category === category).length;
+                const element = document.getElementById(category + 'Count');
+                if (element) {
+                    element.textContent = count;
+                }
+            });
+        }
+
+        // Render tools
+        function renderTools() {
+            const categories = ['mcp', 'automation', 'monitoring', 'development', 'business'];
+            
+            categories.forEach(category => {
+                const container = document.getElementById(category + 'Tools');
+                if (container) {
+                    const categoryTools = dashboardData.tools.filter(tool => tool.category === category);
+                    container.innerHTML = categoryTools.map(tool => createToolCard(tool)).join('');
+                }
+            });
+        }
+
+        // Create tool card HTML
+        function createToolCard(tool) {
+            const statusClass = `status-${tool.status === 'active' ? 'active' : tool.status === 'error' ? 'error' : 'inactive'}`;
+            
+            return `
+                <div class="tool-card" data-tool-id="${tool.id}" data-category="${tool.category}">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center">
+                            <i data-lucide="${tool.icon}" class="w-6 h-6 mr-2 text-blue-600"></i>
+                            <h3 class="font-semibold text-gray-900" data-i18n="toolname">${tool.name}</h3>
+                        </div>
+                        <div class="status-dot ${statusClass}"></div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="tooldescription">${tool.description}</p>
+                    <div class="tool-actions">
+                        ${tool.actions.map(action => `
+                            <button class="tool-action-btn ${action}" onclick="executeToolAction('${tool.id}', '${action}')" data-i18n="_actioncharat0touppercase_actionslice1_">
+                                ${action.charAt(0).toUpperCase() + action.slice(1)}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Execute tool action
+        function executeToolAction(toolId, action) {
+            const tool = dashboardData.tools.find(t => t.id === toolId);
+            if (!tool) return;
+
+            showNotification(`Executing ${action} for ${tool.name}...`, 'info');
+            
+            // Simulate action execution
+            setTimeout(() => {
+                if (action === 'start') {
+                    tool.status = 'active';
+                } else if (action === 'stop') {
+                    tool.status = 'inactive';
+                }
+                
+                renderTools();
+                updateMetrics();
+                showNotification(`${action} completed for ${tool.name}`, 'success');
+            }, 1000);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', filterTools);
+
+            // Filter chips
+            document.getElementById('filterChips').addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-chip')) {
+                    // Update active filter
+                    document.querySelectorAll('.filter-chip').forEach(chip => {
+                        chip.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    
+                    dashboardData.activeFilter = e.target.dataset.filter;
+                    filterTools();
+                }
+            });
+
+            // Mobile navigation
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    // Update active tab
+                    document.querySelectorAll('.mobile-nav-item').forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    e.currentTarget.classList.add('active');
+                    
+                    const tab = e.currentTarget.dataset.tab;
+                    switchTab(tab);
+                });
+            });
+
+            // Touch gestures for mobile
+            let touchStartX = 0;
+            let touchStartY = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+                
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+                
+                // Horizontal swipe
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) {
+                    if (deltaX > 0) {
+                        // Swipe right
+                        navigateTab('prev');
+                    } else {
+                        // Swipe left
+                        navigateTab('next');
+                    }
+                }
+            });
+        }
+
+        // Filter tools
+        function filterTools() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeFilter = dashboardData.activeFilter;
+            
+            document.querySelectorAll('.tool-card').forEach(card => {
+                const toolId = card.dataset.toolId;
+                const category = card.dataset.category;
+                const tool = dashboardData.tools.find(t => t.id === toolId);
+                
+                if (!tool) return;
+                
+                const matchesSearch = tool.name.toLowerCase().includes(searchTerm) || 
+                                    tool.description.toLowerCase().includes(searchTerm);
+                const matchesFilter = activeFilter === 'all' || category === activeFilter;
+                
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Switch tab
+        function switchTab(tab) {
+            // Handle tab switching logic
+            console.log('Switching to tab:', tab);
+            
+            // You can add specific logic for each tab here
+            switch (tab) {
+                case 'dashboard':
+                    // Show dashboard content
+                    break;
+                case 'tools':
+                    // Show tools content
+                    break;
+                case 'monitoring':
+                    // Show monitoring content
+                    break;
+                case 'settings':
+                    // Show settings content
+                    break;
+            }
+        }
+
+        // Navigate tabs
+        function navigateTab(direction) {
+            const tabs = ['dashboard', 'tools', 'monitoring', 'settings'];
+            const currentTab = document.querySelector('.mobile-nav-item.active').dataset.tab;
+            const currentIndex = tabs.indexOf(currentTab);
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % tabs.length;
+            } else {
+                newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+            }
+            
+            const newTab = tabs[newIndex];
+            document.querySelector(`[data-tab="${newTab}"]`).click();
+        }
+
+        // Toggle view
+        function toggleView() {
+            dashboardData.currentView = dashboardData.currentView === 'grid' ? 'list' : 'grid';
+            // Implement view toggle logic
+            showNotification(`Switched to ${dashboardData.currentView} view`, 'info');
+        }
+
+        // Refresh dashboard
+        function refreshDashboard() {
+            showNotification('Refreshing dashboard...', 'info');
+            
+            // Simulate refresh
+            setTimeout(() => {
+                updateMetrics();
+                renderTools();
+                showNotification('Dashboard refreshed successfully', 'success');
+            }, 1000);
+        }
+
+        // Update dashboard (periodic)
+        function updateDashboard() {
+            // Simulate real-time updates
+            const randomTool = dashboardData.tools[Math.floor(Math.random() * dashboardData.tools.length)];
+            if (Math.random() > 0.9) {
+                randomTool.status = randomTool.status === 'active' ? 'inactive' : 'active';
+                renderTools();
+                updateMetrics();
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.getElementById('notificationContainer').appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Open tool modal
+        function openToolModal(toolId) {
+            const tool = dashboardData.tools.find(t => t.id === toolId);
+            if (!tool) return;
+            
+            document.getElementById('modalTitle').textContent = tool.name;
+            document.getElementById('modalBody').innerHTML = `
+                <p class="mb-4" data-i18n="tooldescription">${tool.description}</p>
+                <div class="space-y-2">
+                    <div><strong>Status:</strong> ${tool.status}</div>
+                    <div><strong>Category:</strong> ${tool.category}</div>
+                    <div><strong>Actions:</strong> ${tool.actions.join(', ')}</div>
+                </div>
+            `;
+            
+            document.getElementById('toolModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('toolModal').style.display = 'none';
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+            lucide.createIcons();
+        });
+
+        // Handle resize events
+        window.addEventListener('resize', () => {
+            // Reinitialize icons after resize
+            setTimeout(() => {
+                lucide.createIcons();
+            }, 100);
+        });
+    </script>
+<script src="scripts/i18n-integration.js"></script>
+</body>
+</html>

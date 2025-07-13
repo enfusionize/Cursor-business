@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnfusionAIze | Gamification Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-cyan: #06b6d4;
+            --accent-purple: #7c3aed;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --error-red: #ef4444;
+            --gold: #fbbf24;
+            --silver: #94a3b8;
+            --bronze: #f97316;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--secondary-cyan));
+            --gradient-success: linear-gradient(135deg, var(--success-green), #059669);
+            --gradient-warning: linear-gradient(135deg, var(--warning-orange), #d97706);
+            --gradient-purple: linear-gradient(135deg, var(--accent-purple), #a855f7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .gamification-header {
+            background: var(--gradient-primary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gamification-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .user-stats {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .xp-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            width: 120px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            gap: 2rem;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Left Sidebar - Achievements & Progress */
+        .achievements-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-badge {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .achievement-badge.earned {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            transform: scale(1.05);
+        }
+
+        .achievement-badge.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+
+        .achievement-badge:hover:not(.locked) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        .achievement-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .achievement-progress {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .level-progression {
+            background: rgba(30, 64, 175, 0.1);
+            border: 1px solid var(--primary-blue);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .level-badge {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .level-xp {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .level-progress {
+            width: 100%;
+            height: 12px;
+            background: rgba(30, 64, 175, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+
+        .next-level {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Main Content Area - Challenges & Activities */
+        .challenges-area {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .challenges-header {
+            background: var(--gradient-purple);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .challenges-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenges-subtitle {
+            opacity: 0.9;
+        }
+
+        .challenges-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .challenge-tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-weight: 500;
+        }
+
+        .challenge-tab.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .challenges-content {
+            padding: 2rem;
+        }
+
+        .challenge-card {
+            background: rgba(30, 64, 175, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--primary-blue);
+        }
+
+        .challenge-card.completed {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .challenge-card.in-progress {
+            border-color: var(--warning-orange);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-info h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .challenge-rewards {
+            text-align: right;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .xp-reward {
+            color: var(--success-green);
+            font-weight: 600;
+        }
+
+        .badge-reward {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .challenge-description {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .challenge-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(30, 64, 175, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .challenge-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .challenge-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            color: var(--success-green);
+        }
+
+        .status-in-progress {
+            color: var(--warning-orange);
+        }
+
+        .status-available {
+            color: var(--primary-blue);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Right Sidebar - Leaderboard & Teams */
+        .social-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+        }
+
+        .leaderboard {
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(30, 64, 175, 0.05);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(30, 64, 175, 0.1);
+        }
+
+        .rank-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .rank-1 {
+            background: var(--gold);
+            color: white;
+        }
+
+        .rank-2 {
+            background: var(--silver);
+            color: white;
+        }
+
+        .rank-3 {
+            background: var(--bronze);
+            color: white;
+        }
+
+        .rank-other {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-stats-small {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .team-section {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        .team-progress {
+            margin-bottom: 1rem;
+        }
+
+        .team-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .team-members {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gradient-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Floating Achievement Notification */
+        .achievement-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+        }
+
+        .achievement-popup.show {
+            transform: translateX(0);
+        }
+
+        .popup-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .popup-icon {
+            font-size: 2rem;
+            animation: bounce 0.6s ease;
+        }
+
+        .popup-text h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .popup-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Tool Integration Indicators */
+        .tool-usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tool-card {
+            background: rgba(30, 64, 175, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .tool-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .tool-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .tool-usage {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .usage-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(30, 64, 175, 0.2);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .achievements-panel,
+            .social-panel {
+                position: static;
+            }
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                transform: translate3d(0, -30px, 0);
+            }
+            70% {
+                transform: translate3d(0, -15px, 0);
+            }
+            90% {
+                transform: translate3d(0, -4px, 0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideInUp 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Gamification Header -->
+    <header class="gamification-header">
+        <div class="header-content">
+            <div class="gamification-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="logo-text">
+                    <h1 data-i18n="achievement_hub">Achievement Hub</h1>
+                    <div class="logo-subtitle">Level up your Layer Prompting mastery</div>
+                </div>
+            </div>
+
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="user-level">12</div>
+                    <div class="stat-label">Level</div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="user-xp">2,847</div>
+                    <div class="stat-label">Total XP</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="user-achievements">23</div>
+                    <div class="stat-label">Achievements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="user-streak">7</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Left Sidebar - Achievements & Progress -->
+        <div class="achievements-panel">
+            <div class="panel-header">
+                <i class="fas fa-medal"></i>
+                Achievements
+            </div>
+
+            <!-- Level Progression -->
+            <div class="level-progression">
+                <div class="level-header">
+                    <div class="level-badge">Level 12</div>
+                    <div class="level-xp">2,847 / 3,200 XP</div>
+                </div>
+                <div class="level-progress">
+                    <div class="level-fill" style="width: 75%"></div>
+                </div>
+                <div class="next-level">353 XP to Level 13</div>
+            </div>
+
+            <!-- Achievement Badges -->
+            <div class="achievement-grid">
+                <div class="achievement-badge earned" onclick="showAchievementDetails('first-prompt')">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-title">First Prompt</div>
+                    <div class="achievement-progress">Completed</div>
+                </div>
+
+                <div class="achievement-badge earned" onclick="showAchievementDetails('layer-master')">
+                    <div class="achievement-icon">🧠</div>
+                    <div class="achievement-title">Layer Master</div>
+                    <div class="achievement-progress">7/7 Layers</div>
+                </div>
+
+                <div class="achievement-badge earned" onclick="showAchievementDetails('automation-expert')">
+                    <div class="achievement-icon">⚙️</div>
+                    <div class="achievement-title">Automation Expert</div>
+                    <div class="achievement-progress">Completed</div>
+                </div>
+
+                <div class="achievement-badge in-progress" onclick="showAchievementDetails('streak-warrior')">
+                    <div class="achievement-icon">🔥</div>
+                    <div class="achievement-title">Streak Warrior</div>
+                    <div class="achievement-progress">7/30 Days</div>
+                </div>
+
+                <div class="achievement-badge locked" onclick="showAchievementDetails('platform-guru')">
+                    <div class="achievement-icon">🚀</div>
+                    <div class="achievement-title">Platform Guru</div>
+                    <div class="achievement-progress">Locked</div>
+                </div>
+
+                <div class="achievement-badge locked" onclick="showAchievementDetails('mentor')">
+                    <div class="achievement-icon">👨‍🏫</div>
+                    <div class="achievement-title">Mentor</div>
+                    <div class="achievement-progress">Locked</div>
+                </div>
+            </div>
+
+            <!-- Tool Usage Tracking -->
+            <div class="panel-header">
+                <i class="fas fa-tools"></i>
+                Tool Mastery
+            </div>
+
+            <div class="tool-usage-grid">
+                <div class="tool-card" onclick="openTool('layer-prompter')">
+                    <div class="tool-icon">🤖</div>
+                    <div class="tool-name">Layer Prompter</div>
+                    <div class="tool-usage">47 prompts created</div>
+                    <div class="usage-bar">
+                        <div class="usage-fill" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="openTool('cursor-build')">
+                    <div class="tool-icon">💻</div>
+                    <div class="tool-name">Cursor Build</div>
+                    <div class="tool-usage">23 projects</div>
+                    <div class="usage-bar">
+                        <div class="usage-fill" style="width: 67%"></div>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="openTool('analytics')">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-name">Analytics</div>
+                    <div class="tool-usage">156 insights</div>
+                    <div class="usage-bar">
+                        <div class="usage-fill" style="width: 92%"></div>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="openTool('client-deploy')">
+                    <div class="tool-icon">🚀</div>
+                    <div class="tool-name">Client Deploy</div>
+                    <div class="tool-usage">12 deployments</div>
+                    <div class="usage-bar">
+                        <div class="usage-fill" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area - Challenges & Activities -->
+        <div class="challenges-area">
+            <div class="challenges-header">
+                <h2 class="challenges-title" data-i18n="daily_challenges_quests">Daily Challenges & Quests</h2>
+                <p class="challenges-subtitle" data-i18n="complete_challenges_to_earn_xp_unlock_achievements">Complete challenges to earn XP, unlock achievements, and master Layer Prompting</p>
+                
+                <div class="challenges-tabs">
+                    <div class="challenge-tab active" onclick="switchChallengeTab('daily')">Daily</div>
+                    <div class="challenge-tab" onclick="switchChallengeTab('weekly')">Weekly</div>
+                    <div class="challenge-tab" onclick="switchChallengeTab('epic')">Epic Quests</div>
+                    <div class="challenge-tab" onclick="switchChallengeTab('team')">Team</div>
+                </div>
+            </div>
+
+            <div class="challenges-content">
+                <!-- Daily Challenges -->
+                <div id="daily-challenges" class="challenge-group">
+                    <div class="challenge-card in-progress">
+                        <div class="challenge-header">
+                            <div class="challenge-info">
+                                <h3 data-i18n="morning_layer_prompt">Morning Layer Prompt</h3>
+                                <div class="challenge-meta">
+                                    <span><i class="fas fa-clock"></i> 15 minutes</span>
+                                    <span><i class="fas fa-target"></i> Beginner</span>
+                                    <span><i class="fas fa-calendar"></i> Daily</span>
+                                </div>
+                            </div>
+                            <div class="challenge-rewards">
+                                <div class="reward-item">
+                                    <i class="fas fa-star"></i>
+                                    <span class="xp-reward">+50 XP</span>
+                                </div>
+                                <div class="reward-item">
+                                    <i class="fas fa-fire"></i>
+                                    <span>Streak +1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="challenge-description">
+                            Create your first Layer Prompt of the day using all 7 layers. Focus on a business scenario of your choice.
+                        </div>
+                        <div class="challenge-progress-bar">
+                            <div class="challenge-progress-fill" style="width: 60%"></div>
+                        </div>
+                        <div class="challenge-actions">
+                            <div class="challenge-status status-in-progress">
+                                <i class="fas fa-play-circle"></i>
+                                In Progress (3/5 layers)
+                            </div>
+                            <button class="btn btn-primary" onclick="continueChallenge('morning-prompt')">
+                                <i class="fas fa-arrow-right"></i>
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="challenge-card completed">
+                        <div class="challenge-header">
+                            <div class="challenge-info">
+                                <h3 data-i18n="platform_explorer">Platform Explorer</h3>
+                                <div class="challenge-meta">
+                                    <span><i class="fas fa-clock"></i> 10 minutes</span>
+                                    <span><i class="fas fa-target"></i> Beginner</span>
+                                    <span><i class="fas fa-calendar"></i> Daily</span>
+                                </div>
+                            </div>
+                            <div class="challenge-rewards">
+                                <div class="reward-item">
+                                    <i class="fas fa-star"></i>
+                                    <span class="xp-reward">+25 XP</span>
+                                </div>
+                                <div class="reward-item">
+                                    <i class="fas fa-medal"></i>
+                                    <span class="badge-reward">Explorer Badge</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="challenge-description">
+                            Visit and interact with 3 different platform tools today.
+                        </div>
+                        <div class="challenge-progress-bar">
+                            <div class="challenge-progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="challenge-actions">
+                            <div class="challenge-status status-completed">
+                                <i class="fas fa-check-circle"></i>
+                                Completed! +25 XP earned
+                            </div>
+                            <button class="btn btn-success" onclick="claimReward('platform-explorer')">
+                                <i class="fas fa-gift"></i>
+                                Claimed
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-header">
+                            <div class="challenge-info">
+                                <h3 data-i18n="team_collaboration">Team Collaboration</h3>
+                                <div class="challenge-meta">
+                                    <span><i class="fas fa-clock"></i> 20 minutes</span>
+                                    <span><i class="fas fa-target"></i> Intermediate</span>
+                                    <span><i class="fas fa-calendar"></i> Daily</span>
+                                </div>
+                            </div>
+                            <div class="challenge-rewards">
+                                <div class="reward-item">
+                                    <i class="fas fa-star"></i>
+                                    <span class="xp-reward">+75 XP</span>
+                                </div>
+                                <div class="reward-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Team +10 points</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="challenge-description">
+                            Help a team member with their Layer Prompt or share feedback on their work.
+                        </div>
+                        <div class="challenge-progress-bar">
+                            <div class="challenge-progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="challenge-actions">
+                            <div class="challenge-status status-available">
+                                <i class="fas fa-play"></i>
+                                Ready to start
+                            </div>
+                            <button class="btn btn-primary" onclick="startChallenge('team-collaboration')">
+                                <i class="fas fa-play"></i>
+                                Start Challenge
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Challenges (hidden initially) -->
+                <div id="weekly-challenges" class="challenge-group" style="display: none;">
+                    <div class="challenge-card">
+                        <div class="challenge-header">
+                            <div class="challenge-info">
+                                <h3 data-i18n="layer_prompting_marathon">Layer Prompting Marathon</h3>
+                                <div class="challenge-meta">
+                                    <span><i class="fas fa-clock"></i> 7 days</span>
+                                    <span><i class="fas fa-target"></i> Advanced</span>
+                                    <span><i class="fas fa-calendar-week"></i> Weekly</span>
+                                </div>
+                            </div>
+                            <div class="challenge-rewards">
+                                <div class="reward-item">
+                                    <i class="fas fa-star"></i>
+                                    <span class="xp-reward">+500 XP</span>
+                                </div>
+                                <div class="reward-item">
+                                    <i class="fas fa-trophy"></i>
+                                    <span class="badge-reward">Marathon Badge</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="challenge-description">
+                            Create 15 high-quality Layer Prompts across different business scenarios this week.
+                        </div>
+                        <div class="challenge-progress-bar">
+                            <div class="challenge-progress-fill" style="width: 47%"></div>
+                        </div>
+                        <div class="challenge-actions">
+                            <div class="challenge-status status-in-progress">
+                                <i class="fas fa-play-circle"></i>
+                                In Progress (7/15 prompts)
+                            </div>
+                            <button class="btn btn-primary" onclick="viewProgress('marathon')">
+                                <i class="fas fa-chart-line"></i>
+                                View Progress
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Leaderboard & Teams -->
+        <div class="social-panel">
+            <div class="panel-header">
+                <i class="fas fa-trophy"></i>
+                Leaderboard
+            </div>
+
+            <div class="leaderboard">
+                <div class="leaderboard-item">
+                    <div class="rank-badge rank-1">1</div>
+                    <div class="user-avatar">AM</div>
+                    <div class="user-info">
+                        <div class="user-name">Alex Mitchell</div>
+                        <div class="user-stats-small">Level 15 • 4,892 XP</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-item">
+                    <div class="rank-badge rank-2">2</div>
+                    <div class="user-avatar">SJ</div>
+                    <div class="user-info">
+                        <div class="user-name">Sarah Johnson</div>
+                        <div class="user-stats-small">Level 14 • 4,123 XP</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-item">
+                    <div class="rank-badge rank-3">3</div>
+                    <div class="user-avatar">DK</div>
+                    <div class="user-info">
+                        <div class="user-name">David Kim</div>
+                        <div class="user-stats-small">Level 13 • 3,756 XP</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-item" style="border: 2px solid var(--primary-blue);">
+                    <div class="rank-badge rank-other">4</div>
+                    <div class="user-avatar">YU</div>
+                    <div class="user-info">
+                        <div class="user-name">You</div>
+                        <div class="user-stats-small">Level 12 • 2,847 XP</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-item">
+                    <div class="rank-badge rank-other">5</div>
+                    <div class="user-avatar">MB</div>
+                    <div class="user-info">
+                        <div class="user-name">Maria Brown</div>
+                        <div class="user-stats-small">Level 11 • 2,634 XP</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="team-section">
+                <div class="team-header">
+                    <i class="fas fa-users"></i>
+                    Team Alpha
+                </div>
+
+                <div class="team-progress">
+                    <div class="team-stat">
+                        <span>Team Level:</span>
+                        <span>8</span>
+                    </div>
+                    <div class="team-stat">
+                        <span>Weekly Goal:</span>
+                        <span>847/1000 points</span>
+                    </div>
+                    <div class="team-stat">
+                        <span>Team Rank:</span>
+                        <span>#2 of 12</span>
+                    </div>
+                </div>
+
+                <div class="team-members">
+                    <div class="member-avatar" title="Alex Mitchell">AM</div>
+                    <div class="member-avatar" title="Sarah Johnson">SJ</div>
+                    <div class="member-avatar" title="You">YU</div>
+                    <div class="member-avatar" title="Maria Brown">MB</div>
+                    <div class="member-avatar" title="John Davis">JD</div>
+                </div>
+
+                <button class="btn btn-primary" onclick="viewTeamDetails()" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-users"></i>
+                    View Team Details
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Popup Notification -->
+    <div class="achievement-popup" id="achievement-popup">
+        <div class="popup-content">
+            <div class="popup-icon">🏆</div>
+            <div class="popup-text">
+                <h4 data-i18n="achievement_unlocked">Achievement Unlocked!</h4>
+                <p id="popup-achievement-text" data-i18n="layer_master_completed_all_7_layers">Layer Master - Completed all 7 layers</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gamification System JavaScript
+        class GamificationSystem {
+            constructor() {
+                this.userLevel = 12;
+                this.userXP = 2847;
+                this.xpToNextLevel = 3200;
+                this.achievements = new Map();
+                this.challenges = new Map();
+                this.toolUsage = new Map();
+                
+                this.initializeSystem();
+            }
+
+            initializeSystem() {
+                this.loadUserProgress();
+                this.initializeAchievements();
+                this.initializeChallenges();
+                this.setupEventListeners();
+                this.startDailyTracking();
+                console.log('🎮 Gamification System initialized');
+            }
+
+            // Achievement System
+            initializeAchievements() {
+                const achievements = {
+                    'first-prompt': {
+                        name: 'First Prompt',
+                        description: 'Create your first Layer Prompt',
+                        icon: '🎯',
+                        xpReward: 100,
+                        completed: true,
+                        category: 'beginner'
+                    },
+                    'layer-master': {
+                        name: 'Layer Master',
+                        description: 'Successfully use all 7 layers in a single prompt',
+                        icon: '🧠',
+                        xpReward: 200,
+                        completed: true,
+                        category: 'skill'
+                    },
+                    'automation-expert': {
+                        name: 'Automation Expert',
+                        description: 'Create 10 automated workflows',
+                        icon: '⚙️',
+                        xpReward: 300,
+                        completed: true,
+                        category: 'mastery'
+                    },
+                    'streak-warrior': {
+                        name: 'Streak Warrior',
+                        description: 'Maintain a 30-day daily activity streak',
+                        icon: '🔥',
+                        xpReward: 500,
+                        progress: 7,
+                        target: 30,
+                        completed: false,
+                        category: 'consistency'
+                    },
+                    'platform-guru': {
+                        name: 'Platform Guru',
+                        description: 'Master all platform tools',
+                        icon: '🚀',
+                        xpReward: 750,
+                        completed: false,
+                        locked: true,
+                        category: 'mastery'
+                    },
+                    'mentor': {
+                        name: 'Mentor',
+                        description: 'Help 50 team members with their prompts',
+                        icon: '👨‍🏫',
+                        xpReward: 1000,
+                        completed: false,
+                        locked: true,
+                        category: 'leadership'
+                    }
+                };
+
+                this.achievements = new Map(Object.entries(achievements));
+                this.updateAchievementDisplay();
+            }
+
+            unlockAchievement(achievementId) {
+                const achievement = this.achievements.get(achievementId);
+                if (!achievement || achievement.completed) return;
+
+                achievement.completed = true;
+                this.addXP(achievement.xpReward);
+                this.showAchievementPopup(achievement);
+                this.updateAchievementDisplay();
+                
+                // Track achievement unlock
+                console.log(`🏆 Achievement unlocked: ${achievement.name}`);
+            }
+
+            showAchievementPopup(achievement) {
+                const popup = document.getElementById('achievement-popup');
+                const text = document.getElementById('popup-achievement-text');
+                
+                text.textContent = `${achievement.name} - ${achievement.description}`;
+                popup.classList.add('show');
+                
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 4000);
+            }
+
+            // Challenge System
+            initializeChallenges() {
+                const challenges = {
+                    'morning-prompt': {
+                        name: 'Morning Layer Prompt',
+                        description: 'Create your first Layer Prompt of the day using all 7 layers',
+                        type: 'daily',
+                        xpReward: 50,
+                        timeLimit: 900, // 15 minutes
+                        difficulty: 'beginner',
+                        progress: 3,
+                        target: 5,
+                        status: 'in-progress'
+                    },
+                    'platform-explorer': {
+                        name: 'Platform Explorer',
+                        description: 'Visit and interact with 3 different platform tools today',
+                        type: 'daily',
+                        xpReward: 25,
+                        timeLimit: 600, // 10 minutes
+                        difficulty: 'beginner',
+                        progress: 3,
+                        target: 3,
+                        status: 'completed'
+                    },
+                    'team-collaboration': {
+                        name: 'Team Collaboration',
+                        description: 'Help a team member with their Layer Prompt or share feedback',
+                        type: 'daily',
+                        xpReward: 75,
+                        timeLimit: 1200, // 20 minutes
+                        difficulty: 'intermediate',
+                        progress: 0,
+                        target: 1,
+                        status: 'available'
+                    },
+                    'marathon': {
+                        name: 'Layer Prompting Marathon',
+                        description: 'Create 15 high-quality Layer Prompts across different business scenarios',
+                        type: 'weekly',
+                        xpReward: 500,
+                        timeLimit: 604800, // 7 days
+                        difficulty: 'advanced',
+                        progress: 7,
+                        target: 15,
+                        status: 'in-progress'
+                    }
+                };
+
+                this.challenges = new Map(Object.entries(challenges));
+                this.updateChallengeDisplay();
+            }
+
+            startChallenge(challengeId) {
+                const challenge = this.challenges.get(challengeId);
+                if (!challenge || challenge.status !== 'available') return;
+
+                challenge.status = 'in-progress';
+                challenge.startTime = Date.now();
+                
+                this.updateChallengeDisplay();
+                console.log(`🎯 Challenge started: ${challenge.name}`);
+                
+                // Show challenge started notification
+                this.showNotification(`Challenge started: ${challenge.name}`, 'info');
+            }
+
+            completeChallenge(challengeId) {
+                const challenge = this.challenges.get(challengeId);
+                if (!challenge || challenge.status !== 'in-progress') return;
+
+                challenge.status = 'completed';
+                challenge.completedAt = Date.now();
+                challenge.progress = challenge.target;
+                
+                this.addXP(challenge.xpReward);
+                this.updateChallengeDisplay();
+                
+                console.log(`✅ Challenge completed: ${challenge.name}`);
+                this.showNotification(`Challenge completed! +${challenge.xpReward} XP`, 'success');
+            }
+
+            updateChallengeProgress(challengeId, progress) {
+                const challenge = this.challenges.get(challengeId);
+                if (!challenge) return;
+
+                challenge.progress = Math.min(progress, challenge.target);
+                
+                if (challenge.progress >= challenge.target && challenge.status === 'in-progress') {
+                    this.completeChallenge(challengeId);
+                } else {
+                    this.updateChallengeDisplay();
+                }
+            }
+
+            // XP and Level System
+            addXP(amount) {
+                this.userXP += amount;
+                
+                // Check for level up
+                while (this.userXP >= this.xpToNextLevel) {
+                    this.levelUp();
+                }
+                
+                this.updateUserStatsDisplay();
+                this.saveUserProgress();
+            }
+
+            levelUp() {
+                this.userLevel++;
+                this.userXP -= this.xpToNextLevel;
+                this.xpToNextLevel = this.calculateXPForLevel(this.userLevel + 1);
+                
+                console.log(`🎉 Level up! Now level ${this.userLevel}`);
+                this.showNotification(`Level up! Welcome to Level ${this.userLevel}!`, 'success');
+                
+                // Unlock new content based on level
+                this.checkLevelUnlocks();
+            }
+
+            calculateXPForLevel(level) {
+                return Math.floor(1000 * Math.pow(1.2, level - 1));
+            }
+
+            // Tool Usage Tracking
+            trackToolUsage(toolName, action) {
+                if (!this.toolUsage.has(toolName)) {
+                    this.toolUsage.set(toolName, {
+                        uses: 0,
+                        lastUsed: null,
+                        actions: new Map()
+                    });
+                }
+
+                const tool = this.toolUsage.get(toolName);
+                tool.uses++;
+                tool.lastUsed = Date.now();
+                
+                if (!tool.actions.has(action)) {
+                    tool.actions.set(action, 0);
+                }
+                tool.actions.set(action, tool.actions.get(action) + 1);
+
+                // Award XP for tool usage
+                this.addXP(5);
+                
+                // Check for tool-specific achievements
+                this.checkToolAchievements(toolName, tool);
+                
+                // Update challenge progress
+                this.updateChallengeProgress('platform-explorer', 
+                    Array.from(this.toolUsage.keys()).length);
+            }
+
+            checkToolAchievements(toolName, toolData) {
+                // Check for tool-specific milestones
+                const milestones = [10, 25, 50, 100];
+                milestones.forEach(milestone => {
+                    if (toolData.uses === milestone) {
+                        this.addXP(milestone * 2);
+                        this.showNotification(`${toolName} milestone: ${milestone} uses! +${milestone * 2} XP`, 'success');
+                    }
+                });
+            }
+
+            // Display Updates
+            updateUserStatsDisplay() {
+                document.getElementById('user-level').textContent = this.userLevel;
+                document.getElementById('user-xp').textContent = this.userXP.toLocaleString();
+                
+                // Update XP bar
+                const xpProgress = (this.userXP / this.xpToNextLevel) * 100;
+                document.querySelector('.xp-fill').style.width = `${xpProgress}%`;
+                
+                // Update level progression
+                document.querySelector('.level-badge').textContent = `Level ${this.userLevel}`;
+                document.querySelector('.level-xp').textContent = 
+                    `${this.userXP.toLocaleString()} / ${this.xpToNextLevel.toLocaleString()} XP`;
+                document.querySelector('.level-fill').style.width = `${xpProgress}%`;
+                document.querySelector('.next-level').textContent = 
+                    `${this.xpToNextLevel - this.userXP} XP to Level ${this.userLevel + 1}`;
+            }
+
+            updateAchievementDisplay() {
+                // Update achievement badges
+                this.achievements.forEach((achievement, id) => {
+                    const badge = document.querySelector(`[onclick="showAchievementDetails('${id}')"]`);
+                    if (badge) {
+                        badge.className = 'achievement-badge';
+                        if (achievement.completed) {
+                            badge.classList.add('earned');
+                        } else if (achievement.locked) {
+                            badge.classList.add('locked');
+                        } else {
+                            badge.classList.add('in-progress');
+                        }
+                        
+                        // Update progress text
+                        const progressElement = badge.querySelector('.achievement-progress');
+                        if (achievement.completed) {
+                            progressElement.textContent = 'Completed';
+                        } else if (achievement.locked) {
+                            progressElement.textContent = 'Locked';
+                        } else if (achievement.progress) {
+                            progressElement.textContent = `${achievement.progress}/${achievement.target}`;
+                        }
+                    }
+                });
+                
+                // Update achievement count
+                const completedCount = Array.from(this.achievements.values())
+                    .filter(a => a.completed).length;
+                document.getElementById('user-achievements').textContent = completedCount;
+            }
+
+            updateChallengeDisplay() {
+                // Update challenge cards based on current status
+                this.challenges.forEach((challenge, id) => {
+                    const card = document.querySelector(`[onclick*="${id}"]`)?.closest('.challenge-card');
+                    if (card) {
+                        // Update card class
+                        card.className = 'challenge-card';
+                        if (challenge.status === 'completed') {
+                            card.classList.add('completed');
+                        } else if (challenge.status === 'in-progress') {
+                            card.classList.add('in-progress');
+                        }
+                        
+                        // Update progress bar
+                        const progressBar = card.querySelector('.challenge-progress-fill');
+                        const progressPercent = (challenge.progress / challenge.target) * 100;
+                        progressBar.style.width = `${progressPercent}%`;
+                        
+                        // Update status text
+                        const statusElement = card.querySelector('.challenge-status');
+                        if (challenge.status === 'completed') {
+                            statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Completed! +' + 
+                                challenge.xpReward + ' XP earned';
+                            statusElement.className = 'challenge-status status-completed';
+                        } else if (challenge.status === 'in-progress') {
+                            statusElement.innerHTML = '<i class="fas fa-play-circle"></i> In Progress (' + 
+                                challenge.progress + '/' + challenge.target + ')';
+                            statusElement.className = 'challenge-status status-in-progress';
+                        } else {
+                            statusElement.innerHTML = '<i class="fas fa-play"></i> Ready to start';
+                            statusElement.className = 'challenge-status status-available';
+                        }
+                    }
+                });
+            }
+
+            // Event Handlers
+            setupEventListeners() {
+                // Listen for tool usage events
+                document.addEventListener('tool-usage', (event) => {
+                    this.trackToolUsage(event.detail.tool, event.detail.action);
+                });
+
+                // Listen for prompt creation events
+                document.addEventListener('prompt-created', (event) => {
+                    this.updateChallengeProgress('morning-prompt', 
+                        this.challenges.get('morning-prompt').progress + 1);
+                });
+
+                // Listen for collaboration events
+                document.addEventListener('collaboration', (event) => {
+                    this.updateChallengeProgress('team-collaboration', 1);
+                });
+            }
+
+            // Utility Functions
+            showNotification(message, type = 'info') {
+                // Create and show notification
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--gradient-success);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                    z-index: 1001;
+                    animation: slideInUp 0.5s ease;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+
+            saveUserProgress() {
+                const progressData = {
+                    level: this.userLevel,
+                    xp: this.userXP,
+                    xpToNextLevel: this.xpToNextLevel,
+                    achievements: Object.fromEntries(this.achievements),
+                    challenges: Object.fromEntries(this.challenges),
+                    toolUsage: Object.fromEntries(this.toolUsage),
+                    lastSaved: Date.now()
+                };
+                
+                localStorage.setItem('enfusionaize-gamification', JSON.stringify(progressData));
+            }
+
+            loadUserProgress() {
+                const saved = localStorage.getItem('enfusionaize-gamification');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.userLevel = data.level || 1;
+                    this.userXP = data.xp || 0;
+                    this.xpToNextLevel = data.xpToNextLevel || 1000;
+                    
+                    if (data.toolUsage) {
+                        this.toolUsage = new Map(Object.entries(data.toolUsage));
+                    }
+                }
+            }
+
+            startDailyTracking() {
+                // Reset daily challenges at midnight
+                const now = new Date();
+                const tomorrow = new Date(now);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
+                
+                const msUntilMidnight = tomorrow.getTime() - now.getTime();
+                
+                setTimeout(() => {
+                    this.resetDailyChallenges();
+                    // Set up daily reset
+                    setInterval(() => this.resetDailyChallenges(), 24 * 60 * 60 * 1000);
+                }, msUntilMidnight);
+            }
+
+            resetDailyChallenges() {
+                this.challenges.forEach((challenge, id) => {
+                    if (challenge.type === 'daily') {
+                        challenge.status = 'available';
+                        challenge.progress = 0;
+                    }
+                });
+                
+                this.updateChallengeDisplay();
+                console.log('🌅 Daily challenges reset');
+            }
+        }
+
+        // Global Functions for UI Interaction
+        let gamificationSystem;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gamificationSystem = new GamificationSystem();
+        });
+
+        function switchChallengeTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.challenge-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Hide all challenge groups
+            document.querySelectorAll('.challenge-group').forEach(group => {
+                group.style.display = 'none';
+            });
+            
+            // Show selected challenge group
+            const targetGroup = document.getElementById(`${tabName}-challenges`);
+            if (targetGroup) {
+                targetGroup.style.display = 'block';
+            }
+        }
+
+        function startChallenge(challengeId) {
+            gamificationSystem.startChallenge(challengeId);
+        }
+
+        function continueChallenge(challengeId) {
+            // Open the appropriate tool or interface for the challenge
+            console.log(`Continuing challenge: ${challengeId}`);
+            
+            // Emit tool usage event
+            document.dispatchEvent(new CustomEvent('tool-usage', {
+                detail: { tool: 'layer-prompter', action: 'challenge-continue' }
+            }));
+        }
+
+        function claimReward(challengeId) {
+            const challenge = gamificationSystem.challenges.get(challengeId);
+            if (challenge && challenge.status === 'completed') {
+                gamificationSystem.showNotification(`Reward claimed: +${challenge.xpReward} XP!`, 'success');
+            }
+        }
+
+        function showAchievementDetails(achievementId) {
+            const achievement = gamificationSystem.achievements.get(achievementId);
+            if (achievement) {
+                alert(`${achievement.name}\n\n${achievement.description}\n\nReward: ${achievement.xpReward} XP\nStatus: ${achievement.completed ? 'Completed' : achievement.locked ? 'Locked' : 'In Progress'}`);
+            }
+        }
+
+        function openTool(toolName) {
+            console.log(`Opening tool: ${toolName}`);
+            
+            // Emit tool usage event
+            document.dispatchEvent(new CustomEvent('tool-usage', {
+                detail: { tool: toolName, action: 'open' }
+            }));
+            
+            // Navigate to tool (implement based on your routing)
+            // window.location.href = `/tools/${toolName}`;
+        }
+
+        function viewTeamDetails() {
+            console.log('Viewing team details...');
+            
+            // Open team management interface
+            // Implementation depends on your team system
+        }
+
+        function viewProgress(challengeId) {
+            const challenge = gamificationSystem.challenges.get(challengeId);
+            if (challenge) {
+                alert(`${challenge.name}\n\nProgress: ${challenge.progress}/${challenge.target}\nReward: ${challenge.xpReward} XP\nTime Limit: ${Math.floor(challenge.timeLimit / 60)} minutes`);
+            }
+        }
+
+        // Simulate some events for demonstration
+        setTimeout(() => {
+            document.dispatchEvent(new CustomEvent('tool-usage', {
+                detail: { tool: 'analytics', action: 'view-dashboard' }
+            }));
+        }, 2000);
+
+        setTimeout(() => {
+            gamificationSystem.unlockAchievement('layer-master');
+        }, 5000);
+    </script>
+<script src="scripts/i18n-integration.js"></script>
+</body>
+</html>

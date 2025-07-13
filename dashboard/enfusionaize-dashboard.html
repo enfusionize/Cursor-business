@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnfusionAIze Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        /* EnfusionAIze Brand Colors */
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+            --danger-red: #ef4444;
+            --dark-bg: #0f172a;
+            --dark-surface: #1e293b;
+            --dark-elevated: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #475569;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .sidebar {
+            background: var(--dark-surface);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .main-content {
+            background: var(--dark-bg);
+        }
+
+        .card {
+            background: var(--dark-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .card-elevated {
+            background: var(--dark-elevated);
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--dark-elevated);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary-blue);
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+        }
+
+        .btn-secondary {
+            background: var(--dark-elevated);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .status-active { background: var(--success-green); }
+        .status-warning { background: var(--warning-yellow); }
+        .status-error { background: var(--danger-red); }
+        .status-inactive { background: var(--text-muted); }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-cyan);
+        }
+
+        .workspace-column {
+            background: var(--dark-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            height: 600px;
+            overflow-y: auto;
+        }
+
+        .workspace-header {
+            background: var(--dark-elevated);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .demo-section {
+            background: linear-gradient(135deg, var(--dark-surface), var(--dark-elevated));
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .integration-card {
+            background: var(--dark-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .chart-container {
+            background: var(--dark-surface);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 flex-shrink-0">
+            <div class="p-6">
+                <!-- Logo -->
+                <div class="flex items-center mb-8">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg mr-3 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="logo">EnfusionAIze</span>
+                </div>
+
+                <!-- User Info -->
+                <div class="mb-6 p-3 rounded-lg bg-slate-800">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-semibold">
+                            I
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-sm font-medium">Good Morning, Intel</div>
+                            <div class="text-xs text-gray-400">Ready to scale today</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav>
+                    <div class="nav-item active" data-tab="dashboard">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                        Dashboard
+                    </div>
+                    <div class="nav-item" data-tab="maip">
+                        <i data-lucide="map" class="w-5 h-5 mr-3"></i>
+                        M.A.I.P
+                    </div>
+                    <div class="nav-item" data-tab="calculators">
+                        <i data-lucide="calculator" class="w-5 h-5 mr-3"></i>
+                        Calculators
+                    </div>
+                    <div class="nav-item" data-tab="automation">
+                        <i data-lucide="bot" class="w-5 h-5 mr-3"></i>
+                        Automation Studio
+                    </div>
+                    <div class="nav-item" data-tab="clickup">
+                        <i data-lucide="check-square" class="w-5 h-5 mr-3"></i>
+                        ClickUp
+                    </div>
+                    <div class="nav-item" data-tab="inbox">
+                        <i data-lucide="inbox" class="w-5 h-5 mr-3"></i>
+                        Inbox
+                    </div>
+                    <div class="nav-item" data-tab="email">
+                        <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
+                        Email
+                    </div>
+                    <div class="nav-item" data-tab="tasks">
+                        <i data-lucide="list-todo" class="w-5 h-5 mr-3"></i>
+                        Tasks
+                    </div>
+                    <div class="nav-item" data-tab="calendar">
+                        <i data-lucide="calendar" class="w-5 h-5 mr-3"></i>
+                        Calendar
+                    </div>
+                    <div class="nav-item" data-tab="reports">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                        Reports
+                    </div>
+                    <div class="nav-item" data-tab="help">
+                        <i data-lucide="help-circle" class="w-5 h-5 mr-3"></i>
+                        Help Center
+                    </div>
+                    <div class="nav-item" data-tab="settings">
+                        <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                        Settings
+                    </div>
+                    <div class="nav-item" data-tab="affiliates">
+                        <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                        Affiliates
+                    </div>
+                </nav>
+
+                <!-- Upgrade Section -->
+                <div class="mt-8 p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-center">
+                    <h3 class="font-semibold mb-2" data-i18n="upgrade_to_pro">UPGRADE TO PRO</h3>
+                    <p class="text-xs mb-3" data-i18n="get_10x_more_powerful_features_and_unlock_your_ful">Get 10x more powerful features and unlock your full potential</p>
+                    <button class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold w-full" data-i18n="_upgrade_">
+                        Upgrade
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="border-b border-gray-700 p-6">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold" data-i18n="dashboard">Dashboard</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="btn-secondary">
+                            <i data-lucide="search" class="w-4 h-4 mr-2"></i>
+                            Search
+                        </button>
+                        <button class="btn-primary">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            Add New
+                        </button>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="bell" class="w-5 h-5 text-gray-400"></i>
+                            <i data-lucide="user" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="p-6">
+                <!-- Top Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- M.A.I.P Card -->
+                    <div class="card">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold" data-i18n="mind_maip">Mind M.A.I.P™</h3>
+                            <i data-lucide="brain" class="w-5 h-5 text-blue-500"></i>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="aipowered_workflow_automation">AI-powered workflow automation</p>
+                        <button class="btn-primary w-full" data-i18n="view_more">View more</button>
+                    </div>
+
+                    <!-- Report Access Card -->
+                    <div class="card">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold" data-i18n="report_access">Report Access</h3>
+                            <i data-lucide="file-text" class="w-5 h-5 text-green-500"></i>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="enfusionaize_pro_report">EnfusionAIze PRO Report</p>
+                        <button class="btn-primary w-full" data-i18n="view_more">View more</button>
+                    </div>
+
+                    <!-- Fuse AI Card -->
+                    <div class="card">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold" data-i18n="fuse_ai">Fuse AI</h3>
+                            <i data-lucide="cpu" class="w-5 h-5 text-purple-500"></i>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="advanced_ai_integrations">Advanced AI integrations</p>
+                        <button class="btn-primary w-full" data-i18n="view_more">View more</button>
+                    </div>
+                </div>
+
+                <!-- 3-Column Cursor Workspace -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4" data-i18n="cursor_workspace_levels">Cursor Workspace Levels</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Beginner Level -->
+                        <div class="workspace-column">
+                            <div class="workspace-header">
+                                <div class="flex items-center">
+                                    <i data-lucide="play-circle" class="w-5 h-5 mr-2 text-green-500"></i>
+                                    Beginner Business Operations
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="basic_chat_interface">Basic Chat Interface</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="simple_qa_with_claude">Simple Q&A with Claude</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="financial_queries_xero_mcp">Financial Queries (Xero MCP)</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="show_me_this_months_revenue">"Show me this month's revenue"</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="website_screenshots">Website Screenshots</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="basic_ux_analysis_with_playwright">Basic UX analysis with Playwright</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="content_research">Content Research</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="perplexity_mcp_for_blog_ideas">Perplexity MCP for blog ideas</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="seo_keyword_research">SEO Keyword Research</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="basic_keyword_discovery">Basic keyword discovery</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Intermediate Level -->
+                        <div class="workspace-column">
+                            <div class="workspace-header">
+                                <div class="flex items-center">
+                                    <i data-lucide="zap" class="w-5 h-5 mr-2 text-yellow-500"></i>
+                                    Advanced Business Workflows
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="financial_dashboards">Financial Dashboards</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="automated_pl_and_investor_reports">Automated P&L and investor reports</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="ux_analysis_suite">UX Analysis Suite</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="complete_ux_audits_with_recommendations">Complete UX audits with recommendations</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="programmatic_seo">Programmatic SEO</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="create_50_seo_pages_automatically">Create 50 SEO pages automatically</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="ab_test_management">A/B Test Management</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="automated_test_creation_and_tracking">Automated test creation and tracking</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="qa_automation">QA Automation</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="automated_testing_for_critical_flows">Automated testing for critical flows</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Level -->
+                        <div class="workspace-column">
+                            <div class="workspace-header">
+                                <div class="flex items-center">
+                                    <i data-lucide="rocket" class="w-5 h-5 mr-2 text-purple-500"></i>
+                                    Complete Business Automation
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="lead_generation_automation">Lead Generation Automation</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="complete_lead_gen_and_nurturing">Complete lead gen and nurturing</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="predictive_analytics">Predictive Analytics</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="customer_ltv_and_forecasting">Customer LTV and forecasting</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="competitive_intelligence">Competitive Intelligence</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="automated_competitor_monitoring">Automated competitor monitoring</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="multichannel_campaigns">Multi-Channel Campaigns</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="orchestrated_marketing_automation">Orchestrated marketing automation</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg">
+                                    <h4 class="font-medium mb-2" data-i18n="enterprise_workflow">Enterprise Workflow</h4>
+                                    <p class="text-sm text-gray-400" data-i18n="full_business_process_automation">Full business process automation</p>
+                                    <div class="mt-2">
+                                        <span class="status-indicator status-active"></span>
+                                        <span class="text-xs">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4" data-i18n="client_demo_space">Client Demo Space</h2>
+                    <div class="demo-section">
+                        <div class="mb-6">
+                            <i data-lucide="presentation" class="w-16 h-16 mx-auto mb-4 text-blue-500"></i>
+                            <h3 class="text-xl font-semibold mb-2" data-i18n="interactive_demo_environment">Interactive Demo Environment</h3>
+                            <p class="text-gray-400 mb-6" data-i18n="showcase_your_dashboard_capabilities_with_real_cli">Showcase your dashboard capabilities with real client data</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="text-left">
+                                <h4 class="font-medium mb-2" data-i18n="demo_features">Demo Features:</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Real-time data visualization</li>
+                                    <li>• Custom client branding</li>
+                                    <li>• Interactive analytics</li>
+                                    <li>• Live workflow demonstrations</li>
+                                </ul>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-medium mb-2" data-i18n="client_integration">Client Integration:</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Upload test data</li>
+                                    <li>• Custom scenarios</li>
+                                    <li>• ROI calculations</li>
+                                    <li>• Performance metrics</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <button class="btn-primary">
+                                <i data-lucide="play" class="w-4 h-4 mr-2"></i>
+                                Start Demo
+                            </button>
+                            <button class="btn-secondary">
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                Upload Client Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Integration Section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4" data-i18n="website_integration">Website Integration</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="card">
+                            <h3 class="font-semibold mb-4" data-i18n="domain_integration_status">Domain Integration Status</h3>
+                            <div class="space-y-3">
+                                <div class="integration-card">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <span class="status-indicator status-active"></span>
+                                            <span>enfusionaize.com</span>
+                                        </div>
+                                        <span class="text-sm text-green-400">Connected</span>
+                                    </div>
+                                </div>
+                                <div class="integration-card">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <span class="status-indicator status-active"></span>
+                                            <span>Analytics Tracking</span>
+                                        </div>
+                                        <span class="text-sm text-green-400">Active</span>
+                                    </div>
+                                </div>
+                                <div class="integration-card">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <span class="status-indicator status-warning"></span>
+                                            <span>Lead Management</span>
+                                        </div>
+                                        <span class="text-sm text-yellow-400">Configuring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="font-semibold mb-4" data-i18n="available_actions">Available Actions</h3>
+                            <div class="space-y-3">
+                                <button class="btn-secondary w-full text-left">
+                                    <i data-lucide="activity" class="w-4 h-4 mr-2"></i>
+                                    Real-time Visitor Tracking
+                                </button>
+                                <button class="btn-secondary w-full text-left">
+                                    <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                                    Lead Capture Integration
+                                </button>
+                                <button class="btn-secondary w-full text-left">
+                                    <i data-lucide="mail" class="w-4 h-4 mr-2"></i>
+                                    Email Campaign Management
+                                </button>
+                                <button class="btn-secondary w-full text-left">
+                                    <i data-lucide="bar-chart" class="w-4 h-4 mr-2"></i>
+                                    Performance Analytics
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Overview -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Metrics -->
+                    <div class="card">
+                        <h3 class="font-semibold mb-4" data-i18n="key_metrics">Key Metrics</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-400">$2000</div>
+                                <div class="text-sm text-gray-400">Revenue</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-400">$10000</div>
+                                <div class="text-sm text-gray-400">Overall CR</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-400">85%</div>
+                                <div class="text-sm text-gray-400">ROAS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-cyan-400">0.01</div>
+                                <div class="text-sm text-gray-400">DOI</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="card">
+                        <h3 class="font-semibold mb-4" data-i18n="performance_trends">Performance Trends</h3>
+                        <div class="chart-container">
+                            <canvas id="performanceChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navigation handling
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                const tab = this.dataset.tab;
+                console.log('Switching to:', tab);
+                // Add tab switching logic here
+            });
+        });
+
+        // Initialize chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Performance',
+                    data: [65, 59, 80, 81, 56, 55],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#cbd5e1'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#64748b'
+                        },
+                        grid: {
+                            color: '#475569'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#64748b'
+                        },
+                        grid: {
+                            color: '#475569'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Demo functionality
+        document.querySelector('.demo-section button').addEventListener('click', function() {
+            alert('Demo environment launching...');
+        });
+    </script>
+<script src="scripts/i18n-integration.js"></script>
+</body>
+</html>
