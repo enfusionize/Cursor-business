@@ -100,7 +100,20 @@
     "sop-integrate": "node scripts/sop-integration-manager.js full",
     "sop-phase": "node scripts/sop-integration-manager.js phase",
     "sop-step": "node scripts/sop-integration-manager.js step",
-    "sop-integration-report": "node scripts/sop-integration-manager.js report"
+    "sop-integration-report": "node scripts/sop-integration-manager.js report",
+    "ai-blueprint": "node mcps/ai-agent-blueprint-mcp.js",
+    "ai-deploy": "node scripts/ai-agent-blueprint-deployer.js",
+    "ai-deploy-saas": "node scripts/ai-agent-blueprint-deployer.js saas standard_8_weeks",
+    "ai-deploy-ecommerce": "node scripts/ai-agent-blueprint-deployer.js ecommerce accelerated_6_weeks",
+    "ai-deploy-coaching": "node scripts/ai-agent-blueprint-deployer.js coaching extended_12_weeks",
+    "ai-deploy-agency": "node scripts/ai-agent-blueprint-deployer.js agency standard_8_weeks",
+    "ai-c3-setup": "node scripts/ai-agent-blueprint-deployer.js --c3-only",
+    "ai-h3-setup": "node scripts/ai-agent-blueprint-deployer.js --h3-only",
+    "ai-phase1": "node scripts/ai-agent-blueprint-deployer.js --phase=phase1",
+    "ai-phase2": "node scripts/ai-agent-blueprint-deployer.js --phase=phase2",
+    "ai-phase3": "node scripts/ai-agent-blueprint-deployer.js --phase=phase3",
+    "ai-monitor": "node scripts/ai-agent-blueprint-deployer.js --monitor",
+    "ai-report": "node scripts/ai-agent-blueprint-deployer.js --report"
   },
   "dependencies": {
     "next": "^14.0.0",
