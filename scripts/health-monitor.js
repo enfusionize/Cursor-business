@@ -15,6 +15,9 @@
  * - Error Detection & Recovery
  */
 
+// Load environment variables
+require('dotenv').config();
+
 const chalk = require('chalk').default;
 const axios = require('axios');
 const fs = require('fs').promises;

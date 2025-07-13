@@ -14,6 +14,9 @@
  * - Network connectivity issues
  */
 
+// Load environment variables
+require('dotenv').config();
+
 const chalk = require('chalk').default;
 const fs = require('fs').promises;
 const path = require('path');
