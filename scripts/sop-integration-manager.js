@@ -751,7 +751,7 @@ jobs:
         run: npm test
       - name: Deploy to Vercel
         if: github.ref == 'refs/heads/main'
-        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+        run: vercel --prod --token \${{ secrets.VERCEL_TOKEN }}
 `;
         
         await fs.ensureDir(path.join(this.rootDir, '.github/workflows'));
