@@ -84,7 +84,23 @@
     "sandbox-cleanup": "node sandbox/cli.js cleanup",
     "grok-debug": "node sandbox/integrations/grok-debug-mcp.js",
     "grok-debug-daemon": "bash sandbox/start-grok-debug.sh --daemon",
-    "grok-debug-widget": "open sandbox/dashboard/grok-debug-widget.html"
+    "grok-debug-widget": "open sandbox/dashboard/grok-debug-widget.html",
+    "sop-version": "node scripts/sop-versioning-system.js",
+    "sop-update": "node scripts/sop-versioning-system.js update",
+    "sop-report": "node scripts/sop-versioning-system.js report",
+    "sop-auto-update": "node scripts/sop-versioning-system.js auto-update",
+    "sop-setup-hooks": "node scripts/sop-versioning-system.js setup-hooks",
+    "enhanced-errors": "node scripts/enhanced-error-handling.js",
+    "error-report": "node scripts/enhanced-error-handling.js report",
+    "error-export": "node scripts/enhanced-error-handling.js export",
+    "i18n-init": "node scripts/internationalization-system.js init",
+    "i18n-export": "node scripts/internationalization-system.js export",
+    "i18n-report": "node scripts/internationalization-system.js report",
+    "i18n-update-html": "node scripts/internationalization-system.js update-html",
+    "sop-integrate": "node scripts/sop-integration-manager.js full",
+    "sop-phase": "node scripts/sop-integration-manager.js phase",
+    "sop-step": "node scripts/sop-integration-manager.js step",
+    "sop-integration-report": "node scripts/sop-integration-manager.js report"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -104,7 +120,10 @@
     "google-auth-library": "^9.4.0",
     "chart.js": "^4.4.0",
     "fs-extra": "^11.1.1",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "semver": "^7.5.4",
+    "winston": "^3.11.0",
+    "tenacity": "^7.0.0"
   },
   "devDependencies": {
     "vercel": "^32.0.0",
