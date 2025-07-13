@@ -46,6 +46,11 @@ const HomePage = () => {
       icon: <Globe className="h-8 w-8 text-cyan-400" />,
       title: "Global Impact",
       description: "Track your positive environmental and social impact across all investments."
+    },
+    {
+      icon: <DollarSign className="h-8 w-8 text-purple-400" />,
+      title: "Exchange Access",
+      description: "Access Enfusionize™ Exchange for AI-verified investment opportunities with real-time data tracking."
     }
   ];
 
@@ -88,14 +93,17 @@ const HomePage = () => {
               <h1 className="text-xl font-bold text-white">Conscious Wealth</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="#features" className="text-white/70 hover:text-white transition-colors">
-                Features
+              <Link href="/dashboard" className="text-white/70 hover:text-white transition-colors">
+                Dashboard
               </Link>
-              <Link href="#about" className="text-white/70 hover:text-white transition-colors">
-                About
+              <Link href="/roadmap" className="text-white/70 hover:text-white transition-colors">
+                Roadmap
               </Link>
-              <Link href="#testimonials" className="text-white/70 hover:text-white transition-colors">
-                Testimonials
+              <Link href="/exchange" className="text-white/70 hover:text-white transition-colors">
+                Exchange
+              </Link>
+              <Link href="/wealthprint" className="text-white/70 hover:text-white transition-colors">
+                Wealthprint™
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
@@ -137,10 +145,10 @@ const HomePage = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
-                href="/investments"
+                href="/exchange"
                 className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-colors border border-white/20"
               >
-                View Demo Portfolio
+                Explore Exchange
               </Link>
             </div>
           </motion.div>
@@ -180,7 +188,7 @@ const HomePage = () => {
               Built specifically for new millionaires who want to grow their wealth responsibly
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}

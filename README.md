@@ -11,6 +11,7 @@
 - Comprehensive analytics with ESG (Environmental, Social, Governance) metrics
 - Performance tracking with conscious investment percentage
 - Risk assessment and diversification scoring
+- Integrated Enfusionize™ Exchange for AI-verified opportunities
 
 ### 🗺️ **Wealth Roadmap**
 - **Preparation Phase**: Building foundation for millionaire status ($0-$250K)
@@ -71,12 +72,14 @@ Navigate to `http://localhost:3000`
 - **/investments** - Individual investment management
 - **/roadmap** - Wealth building roadmap
 - **/wealthprint** - Impact and influence tracking
+- **/exchange** - Enfusionize™ Exchange integration
 
 ### **Backend APIs**
 - **/api/investments** - Investment CRUD operations
 - **/api/portfolio/analytics** - Portfolio analytics and insights
 - **/api/user/profile** - User profile management
 - **/api/wealth/roadmap** - Wealth roadmap data and milestones
+- **/api/exchange/opportunities** - Enfusionize™ Exchange integration
 
 ## 🌟 Core Concepts
 
