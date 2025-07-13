@@ -26,6 +26,8 @@
 - Updated dashboard component: sandbox/dashboard/index.html
 - Modified scripts/health-monitor.js
 - Modified vercel.json
+- Modified docs/SOP_CHANGELOG.md
+- Modified docs/sop-version.json
 
 ### Added
 - Initial comprehensive SOP for Full-Stack Cursor Integration
@@ -74,6 +76,7 @@
 - Enhanced MCP integration in training/intermediate-mcps.md
 - Added training/troubleshooting.md
 - Added validation-results.json
+- Added docs/sop-backups/sop-v1.0.0-1752428500726.md
 
 ### Infrastructure
 - Core platform components documentation
@@ -88,6 +91,14 @@
 - API key management
 - Data privacy considerations
 - Incident response procedures
+
+
+## Version 1.1.0 - 2025-07-13
+
+### Changed
+- Modified docs/FULL_STACK_CURSOR_INTEGRATION_SOP.md
+
+---
 
 ---
 
