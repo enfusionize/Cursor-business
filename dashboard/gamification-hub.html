@@ -746,7 +746,7 @@
                     <i class="fas fa-trophy"></i>
                 </div>
                 <div class="logo-text">
-                    <h1>Achievement Hub</h1>
+                    <h1 data-i18n="achievement_hub">Achievement Hub</h1>
                     <div class="logo-subtitle">Level up your Layer Prompting mastery</div>
                 </div>
             </div>
@@ -882,8 +882,8 @@
         <!-- Main Content Area - Challenges & Activities -->
         <div class="challenges-area">
             <div class="challenges-header">
-                <h2 class="challenges-title">Daily Challenges & Quests</h2>
-                <p class="challenges-subtitle">Complete challenges to earn XP, unlock achievements, and master Layer Prompting</p>
+                <h2 class="challenges-title" data-i18n="daily_challenges_quests">Daily Challenges & Quests</h2>
+                <p class="challenges-subtitle" data-i18n="complete_challenges_to_earn_xp_unlock_achievements">Complete challenges to earn XP, unlock achievements, and master Layer Prompting</p>
                 
                 <div class="challenges-tabs">
                     <div class="challenge-tab active" onclick="switchChallengeTab('daily')">Daily</div>
@@ -899,7 +899,7 @@
                     <div class="challenge-card in-progress">
                         <div class="challenge-header">
                             <div class="challenge-info">
-                                <h3>Morning Layer Prompt</h3>
+                                <h3 data-i18n="morning_layer_prompt">Morning Layer Prompt</h3>
                                 <div class="challenge-meta">
                                     <span><i class="fas fa-clock"></i> 15 minutes</span>
                                     <span><i class="fas fa-target"></i> Beginner</span>
@@ -938,7 +938,7 @@
                     <div class="challenge-card completed">
                         <div class="challenge-header">
                             <div class="challenge-info">
-                                <h3>Platform Explorer</h3>
+                                <h3 data-i18n="platform_explorer">Platform Explorer</h3>
                                 <div class="challenge-meta">
                                     <span><i class="fas fa-clock"></i> 10 minutes</span>
                                     <span><i class="fas fa-target"></i> Beginner</span>
@@ -977,7 +977,7 @@
                     <div class="challenge-card">
                         <div class="challenge-header">
                             <div class="challenge-info">
-                                <h3>Team Collaboration</h3>
+                                <h3 data-i18n="team_collaboration">Team Collaboration</h3>
                                 <div class="challenge-meta">
                                     <span><i class="fas fa-clock"></i> 20 minutes</span>
                                     <span><i class="fas fa-target"></i> Intermediate</span>
@@ -1019,7 +1019,7 @@
                     <div class="challenge-card">
                         <div class="challenge-header">
                             <div class="challenge-info">
-                                <h3>Layer Prompting Marathon</h3>
+                                <h3 data-i18n="layer_prompting_marathon">Layer Prompting Marathon</h3>
                                 <div class="challenge-meta">
                                     <span><i class="fas fa-clock"></i> 7 days</span>
                                     <span><i class="fas fa-target"></i> Advanced</span>
@@ -1155,8 +1155,8 @@
         <div class="popup-content">
             <div class="popup-icon">🏆</div>
             <div class="popup-text">
-                <h4>Achievement Unlocked!</h4>
-                <p id="popup-achievement-text">Layer Master - Completed all 7 layers</p>
+                <h4 data-i18n="achievement_unlocked">Achievement Unlocked!</h4>
+                <p id="popup-achievement-text" data-i18n="layer_master_completed_all_7_layers">Layer Master - Completed all 7 layers</p>
             </div>
         </div>
     </div>
@@ -1717,5 +1717,6 @@
             gamificationSystem.unlockAchievement('layer-master');
         }, 5000);
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

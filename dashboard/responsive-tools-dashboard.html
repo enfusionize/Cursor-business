@@ -614,7 +614,7 @@
     <header class="header">
         <div class="header-content">
             <div class="flex items-center">
-                <h1 class="header-title">Tools Dashboard</h1>
+                <h1 class="header-title" data-i18n="tools_dashboard">Tools Dashboard</h1>
                 <div class="status-dot status-active ml-2"></div>
             </div>
             <div class="header-actions">
@@ -671,7 +671,7 @@
         <div class="tool-category">
             <div class="category-header">
                 <i data-lucide="server" class="category-icon"></i>
-                <h2 class="category-title">MCP Servers</h2>
+                <h2 class="category-title" data-i18n="mcp_servers">MCP Servers</h2>
                 <span class="category-count" id="mcpCount">0</span>
             </div>
             <div class="dashboard-grid" id="mcpServers">
@@ -683,7 +683,7 @@
         <div class="tool-category">
             <div class="category-header">
                 <i data-lucide="zap" class="category-icon"></i>
-                <h2 class="category-title">Automation Tools</h2>
+                <h2 class="category-title" data-i18n="automation_tools">Automation Tools</h2>
                 <span class="category-count" id="automationCount">0</span>
             </div>
             <div class="dashboard-grid" id="automationTools">
@@ -695,7 +695,7 @@
         <div class="tool-category">
             <div class="category-header">
                 <i data-lucide="activity" class="category-icon"></i>
-                <h2 class="category-title">Monitoring & Analytics</h2>
+                <h2 class="category-title" data-i18n="monitoring_analytics">Monitoring & Analytics</h2>
                 <span class="category-count" id="monitoringCount">0</span>
             </div>
             <div class="dashboard-grid" id="monitoringTools">
@@ -707,7 +707,7 @@
         <div class="tool-category">
             <div class="category-header">
                 <i data-lucide="code" class="category-icon"></i>
-                <h2 class="category-title">Development Tools</h2>
+                <h2 class="category-title" data-i18n="development_tools">Development Tools</h2>
                 <span class="category-count" id="developmentCount">0</span>
             </div>
             <div class="dashboard-grid" id="developmentTools">
@@ -719,7 +719,7 @@
         <div class="tool-category">
             <div class="category-header">
                 <i data-lucide="briefcase" class="category-icon"></i>
-                <h2 class="category-title">Business Tools</h2>
+                <h2 class="category-title" data-i18n="business_tools">Business Tools</h2>
                 <span class="category-count" id="businessCount">0</span>
             </div>
             <div class="dashboard-grid" id="businessTools">
@@ -762,8 +762,8 @@
     <div id="toolModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Tool Configuration</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <h3 class="modal-title" id="modalTitle" data-i18n="tool_configuration">Tool Configuration</h3>
+                <button class="modal-close" onclick="closeModal()" data-i18n="times">&times;</button>
             </div>
             <div id="modalBody">
                 <!-- Modal content will be populated here -->
@@ -1019,14 +1019,14 @@
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center">
                             <i data-lucide="${tool.icon}" class="w-6 h-6 mr-2 text-blue-600"></i>
-                            <h3 class="font-semibold text-gray-900">${tool.name}</h3>
+                            <h3 class="font-semibold text-gray-900" data-i18n="toolname">${tool.name}</h3>
                         </div>
                         <div class="status-dot ${statusClass}"></div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-4">${tool.description}</p>
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="tooldescription">${tool.description}</p>
                     <div class="tool-actions">
                         ${tool.actions.map(action => `
-                            <button class="tool-action-btn ${action}" onclick="executeToolAction('${tool.id}', '${action}')">
+                            <button class="tool-action-btn ${action}" onclick="executeToolAction('${tool.id}', '${action}')" data-i18n="_actioncharat0touppercase_actionslice1_">
                                 ${action.charAt(0).toUpperCase() + action.slice(1)}
                             </button>
                         `).join('')}
@@ -1238,7 +1238,7 @@
             
             document.getElementById('modalTitle').textContent = tool.name;
             document.getElementById('modalBody').innerHTML = `
-                <p class="mb-4">${tool.description}</p>
+                <p class="mb-4" data-i18n="tooldescription">${tool.description}</p>
                 <div class="space-y-2">
                     <div><strong>Status:</strong> ${tool.status}</div>
                     <div><strong>Category:</strong> ${tool.category}</div>
@@ -1268,5 +1268,6 @@
             }, 100);
         });
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

@@ -520,8 +520,8 @@
         <!-- Main Content Area -->
         <div class="main-content">
             <div class="content-header">
-                <h1 class="content-title" id="content-title">Layer Prompting Fundamentals</h1>
-                <p class="content-phase" id="content-phase">Foundation Phase • Week 1</p>
+                <h1 class="content-title" id="content-title" data-i18n="layer_prompting_fundamentals">Layer Prompting Fundamentals</h1>
+                <p class="content-phase" id="content-phase" data-i18n="foundation_phase_week_1">Foundation Phase • Week 1</p>
                 <div class="content-tabs">
                     <div class="tab active" onclick="switchTab('overview')">Overview</div>
                     <div class="tab" onclick="switchTab('objectives')">Objectives</div>
@@ -533,7 +533,7 @@
             <div class="content-body">
                 <!-- Overview Tab -->
                 <div id="overview-content" class="tab-content active">
-                    <h3>Welcome to Layer Prompting</h3>
+                    <h3 data-i18n="welcome_to_layer_prompting">Welcome to Layer Prompting</h3>
                     <p>
                         Master the art of <span class="interactive-element">
                             <span class="tooltip-trigger">Layer Prompting</span>
@@ -548,7 +548,7 @@
                         </span>
                     </p>
 
-                    <h4>The 7 Layers Framework</h4>
+                    <h4 data-i18n="the_7_layers_framework">The 7 Layers Framework</h4>
                     <ul>
                         <li>
                             <strong>Context Layer:</strong> 
@@ -611,7 +611,7 @@
 
                 <!-- Objectives Tab -->
                 <div id="objectives-content" class="tab-content">
-                    <h3>Week 1 Learning Objectives</h3>
+                    <h3 data-i18n="week_1_learning_objectives">Week 1 Learning Objectives</h3>
                     <ul>
                         <li>
                             Master the 
@@ -647,7 +647,7 @@
                         </li>
                     </ul>
 
-                    <h4>Success Metrics</h4>
+                    <h4 data-i18n="success_metrics">Success Metrics</h4>
                     <ul>
                         <li>50% reduction in manual task completion time</li>
                         <li>3+ successful Layer Prompts created independently</li>
@@ -658,7 +658,7 @@
 
                 <!-- Interactive Demo Tab -->
                 <div id="demo-content" class="tab-content">
-                    <h3>Interactive Demo: Your First Layer Prompt</h3>
+                    <h3 data-i18n="interactive_demo_your_first_layer_prompt">Interactive Demo: Your First Layer Prompt</h3>
                     <p>
                         Practice creating a 
                         <span class="interactive-element">
@@ -674,8 +674,8 @@
                     </p>
 
                     <div style="background: rgba(30, 64, 175, 0.1); border: 1px solid var(--primary-blue); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
-                        <h4>Demo Scenario: Email Campaign Strategy</h4>
-                        <p>You need to create an email marketing campaign for a new product launch. Let's build this using Layer Prompting:</p>
+                        <h4 data-i18n="demo_scenario_email_campaign_strategy">Demo Scenario: Email Campaign Strategy</h4>
+                        <p data-i18n="you_need_to_create_an_email_marketing_campaign_for">You need to create an email marketing campaign for a new product launch. Let's build this using Layer Prompting:</p>
                         
                         <div style="margin-top: 1rem;">
                             <strong>Context Layer:</strong> 
@@ -704,10 +704,10 @@
 
                 <!-- Exercises Tab -->
                 <div id="exercises-content" class="tab-content">
-                    <h3>Practice Exercises</h3>
+                    <h3 data-i18n="practice_exercises">Practice Exercises</h3>
                     
                     <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
-                        <h4>Exercise 1: Basic Layer Construction</h4>
+                        <h4 data-i18n="exercise_1_basic_layer_construction">Exercise 1: Basic Layer Construction</h4>
                         <p>
                             Create a 
                             <span class="interactive-element">
@@ -717,11 +717,11 @@
                             for task automation.
                             <span class="context-popup-trigger" onclick="showContextPopup('exercise-1')">Instructions</span>
                         </p>
-                        <button class="btn btn-success" onclick="startExercise(1)">Start Exercise</button>
+                        <button class="btn btn-success" onclick="startExercise(1)" data-i18n="start_exercise">Start Exercise</button>
                     </div>
 
                     <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
-                        <h4>Exercise 2: Complete Layer Prompt</h4>
+                        <h4 data-i18n="exercise_2_complete_layer_prompt">Exercise 2: Complete Layer Prompt</h4>
                         <p>
                             Build a 
                             <span class="interactive-element">
@@ -731,11 +731,11 @@
                             for business process automation.
                             <span class="context-popup-trigger" onclick="showContextPopup('exercise-2')">Instructions</span>
                         </p>
-                        <button class="btn btn-success" onclick="startExercise(2)">Start Exercise</button>
+                        <button class="btn btn-success" onclick="startExercise(2)" data-i18n="start_exercise">Start Exercise</button>
                     </div>
 
                     <div style="background: var(--popup-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0;">
-                        <h4>Exercise 3: Real-World Application</h4>
+                        <h4 data-i18n="exercise_3_realworld_application">Exercise 3: Real-World Application</h4>
                         <p>
                             Apply Layer Prompting to your 
                             <span class="interactive-element">
@@ -744,7 +744,7 @@
                             </span>.
                             <span class="context-popup-trigger" onclick="showContextPopup('exercise-3')">Guidelines</span>
                         </p>
-                        <button class="btn btn-success" onclick="startExercise(3)">Start Exercise</button>
+                        <button class="btn btn-success" onclick="startExercise(3)" data-i18n="start_exercise">Start Exercise</button>
                     </div>
                 </div>
             </div>
@@ -786,37 +786,37 @@
                 </div>
                 <div class="prompter-body">
                     <div class="layer-input">
-                        <label class="layer-label">Context Layer</label>
+                        <label class="layer-label" data-i18n="context_layer">Context Layer</label>
                         <textarea class="layer-textarea" id="context-layer" placeholder="Describe the environment, situation, and background..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Objective Layer</label>
+                        <label class="layer-label" data-i18n="objective_layer">Objective Layer</label>
                         <textarea class="layer-textarea" id="objective-layer" placeholder="Define clear goals and success metrics..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Constraint Layer</label>
+                        <label class="layer-label" data-i18n="constraint_layer">Constraint Layer</label>
                         <textarea class="layer-textarea" id="constraint-layer" placeholder="Specify limitations and boundaries..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Data Layer</label>
+                        <label class="layer-label" data-i18n="data_layer">Data Layer</label>
                         <textarea class="layer-textarea" id="data-layer" placeholder="Provide relevant information and examples..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Process Layer</label>
+                        <label class="layer-label" data-i18n="process_layer">Process Layer</label>
                         <textarea class="layer-textarea" id="process-layer" placeholder="Outline step-by-step methodology..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Output Layer</label>
+                        <label class="layer-label" data-i18n="output_layer">Output Layer</label>
                         <textarea class="layer-textarea" id="output-layer" placeholder="Specify desired format and deliverables..."></textarea>
                     </div>
                     
                     <div class="layer-input">
-                        <label class="layer-label">Validation Layer</label>
+                        <label class="layer-label" data-i18n="validation_layer">Validation Layer</label>
                         <textarea class="layer-textarea" id="validation-layer" placeholder="Define quality checks and success verification..."></textarea>
                     </div>
 
@@ -847,7 +847,7 @@
             <button class="popup-close" onclick="closeContextPopup()">
                 <i class="fas fa-times"></i>
             </button>
-            <h3 class="popup-title" id="popup-title">Context Information</h3>
+            <h3 class="popup-title" id="popup-title" data-i18n="context_information">Context Information</h3>
             <div id="popup-body">
                 <!-- Content will be populated by JavaScript -->
             </div>
@@ -957,10 +957,10 @@
             'layer-prompting-intro': {
                 title: 'Layer Prompting Methodology',
                 content: `
-                    <h4>What is Layer Prompting?</h4>
-                    <p>Layer Prompting is EnfusionAIze's proprietary methodology for structuring AI interactions across multiple cognitive layers to achieve optimal business outcomes.</p>
+                    <h4 data-i18n="what_is_layer_prompting">What is Layer Prompting?</h4>
+                    <p data-i18n="layer_prompting_is_enfusionaizes_proprietary_metho">Layer Prompting is EnfusionAIze's proprietary methodology for structuring AI interactions across multiple cognitive layers to achieve optimal business outcomes.</p>
                     
-                    <h4>Why 7 Layers?</h4>
+                    <h4 data-i18n="why_7_layers">Why 7 Layers?</h4>
                     <ul>
                         <li><strong>Cognitive Alignment:</strong> Mirrors human problem-solving processes</li>
                         <li><strong>Systematic Structure:</strong> Ensures consistency and reproducibility</li>
@@ -969,7 +969,7 @@
                         <li><strong>Scalable Implementation:</strong> Works across all AI models and use cases</li>
                     </ul>
                     
-                    <h4>Proven Results:</h4>
+                    <h4 data-i18n="proven_results">Proven Results:</h4>
                     <ul>
                         <li>425% average productivity increase</li>
                         <li>60% cost reduction in operations</li>
@@ -981,10 +981,10 @@
             'context-layer': {
                 title: 'Context Layer - Environmental Awareness',
                 content: `
-                    <h4>Purpose:</h4>
-                    <p>Establish environmental and situational awareness for the AI</p>
+                    <h4 data-i18n="purpose">Purpose:</h4>
+                    <p data-i18n="establish_environmental_and_situational_awareness_">Establish environmental and situational awareness for the AI</p>
                     
-                    <h4>Components:</h4>
+                    <h4 data-i18n="components">Components:</h4>
                     <ul>
                         <li><strong>Environmental Context:</strong> Current situation, constraints, stakeholders</li>
                         <li><strong>Historical Context:</strong> Relevant past events, decisions, outcomes</li>
@@ -992,7 +992,7 @@
                         <li><strong>Technical Context:</strong> Available tools, systems, integrations</li>
                     </ul>
                     
-                    <h4>Example:</h4>
+                    <h4 data-i18n="example">Example:</h4>
                     <div style="background: #374151; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
                         <code>
                         CONTEXT LAYER:<br>
@@ -1007,10 +1007,10 @@
             'objective-layer': {
                 title: 'Objective Layer - Goal Definition',
                 content: `
-                    <h4>Purpose:</h4>
-                    <p>Define clear goals and success metrics</p>
+                    <h4 data-i18n="purpose">Purpose:</h4>
+                    <p data-i18n="define_clear_goals_and_success_metrics">Define clear goals and success metrics</p>
                     
-                    <h4>Components:</h4>
+                    <h4 data-i18n="components">Components:</h4>
                     <ul>
                         <li><strong>Primary Objective:</strong> Main goal to be accomplished</li>
                         <li><strong>Secondary Objectives:</strong> Supporting goals and considerations</li>
@@ -1018,7 +1018,7 @@
                         <li><strong>Timeline:</strong> Deadlines and milestone requirements</li>
                     </ul>
                     
-                    <h4>Best Practices:</h4>
+                    <h4 data-i18n="best_practices">Best Practices:</h4>
                     <ul>
                         <li>Use SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound)</li>
                         <li>Include both quantitative and qualitative metrics</li>
@@ -1030,10 +1030,10 @@
             'demo-walkthrough': {
                 title: 'Interactive Demo Walkthrough',
                 content: `
-                    <h4>Email Campaign Strategy Demo</h4>
-                    <p>This guided walkthrough demonstrates how to apply Layer Prompting to a real business scenario.</p>
+                    <h4 data-i18n="email_campaign_strategy_demo">Email Campaign Strategy Demo</h4>
+                    <p data-i18n="this_guided_walkthrough_demonstrates_how_to_apply_">This guided walkthrough demonstrates how to apply Layer Prompting to a real business scenario.</p>
                     
-                    <h4>Learning Objectives:</h4>
+                    <h4 data-i18n="learning_objectives">Learning Objectives:</h4>
                     <ul>
                         <li>Apply all 7 layers to a practical business challenge</li>
                         <li>See how layers interact and build upon each other</li>
@@ -1041,7 +1041,7 @@
                         <li>Practice quality validation techniques</li>
                     </ul>
                     
-                    <h4>Demo Components:</h4>
+                    <h4 data-i18n="demo_components">Demo Components:</h4>
                     <ol>
                         <li><strong>Scenario Setup:</strong> Real business context and requirements</li>
                         <li><strong>Layer-by-Layer Construction:</strong> Step-by-step prompt building</li>
@@ -1088,7 +1088,8 @@
             
             // Update iframe content
             const iframe = document.getElementById('course-iframe');
-            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2>Week ${weekId} Content</h2><p>This iframe would load the actual course content for Week ${weekId}.</p><p>Content includes:</p><ul><li>Video lessons</li><li>Interactive exercises</li><li>Templates and resources</li><li>Progress tracking</li></ul></body></html>`;
+            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2 data-i18n="week_weekid_content">Week ${weekId} Content</h2><p data-i18n="this_iframe_would_load_the_actual_course_content_f">This iframe would load the actual course content for Week ${weekId}.</p><p data-i18n="content_includes">Content includes:</p><ul><li>Video lessons</li><li>Interactive exercises</li><li>Templates and resources</li><li>Progress tracking</li></ul><script src="scripts/i18n-integration.js"></script>
+</body></html>`;
         }
 
         // Load course content
@@ -1184,7 +1185,7 @@
         // Iframe functions
         function setupIframe() {
             const iframe = document.getElementById('course-iframe');
-            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2>Course Portal</h2><p>Welcome to the EnfusionAIze Course Portal!</p><p>This iframe provides direct access to:</p><ul><li>Video lessons and tutorials</li><li>Interactive exercises</li><li>Progress tracking</li><li>Resource downloads</li><li>Community discussions</li></ul><p><em>Click "Full Course" to open in a new window.</em></p></body></html>`;
+            iframe.src = `data:text/html,<html><body style="font-family: Arial; padding: 20px; background: #1e293b; color: white;"><h2 data-i18n="course_portal">Course Portal</h2><p data-i18n="welcome_to_the_enfusionaize_course_portal">Welcome to the EnfusionAIze Course Portal!</p><p data-i18n="this_iframe_provides_direct_access_to">This iframe provides direct access to:</p><ul><li>Video lessons and tutorials</li><li>Interactive exercises</li><li>Progress tracking</li><li>Resource downloads</li><li>Community discussions</li></ul><p><em>Click "Full Course" to open in a new window.</em></p></body></html>`;
         }
 
         function refreshIframe() {
@@ -1214,19 +1215,19 @@
                     </style>
                 </head>
                 <body>
-                    <h1>🎓 EnfusionAIze Accelerator Course</h1>
-                    <h2>Full Course Portal Access</h2>
+                    <h1 data-i18n="_enfusionaize_accelerator_course">🎓 EnfusionAIze Accelerator Course</h1>
+                    <h2 data-i18n="full_course_portal_access">Full Course Portal Access</h2>
                     
                     <div class="course-section">
-                        <h3>📚 Current Progress</h3>
-                        <p>Week ${courseData.currentWeek} of 13 - Layer Prompting Fundamentals</p>
+                        <h3 data-i18n="_current_progress">📚 Current Progress</h3>
+                        <p data-i18n="week_coursedatacurrentweek_of_13_layer_prompting_f">Week ${courseData.currentWeek} of 13 - Layer Prompting Fundamentals</p>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${(courseData.currentWeek / 13) * 100}%"></div>
                         </div>
                     </div>
                     
                     <div class="course-section">
-                        <h3>🎯 This Week's Focus</h3>
+                        <h3 data-i18n="_this_weeks_focus">🎯 This Week's Focus</h3>
                         <ul>
                             <li>Master the 7-layer prompting methodology</li>
                             <li>Complete platform orientation and setup</li>
@@ -1236,7 +1237,7 @@
                     </div>
                     
                     <div class="course-section">
-                        <h3>🔧 Available Tools</h3>
+                        <h3 data-i18n="_available_tools">🔧 Available Tools</h3>
                         <ul>
                             <li>Layer Prompting Builder</li>
                             <li>AI Model Orchestration</li>
@@ -1246,8 +1247,8 @@
                     </div>
                     
                     <div class="course-section">
-                        <h3>👥 Community & Support</h3>
-                        <p>Connect with fellow learners, get expert help, and share your successes.</p>
+                        <h3 data-i18n="_community_support">👥 Community & Support</h3>
+                        <p data-i18n="connect_with_fellow_learners_get_expert_help_and_s">Connect with fellow learners, get expert help, and share your successes.</p>
                         <ul>
                             <li>Weekly live sessions</li>
                             <li>1-on-1 implementation support</li>

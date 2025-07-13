@@ -460,8 +460,8 @@
 
     <div class="container">
         <div class="page-header">
-            <h1 class="page-title">One-Click Client Deployment</h1>
-            <p class="page-subtitle">
+            <h1 class="page-title" data-i18n="oneclick_client_deployment">One-Click Client Deployment</h1>
+            <p class="page-subtitle" data-i18n="_instantly_deploy_customized_dashboard_environment">
                 Instantly deploy customized dashboard environments for newly signed clients using our demo environment as a foundation
             </p>
         </div>
@@ -495,37 +495,37 @@
                         <i class="fas fa-rocket"></i>
                     </div>
                     <div>
-                        <h2 class="card-title">Deploy New Client</h2>
-                        <p style="color: var(--text-secondary); margin: 0;">Create instant dashboard from demo environment</p>
+                        <h2 class="card-title" data-i18n="deploy_new_client">Deploy New Client</h2>
+                        <p style="color: var(--text-secondary); margin: 0;" data-i18n="create_instant_dashboard_from_demo_environment">Create instant dashboard from demo environment</p>
                     </div>
                 </div>
 
                 <form id="client-deployment-form">
                     <div class="form-group">
-                        <label class="form-label" for="client-id">Client ID *</label>
+                        <label class="form-label" for="client-id" data-i18n="client_id_">Client ID *</label>
                         <input type="text" id="client-id" class="form-input" placeholder="e.g., acme-corp-001" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="company-name">Company Name *</label>
+                        <label class="form-label" for="company-name" data-i18n="company_name_">Company Name *</label>
                         <input type="text" id="company-name" class="form-input" placeholder="e.g., Acme Corporation" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="subdomain">Subdomain *</label>
+                        <label class="form-label" for="subdomain" data-i18n="subdomain_">Subdomain *</label>
                         <input type="text" id="subdomain" class="form-input" placeholder="e.g., acme (creates acme.enfusionaize.com)" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label" for="primary-color">Primary Brand Color</label>
+                            <label class="form-label" for="primary-color" data-i18n="primary_brand_color">Primary Brand Color</label>
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <input type="color" id="primary-color" class="color-preview" value="#1e40af">
                                 <input type="text" class="form-input" placeholder="#1e40af" id="primary-color-text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="secondary-color">Secondary Brand Color</label>
+                            <label class="form-label" for="secondary-color" data-i18n="secondary_brand_color">Secondary Brand Color</label>
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <input type="color" id="secondary-color" class="color-preview" value="#06b6d4">
                                 <input type="text" class="form-input" placeholder="#06b6d4" id="secondary-color-text">
@@ -534,7 +534,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="custom-domain">Custom Domain (Optional)</label>
+                        <label class="form-label" for="custom-domain" data-i18n="custom_domain_optional">Custom Domain (Optional)</label>
                         <input type="text" id="custom-domain" class="form-input" placeholder="e.g., dashboard.acme.com">
                     </div>
 
@@ -566,8 +566,8 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div>
-                        <h2 class="card-title">Active Client Instances</h2>
-                        <p style="color: var(--text-secondary); margin: 0;">Manage deployed client dashboards</p>
+                        <h2 class="card-title" data-i18n="active_client_instances">Active Client Instances</h2>
+                        <p style="color: var(--text-secondary); margin: 0;" data-i18n="manage_deployed_client_dashboards">Manage deployed client dashboards</p>
                     </div>
                 </div>
 
@@ -589,8 +589,8 @@
         <!-- Deployment History -->
         <div class="client-list">
             <div class="client-list-header">
-                <h3 class="client-list-title">Recent Deployments</h3>
-                <p style="margin: 0; opacity: 0.9;">Latest client dashboard deployments and their status</p>
+                <h3 class="client-list-title" data-i18n="recent_deployments">Recent Deployments</h3>
+                <p style="margin: 0; opacity: 0.9;" data-i18n="latest_client_dashboard_deployments_and_their_stat">Latest client dashboard deployments and their status</p>
             </div>
             <div id="deployment-history">
                 <!-- Deployment history will be populated here -->
@@ -996,5 +996,6 @@
             deploymentManager.updateMetrics();
         }, 30000);
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

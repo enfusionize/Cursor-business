@@ -1,0 +1,9 @@
+{
+  "dashboard": true,
+  "backend": true,
+  "mcpServers": true,
+  "analytics": true,
+  "monitoring": true,
+  "i18n": true,
+  "errorHandling": true
+}

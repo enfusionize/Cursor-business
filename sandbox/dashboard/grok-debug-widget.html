@@ -28,8 +28,8 @@
                     <div class="flex items-center">
                         <i class="fas fa-bug text-2xl mr-3"></i>
                         <div>
-                            <h1 class="text-2xl font-bold">Grok Debug MCP</h1>
-                            <p class="text-blue-100">One-click code debugging with AI redundancy</p>
+                            <h1 class="text-2xl font-bold" data-i18n="grok_debug_mcp">Grok Debug MCP</h1>
+                            <p class="text-blue-100" data-i18n="oneclick_code_debugging_with_ai_redundancy">One-click code debugging with AI redundancy</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -85,11 +85,11 @@
         <div class="bg-white rounded-lg shadow-md">
             <!-- Debug Tab -->
             <div x-show="activeTab === 'debug'" x-cloak class="p-6">
-                <h3 class="text-lg font-semibold mb-4">Debug Code</h3>
+                <h3 class="text-lg font-semibold mb-4" data-i18n="debug_code">Debug Code</h3>
                 <form @submit.prevent="debugCode()">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Debug</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="code_to_debug">Code to Debug</label>
                             <textarea x-model="debugForm.code" 
                                       class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
                                       placeholder="Paste your code here..."
@@ -97,7 +97,7 @@
                             
                             <div class="mt-4 grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="language">Language</label>
                                     <select x-model="debugForm.language" class="w-full p-2 border border-gray-300 rounded-md">
                                         <option value="javascript">JavaScript</option>
                                         <option value="python">Python</option>
@@ -109,7 +109,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="priority">Priority</label>
                                     <select x-model="debugForm.priority" class="w-full p-2 border border-gray-300 rounded-md">
                                         <option value="low">Low</option>
                                         <option value="medium">Medium</option>
@@ -120,14 +120,14 @@
                             </div>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="description_optional">Description (Optional)</label>
                                 <textarea x-model="debugForm.description" 
                                           class="w-full h-20 p-3 border border-gray-300 rounded-md"
                                           placeholder="Describe what the code should do or what issues you're experiencing..."></textarea>
                             </div>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Error Message (Optional)</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="error_message_optional">Error Message (Optional)</label>
                                 <textarea x-model="debugForm.errorMessage" 
                                           class="w-full h-20 p-3 border border-gray-300 rounded-md"
                                           placeholder="Paste any error messages here..."></textarea>
@@ -136,15 +136,15 @@
                         
                         <div>
                             <div class="bg-gray-50 p-4 rounded-lg h-full">
-                                <h4 class="font-medium mb-3">Debug Results</h4>
+                                <h4 class="font-medium mb-3" data-i18n="debug_results">Debug Results</h4>
                                 <div x-show="loading" class="text-center py-8">
                                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                                    <p class="text-gray-600">Analyzing code with Grok...</p>
+                                    <p class="text-gray-600" data-i18n="analyzing_code_with_grok">Analyzing code with Grok...</p>
                                 </div>
                                 
                                 <div x-show="debugResult && !loading" class="space-y-4">
                                     <div x-show="debugResult.issues && debugResult.issues.length > 0">
-                                        <h5 class="font-medium text-red-600 mb-2">Issues Found:</h5>
+                                        <h5 class="font-medium text-red-600 mb-2" data-i18n="issues_found">Issues Found:</h5>
                                         <ul class="list-disc list-inside space-y-1">
                                             <template x-for="issue in debugResult.issues" :key="issue">
                                                 <li class="text-sm text-gray-700" x-text="issue"></li>
@@ -153,12 +153,12 @@
                                     </div>
                                     
                                     <div x-show="debugResult.rootCause">
-                                        <h5 class="font-medium text-orange-600 mb-2">Root Cause:</h5>
+                                        <h5 class="font-medium text-orange-600 mb-2" data-i18n="root_cause">Root Cause:</h5>
                                         <p class="text-sm text-gray-700" x-text="debugResult.rootCause"></p>
                                     </div>
                                     
                                     <div x-show="debugResult.fixes && debugResult.fixes.length > 0">
-                                        <h5 class="font-medium text-green-600 mb-2">Recommended Fixes:</h5>
+                                        <h5 class="font-medium text-green-600 mb-2" data-i18n="recommended_fixes">Recommended Fixes:</h5>
                                         <ul class="list-disc list-inside space-y-1">
                                             <template x-for="fix in debugResult.fixes" :key="fix">
                                                 <li class="text-sm text-gray-700" x-text="fix"></li>
@@ -175,7 +175,7 @@
                     </div>
                     
                     <div class="mt-6 flex justify-between">
-                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800" data-i18n="_clear_">
                             Clear
                         </button>
                         <button type="submit" :disabled="loading" 
@@ -189,18 +189,18 @@
 
             <!-- Fix Tab -->
             <div x-show="activeTab === 'fix'" x-cloak class="p-6">
-                <h3 class="text-lg font-semibold mb-4">Fix Code</h3>
+                <h3 class="text-lg font-semibold mb-4" data-i18n="fix_code">Fix Code</h3>
                 <form @submit.prevent="fixCode()">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Fix</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="code_to_fix">Code to Fix</label>
                             <textarea x-model="fixForm.code" 
                                       class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
                                       placeholder="Paste your broken code here..."
                                       required></textarea>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="language">Language</label>
                                 <select x-model="fixForm.language" class="w-full p-2 border border-gray-300 rounded-md">
                                     <option value="javascript">JavaScript</option>
                                     <option value="python">Python</option>
@@ -211,7 +211,7 @@
                             </div>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Issues to Address</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="issues_to_address">Issues to Address</label>
                                 <textarea x-model="fixForm.issues" 
                                           class="w-full h-20 p-3 border border-gray-300 rounded-md"
                                           placeholder="Describe the specific issues that need fixing..."
@@ -219,7 +219,7 @@
                             </div>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Requirements (Optional)</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="requirements_optional">Requirements (Optional)</label>
                                 <textarea x-model="fixForm.requirements" 
                                           class="w-full h-20 p-3 border border-gray-300 rounded-md"
                                           placeholder="Any specific requirements or constraints..."></textarea>
@@ -228,16 +228,16 @@
                         
                         <div>
                             <div class="bg-gray-50 p-4 rounded-lg h-full">
-                                <h4 class="font-medium mb-3">Fixed Code</h4>
+                                <h4 class="font-medium mb-3" data-i18n="fixed_code">Fixed Code</h4>
                                 <div x-show="loading" class="text-center py-8">
                                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
-                                    <p class="text-gray-600">Fixing code with Grok...</p>
+                                    <p class="text-gray-600" data-i18n="fixing_code_with_grok">Fixing code with Grok...</p>
                                 </div>
                                 
                                 <div x-show="fixResult && !loading">
                                     <div x-show="fixResult.fixedCode">
                                         <div class="flex justify-between items-center mb-2">
-                                            <h5 class="font-medium text-green-600">Fixed Code:</h5>
+                                            <h5 class="font-medium text-green-600" data-i18n="fixed_code">Fixed Code:</h5>
                                             <button @click="copyToClipboard(fixResult.fixedCode)" 
                                                     class="text-sm text-blue-600 hover:text-blue-800">
                                                 <i class="fas fa-copy mr-1"></i>Copy
@@ -247,7 +247,7 @@
                                     </div>
                                     
                                     <div x-show="fixResult.changes && fixResult.changes.length > 0" class="mt-4">
-                                        <h5 class="font-medium text-blue-600 mb-2">Changes Made:</h5>
+                                        <h5 class="font-medium text-blue-600 mb-2" data-i18n="changes_made">Changes Made:</h5>
                                         <ul class="list-disc list-inside space-y-1">
                                             <template x-for="change in fixResult.changes" :key="change">
                                                 <li class="text-sm text-gray-700" x-text="change"></li>
@@ -264,7 +264,7 @@
                     </div>
                     
                     <div class="mt-6 flex justify-between">
-                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800" data-i18n="_clear_">
                             Clear
                         </button>
                         <button type="submit" :disabled="loading" 
@@ -278,18 +278,18 @@
 
             <!-- Optimize Tab -->
             <div x-show="activeTab === 'optimize'" x-cloak class="p-6">
-                <h3 class="text-lg font-semibold mb-4">Optimize Code</h3>
+                <h3 class="text-lg font-semibold mb-4" data-i18n="optimize_code">Optimize Code</h3>
                 <form @submit.prevent="optimizeCode()">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Code to Optimize</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="code_to_optimize">Code to Optimize</label>
                             <textarea x-model="optimizeForm.code" 
                                       class="w-full h-64 p-3 border border-gray-300 rounded-md code-editor text-sm"
                                       placeholder="Paste your code here for optimization..."
                                       required></textarea>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="language">Language</label>
                                 <select x-model="optimizeForm.language" class="w-full p-2 border border-gray-300 rounded-md">
                                     <option value="javascript">JavaScript</option>
                                     <option value="python">Python</option>
@@ -300,7 +300,7 @@
                             </div>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Optimization Goals</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="optimization_goals">Optimization Goals</label>
                                 <div class="space-y-2">
                                     <label class="flex items-center">
                                         <input type="checkbox" x-model="optimizeForm.goals" value="performance" class="mr-2">
@@ -324,16 +324,16 @@
                         
                         <div>
                             <div class="bg-gray-50 p-4 rounded-lg h-full">
-                                <h4 class="font-medium mb-3">Optimized Code</h4>
+                                <h4 class="font-medium mb-3" data-i18n="optimized_code">Optimized Code</h4>
                                 <div x-show="loading" class="text-center py-8">
                                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-2"></div>
-                                    <p class="text-gray-600">Optimizing code with Grok...</p>
+                                    <p class="text-gray-600" data-i18n="optimizing_code_with_grok">Optimizing code with Grok...</p>
                                 </div>
                                 
                                 <div x-show="optimizeResult && !loading">
                                     <div x-show="optimizeResult.optimizedCode">
                                         <div class="flex justify-between items-center mb-2">
-                                            <h5 class="font-medium text-purple-600">Optimized Code:</h5>
+                                            <h5 class="font-medium text-purple-600" data-i18n="optimized_code">Optimized Code:</h5>
                                             <button @click="copyToClipboard(optimizeResult.optimizedCode)" 
                                                     class="text-sm text-blue-600 hover:text-blue-800">
                                                 <i class="fas fa-copy mr-1"></i>Copy
@@ -343,7 +343,7 @@
                                     </div>
                                     
                                     <div x-show="optimizeResult.performanceGains && optimizeResult.performanceGains.length > 0" class="mt-4">
-                                        <h5 class="font-medium text-green-600 mb-2">Performance Gains:</h5>
+                                        <h5 class="font-medium text-green-600 mb-2" data-i18n="performance_gains">Performance Gains:</h5>
                                         <ul class="list-disc list-inside space-y-1">
                                             <template x-for="gain in optimizeResult.performanceGains" :key="gain">
                                                 <li class="text-sm text-gray-700" x-text="gain"></li>
@@ -360,7 +360,7 @@
                     </div>
                     
                     <div class="mt-6 flex justify-between">
-                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800" data-i18n="_clear_">
                             Clear
                         </button>
                         <button type="submit" :disabled="loading" 
@@ -374,18 +374,18 @@
 
             <!-- Explain Tab -->
             <div x-show="activeTab === 'explain'" x-cloak class="p-6">
-                <h3 class="text-lg font-semibold mb-4">Explain Error</h3>
+                <h3 class="text-lg font-semibold mb-4" data-i18n="explain_error">Explain Error</h3>
                 <form @submit.prevent="explainError()">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Error Message</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="error_message">Error Message</label>
                             <textarea x-model="explainForm.errorMessage" 
                                       class="w-full h-32 p-3 border border-gray-300 rounded-md"
                                       placeholder="Paste the error message here..."
                                       required></textarea>
                             
                             <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Related Code (Optional)</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="related_code_optional">Related Code (Optional)</label>
                                 <textarea x-model="explainForm.code" 
                                           class="w-full h-32 p-3 border border-gray-300 rounded-md code-editor text-sm"
                                           placeholder="Paste the code that's causing the error..."></textarea>
@@ -393,7 +393,7 @@
                             
                             <div class="mt-4 grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="language">Language</label>
                                     <select x-model="explainForm.language" class="w-full p-2 border border-gray-300 rounded-md">
                                         <option value="javascript">JavaScript</option>
                                         <option value="python">Python</option>
@@ -403,7 +403,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Context</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" data-i18n="context">Context</label>
                                     <select x-model="explainForm.context" class="w-full p-2 border border-gray-300 rounded-md">
                                         <option value="general">General</option>
                                         <option value="runtime">Runtime Error</option>
@@ -417,30 +417,30 @@
                         
                         <div>
                             <div class="bg-gray-50 p-4 rounded-lg h-full">
-                                <h4 class="font-medium mb-3">Error Explanation</h4>
+                                <h4 class="font-medium mb-3" data-i18n="error_explanation">Error Explanation</h4>
                                 <div x-show="loading" class="text-center py-8">
                                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-2"></div>
-                                    <p class="text-gray-600">Analyzing error with Grok...</p>
+                                    <p class="text-gray-600" data-i18n="analyzing_error_with_grok">Analyzing error with Grok...</p>
                                 </div>
                                 
                                 <div x-show="explainResult && !loading" class="space-y-4">
                                     <div x-show="explainResult.explanation">
-                                        <h5 class="font-medium text-orange-600 mb-2">Explanation:</h5>
+                                        <h5 class="font-medium text-orange-600 mb-2" data-i18n="explanation">Explanation:</h5>
                                         <p class="text-sm text-gray-700" x-text="explainResult.explanation"></p>
                                     </div>
                                     
                                     <div x-show="explainResult.cause">
-                                        <h5 class="font-medium text-red-600 mb-2">Root Cause:</h5>
+                                        <h5 class="font-medium text-red-600 mb-2" data-i18n="root_cause">Root Cause:</h5>
                                         <p class="text-sm text-gray-700" x-text="explainResult.cause"></p>
                                     </div>
                                     
                                     <div x-show="explainResult.solution">
-                                        <h5 class="font-medium text-green-600 mb-2">Solution:</h5>
+                                        <h5 class="font-medium text-green-600 mb-2" data-i18n="solution">Solution:</h5>
                                         <p class="text-sm text-gray-700" x-text="explainResult.solution"></p>
                                     </div>
                                     
                                     <div x-show="explainResult.prevention">
-                                        <h5 class="font-medium text-blue-600 mb-2">Prevention:</h5>
+                                        <h5 class="font-medium text-blue-600 mb-2" data-i18n="prevention">Prevention:</h5>
                                         <p class="text-sm text-gray-700" x-text="explainResult.prevention"></p>
                                     </div>
                                 </div>
@@ -453,7 +453,7 @@
                     </div>
                     
                     <div class="mt-6 flex justify-between">
-                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        <button type="button" @click="clearForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800" data-i18n="_clear_">
                             Clear
                         </button>
                         <button type="submit" :disabled="loading" 
@@ -470,7 +470,7 @@
         <div class="mt-6 bg-white rounded-lg shadow-md">
             <div class="p-6 border-b border-gray-200">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-lg font-semibold">Recent Debug Sessions</h3>
+                    <h3 class="text-lg font-semibold" data-i18n="recent_debug_sessions">Recent Debug Sessions</h3>
                     <button @click="loadSessions()" class="text-blue-600 hover:text-blue-800">
                         <i class="fas fa-sync-alt mr-1"></i>Refresh
                     </button>
@@ -500,11 +500,11 @@
                             </div>
                             <div class="flex space-x-2">
                                 <button @click="viewSession(session.id)" 
-                                        class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                        class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200" data-i18n="_view_">
                                     View
                                 </button>
                                 <button @click="deleteSession(session.id)" 
-                                        class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                        class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200" data-i18n="_delete_">
                                     Delete
                                 </button>
                             </div>
@@ -825,5 +825,6 @@
             }
         }
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

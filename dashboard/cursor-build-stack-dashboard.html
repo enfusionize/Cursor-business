@@ -163,8 +163,8 @@
                     <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-white">Cursor Build Stack Dashboard</h1>
-                    <p class="text-blue-100">6 AI Tools • Minimax Builder • Figma Flow • One-Click Remix</p>
+                    <h1 class="text-2xl font-bold text-white" data-i18n="cursor_build_stack_dashboard">Cursor Build Stack Dashboard</h1>
+                    <p class="text-blue-100" data-i18n="6_ai_tools_minimax_builder_figma_flow_oneclick_rem">6 AI Tools • Minimax Builder • Figma Flow • One-Click Remix</p>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
@@ -205,12 +205,12 @@
         <!-- Tabs Navigation -->
         <div class="mb-6">
             <div class="flex border-b border-gray-700">
-                <button class="tab-button active" data-tab="overview">System Overview</button>
-                <button class="tab-button" data-tab="ai-models">AI Models</button>
-                <button class="tab-button" data-tab="minimax">Minimax Builder</button>
-                <button class="tab-button" data-tab="figma">Figma Integration</button>
-                <button class="tab-button" data-tab="remix">One-Click Remix</button>
-                <button class="tab-button" data-tab="analytics">Analytics</button>
+                <button class="tab-button active" data-tab="overview" data-i18n="system_overview">System Overview</button>
+                <button class="tab-button" data-tab="ai-models" data-i18n="ai_models">AI Models</button>
+                <button class="tab-button" data-tab="minimax" data-i18n="minimax_builder">Minimax Builder</button>
+                <button class="tab-button" data-tab="figma" data-i18n="figma_integration">Figma Integration</button>
+                <button class="tab-button" data-tab="remix" data-i18n="oneclick_remix">One-Click Remix</button>
+                <button class="tab-button" data-tab="analytics" data-i18n="analytics">Analytics</button>
             </div>
         </div>
 
@@ -221,7 +221,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- System Status -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">System Status</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="system_status">System Status</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -256,7 +256,7 @@
 
                 <!-- Real-time Performance -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Real-time Performance</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="realtime_performance">Real-time Performance</h3>
                     <div class="chart-container">
                         <canvas id="performanceChart"></canvas>
                     </div>
@@ -269,7 +269,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- AI Models Status -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">AI Models Status</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="ai_models_status">AI Models Status</h3>
                     <div id="aiModelsContainer">
                         <!-- AI models will be populated here -->
                     </div>
@@ -277,7 +277,7 @@
 
                 <!-- Model Usage Analytics -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Model Usage Distribution</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="model_usage_distribution">Model Usage Distribution</h3>
                     <div class="chart-container">
                         <canvas id="modelUsageChart"></canvas>
                     </div>
@@ -287,7 +287,7 @@
             <!-- Model Performance Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <div class="card p-6">
-                    <h4 class="font-semibold mb-3">Claude (Primary)</h4>
+                    <h4 class="font-semibold mb-3" data-i18n="claude_primary">Claude (Primary)</h4>
                     <div class="space-y-2">
                         <div class="flex justify-between">
                             <span>Code Quality</span>
@@ -305,7 +305,7 @@
                 </div>
 
                 <div class="card p-6">
-                    <h4 class="font-semibold mb-3">Minimax (Builder)</h4>
+                    <h4 class="font-semibold mb-3" data-i18n="minimax_builder">Minimax (Builder)</h4>
                     <div class="space-y-2">
                         <div class="flex justify-between">
                             <span>Build Quality</span>
@@ -323,7 +323,7 @@
                 </div>
 
                 <div class="card p-6">
-                    <h4 class="font-semibold mb-3">Dora AI (Design)</h4>
+                    <h4 class="font-semibold mb-3" data-i18n="dora_ai_design">Dora AI (Design)</h4>
                     <div class="space-y-2">
                         <div class="flex justify-between">
                             <span>Design Score</span>
@@ -347,7 +347,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Builder Status -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Minimax Builder Status</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="minimax_builder_status">Minimax Builder Status</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span>Website Generation</span>
@@ -370,7 +370,7 @@
 
                 <!-- Recent Generations -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Recent Generations</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="recent_generations">Recent Generations</h3>
                     <div id="recentGenerations" class="space-y-3">
                         <!-- Recent generations will be populated here -->
                     </div>
@@ -379,7 +379,7 @@
 
             <!-- Generation Analytics -->
             <div class="card p-6 mt-6">
-                <h3 class="text-xl font-semibold mb-4">Generation Analytics</h3>
+                <h3 class="text-xl font-semibold mb-4" data-i18n="generation_analytics">Generation Analytics</h3>
                 <div class="chart-container">
                     <canvas id="generationChart"></canvas>
                 </div>
@@ -391,7 +391,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Figma Status -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Figma Integration Status</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="figma_integration_status">Figma Integration Status</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span>Webhooks</span>
@@ -414,7 +414,7 @@
 
                 <!-- Component Library -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Component Library</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="component_library">Component Library</h3>
                     <div id="figmaComponents" class="space-y-3">
                         <!-- Figma components will be populated here -->
                     </div>
@@ -423,7 +423,7 @@
 
             <!-- Sync Analytics -->
             <div class="card p-6 mt-6">
-                <h3 class="text-xl font-semibold mb-4">Design-to-Code Pipeline</h3>
+                <h3 class="text-xl font-semibold mb-4" data-i18n="designtocode_pipeline">Design-to-Code Pipeline</h3>
                 <div class="chart-container">
                     <canvas id="syncChart"></canvas>
                 </div>
@@ -435,7 +435,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Remix System Status -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Remix System Status</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="remix_system_status">Remix System Status</h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span>AI Analysis</span>
@@ -458,7 +458,7 @@
 
                 <!-- Active Variations -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Active Variations</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="active_variations">Active Variations</h3>
                     <div id="activeVariations" class="space-y-3">
                         <!-- Active variations will be populated here -->
                     </div>
@@ -467,7 +467,7 @@
 
             <!-- Remix Analytics -->
             <div class="card p-6 mt-6">
-                <h3 class="text-xl font-semibold mb-4">Remix Performance</h3>
+                <h3 class="text-xl font-semibold mb-4" data-i18n="remix_performance">Remix Performance</h3>
                 <div class="chart-container">
                     <canvas id="remixChart"></canvas>
                 </div>
@@ -479,7 +479,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Cost Analytics -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">Cost Analytics</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="cost_analytics">Cost Analytics</h3>
                     <div class="chart-container">
                         <canvas id="costChart"></canvas>
                     </div>
@@ -487,7 +487,7 @@
 
                 <!-- ROI Metrics -->
                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold mb-4">ROI Metrics</h3>
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="roi_metrics">ROI Metrics</h3>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
                             <span>Development Speed Increase</span>
@@ -511,7 +511,7 @@
 
             <!-- Business Impact -->
             <div class="card p-6 mt-6">
-                <h3 class="text-xl font-semibold mb-4">Business Impact Analytics</h3>
+                <h3 class="text-xl font-semibold mb-4" data-i18n="business_impact_analytics">Business Impact Analytics</h3>
                 <div class="chart-container">
                     <canvas id="businessImpactChart"></canvas>
                 </div>
@@ -1002,5 +1002,6 @@
             }
         });
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

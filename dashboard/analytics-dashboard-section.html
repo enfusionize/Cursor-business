@@ -1,7 +1,7 @@
 <!-- Analytics Dashboard Section -->
 <div id="analytics-tab" class="tab-content hidden">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold">📊 Analytics & Metrics Dashboard</h2>
+        <h2 class="text-xl font-semibold" data-i18n="_analytics_metrics_dashboard">📊 Analytics & Metrics Dashboard</h2>
         <div class="flex space-x-3">
             <button onclick="refreshAnalytics()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
@@ -23,9 +23,9 @@
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm opacity-90">Total Revenue</p>
-                    <p class="text-3xl font-bold" id="totalRevenue">$--</p>
-                    <p class="text-sm opacity-75" id="revenueChange">+0% vs last month</p>
+                    <p class="text-sm opacity-90" data-i18n="total_revenue">Total Revenue</p>
+                    <p class="text-3xl font-bold" id="totalRevenue" data-i18n="">$--</p>
+                    <p class="text-sm opacity-75" id="revenueChange" data-i18n="0_vs_last_month">+0% vs last month</p>
                 </div>
                 <i data-lucide="dollar-sign" class="w-8 h-8 opacity-80"></i>
             </div>
@@ -34,9 +34,9 @@
         <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm opacity-90">Conversions</p>
-                    <p class="text-3xl font-bold" id="totalConversions">--</p>
-                    <p class="text-sm opacity-75" id="conversionChange">+0% vs last month</p>
+                    <p class="text-sm opacity-90" data-i18n="conversions">Conversions</p>
+                    <p class="text-3xl font-bold" id="totalConversions" data-i18n="">--</p>
+                    <p class="text-sm opacity-75" id="conversionChange" data-i18n="0_vs_last_month">+0% vs last month</p>
                 </div>
                 <i data-lucide="target" class="w-8 h-8 opacity-80"></i>
             </div>
@@ -45,9 +45,9 @@
         <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm opacity-90">Active Users</p>
-                    <p class="text-3xl font-bold" id="activeUsers">--</p>
-                    <p class="text-sm opacity-75" id="usersChange">+0% vs last month</p>
+                    <p class="text-sm opacity-90" data-i18n="active_users">Active Users</p>
+                    <p class="text-3xl font-bold" id="activeUsers" data-i18n="">--</p>
+                    <p class="text-sm opacity-75" id="usersChange" data-i18n="0_vs_last_month">+0% vs last month</p>
                 </div>
                 <i data-lucide="users" class="w-8 h-8 opacity-80"></i>
             </div>
@@ -56,9 +56,9 @@
         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm opacity-90">ROI</p>
-                    <p class="text-3xl font-bold" id="averageROI">--%</p>
-                    <p class="text-sm opacity-75" id="roiChange">+0% vs last month</p>
+                    <p class="text-sm opacity-90" data-i18n="roi">ROI</p>
+                    <p class="text-3xl font-bold" id="averageROI" data-i18n="">--%</p>
+                    <p class="text-sm opacity-75" id="roiChange" data-i18n="0_vs_last_month">+0% vs last month</p>
                 </div>
                 <i data-lucide="trending-up" class="w-8 h-8 opacity-80"></i>
             </div>
@@ -67,7 +67,7 @@
 
     <!-- Analytics Platform Integration Status -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h3 class="text-lg font-semibold mb-4">📈 Connected Analytics Platforms</h3>
+        <h3 class="text-lg font-semibold mb-4" data-i18n="_connected_analytics_platforms">📈 Connected Analytics Platforms</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="platformStatus">
             <!-- Platform status cards will be populated here -->
         </div>
@@ -78,12 +78,12 @@
         <!-- Google Analytics Real-Time -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">🔴 Real-Time Visitors (GA4)</h3>
+                <h3 class="text-lg font-semibold" data-i18n="_realtime_visitors_ga4">🔴 Real-Time Visitors (GA4)</h3>
                 <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full" id="gaStatus">Connected</span>
             </div>
             <div class="text-center">
                 <div class="text-4xl font-bold text-blue-600 mb-2" id="realtimeUsers">--</div>
-                <p class="text-gray-600">Active users right now</p>
+                <p class="text-gray-600" data-i18n="active_users_right_now">Active users right now</p>
                 <div class="mt-4">
                     <canvas id="realtimeChart" width="400" height="200"></canvas>
                 </div>
@@ -93,7 +93,7 @@
         <!-- Wicked Reports ROI -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">💰 Campaign ROI (Wicked Reports)</h3>
+                <h3 class="text-lg font-semibold" data-i18n="_campaign_roi_wicked_reports">💰 Campaign ROI (Wicked Reports)</h3>
                 <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full" id="wrStatus">Connected</span>
             </div>
             <div id="roiMetrics">
@@ -122,22 +122,22 @@
     <div class="bg-white rounded-lg shadow-md">
         <div class="border-b border-gray-200">
             <nav class="-mb-px flex space-x-8 px-6">
-                <button onclick="switchAnalyticsTab('google')" class="analytics-tab-btn active py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium">
+                <button onclick="switchAnalyticsTab('google')" class="analytics-tab-btn active py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium" data-i18n="_google_analytics_">
                     Google Analytics
                 </button>
-                <button onclick="switchAnalyticsTab('wicked')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                <button onclick="switchAnalyticsTab('wicked')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_wicked_reports_">
                     Wicked Reports
                 </button>
-                <button onclick="switchAnalyticsTab('hubspot')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                <button onclick="switchAnalyticsTab('hubspot')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_hubspot_">
                     HubSpot
                 </button>
-                <button onclick="switchAnalyticsTab('salesforce')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                <button onclick="switchAnalyticsTab('salesforce')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_salesforce_">
                     Salesforce
                 </button>
-                <button onclick="switchAnalyticsTab('humblytics')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                <button onclick="switchAnalyticsTab('humblytics')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_humblytics_">
                     Humblytics
                 </button>
-                <button onclick="switchAnalyticsTab('unified')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                <button onclick="switchAnalyticsTab('unified')" class="analytics-tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-i18n="_unified_view_">
                     Unified View
                 </button>
             </nav>
@@ -147,17 +147,17 @@
         <div id="google-analytics-tab" class="analytics-tab-content p-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">📊 Page Views & Sessions</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_page_views_sessions">📊 Page Views & Sessions</h4>
                     <canvas id="gaPageViewsChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🎯 Conversion Funnel</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_conversion_funnel">🎯 Conversion Funnel</h4>
                     <canvas id="gaConversionsChart" width="400" height="250"></canvas>
                 </div>
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">📈 Top Pages Performance</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_top_pages_performance">📈 Top Pages Performance</h4>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -180,29 +180,29 @@
         <div id="wicked-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">💰 Revenue Attribution</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_revenue_attribution">💰 Revenue Attribution</h4>
                     <canvas id="wrAttributionChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">📊 Campaign Performance</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_campaign_performance">📊 Campaign Performance</h4>
                     <canvas id="wrCampaignChart" width="400" height="250"></canvas>
                 </div>
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">🎯 Attribution Model Comparison</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_attribution_model_comparison">🎯 Attribution Model Comparison</h4>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">First Click Attribution</h5>
-                        <p class="text-2xl font-bold text-blue-600" id="firstClickRevenue">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="first_click_attribution">First Click Attribution</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="firstClickRevenue" data-i18n="">$--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Last Click Attribution</h5>
-                        <p class="text-2xl font-bold text-green-600" id="lastClickRevenue">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="last_click_attribution">Last Click Attribution</h5>
+                        <p class="text-2xl font-bold text-green-600" id="lastClickRevenue" data-i18n="">$--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Multi-Touch Attribution</h5>
-                        <p class="text-2xl font-bold text-purple-600" id="multiTouchRevenue">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="multitouch_attribution">Multi-Touch Attribution</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="multiTouchRevenue" data-i18n="">$--</p>
                     </div>
                 </div>
             </div>
@@ -212,33 +212,33 @@
         <div id="hubspot-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">👥 Contact Analytics</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_contact_analytics">👥 Contact Analytics</h4>
                     <canvas id="hsContactsChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">💼 Deal Pipeline</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_deal_pipeline">💼 Deal Pipeline</h4>
                     <canvas id="hsDealsChart" width="400" height="250"></canvas>
                 </div>
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">📈 Marketing Performance</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_marketing_performance">📈 Marketing Performance</h4>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Email Opens</h5>
-                        <p class="text-2xl font-bold text-blue-600" id="hsEmailOpens">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="email_opens">Email Opens</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="hsEmailOpens" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Click Rate</h5>
-                        <p class="text-2xl font-bold text-green-600" id="hsClickRate">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="click_rate">Click Rate</h5>
+                        <p class="text-2xl font-bold text-green-600" id="hsClickRate" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Lead Conversion</h5>
-                        <p class="text-2xl font-bold text-purple-600" id="hsLeadConversion">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="lead_conversion">Lead Conversion</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="hsLeadConversion" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Deal Close Rate</h5>
-                        <p class="text-2xl font-bold text-orange-600" id="hsDealCloseRate">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="deal_close_rate">Deal Close Rate</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="hsDealCloseRate" data-i18n="">--%</p>
                     </div>
                 </div>
             </div>
@@ -248,33 +248,33 @@
         <div id="salesforce-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🏢 Pipeline Analytics</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_pipeline_analytics">🏢 Pipeline Analytics</h4>
                     <canvas id="sfPipelineChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">📊 Lead Sources</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_lead_sources">📊 Lead Sources</h4>
                     <canvas id="sfLeadSourceChart" width="400" height="250"></canvas>
                 </div>
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">📈 Sales Performance</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_sales_performance">📈 Sales Performance</h4>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Qualified Leads</h5>
-                        <p class="text-2xl font-bold text-blue-600" id="sfQualifiedLeads">--</p>
+                        <h5 class="font-medium mb-2" data-i18n="qualified_leads">Qualified Leads</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="sfQualifiedLeads" data-i18n="">--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Opportunities</h5>
-                        <p class="text-2xl font-bold text-green-600" id="sfOpportunities">--</p>
+                        <h5 class="font-medium mb-2" data-i18n="opportunities">Opportunities</h5>
+                        <p class="text-2xl font-bold text-green-600" id="sfOpportunities" data-i18n="">--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Win Rate</h5>
-                        <p class="text-2xl font-bold text-purple-600" id="sfWinRate">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="win_rate">Win Rate</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="sfWinRate" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Avg Deal Size</h5>
-                        <p class="text-2xl font-bold text-orange-600" id="sfAvgDealSize">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="avg_deal_size">Avg Deal Size</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="sfAvgDealSize" data-i18n="">$--</p>
                     </div>
                 </div>
             </div>
@@ -284,28 +284,28 @@
         <div id="humblytics-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">📊 Privacy-First Analytics</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_privacyfirst_analytics">📊 Privacy-First Analytics</h4>
                     <canvas id="humblyticsTrafficChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🔥 Heatmap Insights</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_heatmap_insights">🔥 Heatmap Insights</h4>
                     <div class="space-y-4">
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <h5 class="font-medium mb-2">Click Heatmap</h5>
+                            <h5 class="font-medium mb-2" data-i18n="click_heatmap">Click Heatmap</h5>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-600">Most clicked element</span>
                                 <span class="font-semibold text-blue-600" id="topClickElement">--</span>
                             </div>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <h5 class="font-medium mb-2">Scroll Depth</h5>
+                            <h5 class="font-medium mb-2" data-i18n="scroll_depth">Scroll Depth</h5>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-600">Average scroll depth</span>
                                 <span class="font-semibold text-green-600" id="avgScrollDepth">--%</span>
                             </div>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <h5 class="font-medium mb-2">Engagement Zones</h5>
+                            <h5 class="font-medium mb-2" data-i18n="engagement_zones">Engagement Zones</h5>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-600">Hot zones detected</span>
                                 <span class="font-semibold text-purple-600" id="hotZones">--</span>
@@ -317,15 +317,15 @@
             
             <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🎯 Funnel Performance</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_funnel_performance">🎯 Funnel Performance</h4>
                     <canvas id="humblyticsFunnelChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🧪 A/B Test Results</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_ab_test_results">🧪 A/B Test Results</h4>
                     <div class="space-y-4">
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <div class="flex justify-between items-center mb-2">
-                                <h5 class="font-medium">Landing Page Test</h5>
+                                <h5 class="font-medium" data-i18n="landing_page_test">Landing Page Test</h5>
                                 <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Winner</span>
                             </div>
                             <div class="flex justify-between items-center">
@@ -334,7 +334,7 @@
                             </div>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <h5 class="font-medium mb-2">Statistical Significance</h5>
+                            <h5 class="font-medium mb-2" data-i18n="statistical_significance">Statistical Significance</h5>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-gray-600">Confidence level</span>
                                 <span class="font-semibold text-blue-600" id="confidenceLevel">--%</span>
@@ -345,23 +345,23 @@
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">🔒 Privacy-First Features</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_privacyfirst_features">🔒 Privacy-First Features</h4>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
-                        <h5 class="font-medium mb-2 text-green-800">Cookieless Tracking</h5>
-                        <p class="text-sm text-green-600">✓ GDPR Compliant</p>
+                        <h5 class="font-medium mb-2 text-green-800" data-i18n="cookieless_tracking">Cookieless Tracking</h5>
+                        <p class="text-sm text-green-600" data-i18n="_gdpr_compliant">✓ GDPR Compliant</p>
                     </div>
                     <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
-                        <h5 class="font-medium mb-2 text-blue-800">Real-Time Data</h5>
-                        <p class="text-sm text-blue-600">✓ 36KB Script</p>
+                        <h5 class="font-medium mb-2 text-blue-800" data-i18n="realtime_data">Real-Time Data</h5>
+                        <p class="text-sm text-blue-600" data-i18n="_36kb_script">✓ 36KB Script</p>
                     </div>
                     <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
-                        <h5 class="font-medium mb-2 text-purple-800">No Consent Banner</h5>
-                        <p class="text-sm text-purple-600">✓ Privacy-First</p>
+                        <h5 class="font-medium mb-2 text-purple-800" data-i18n="no_consent_banner">No Consent Banner</h5>
+                        <p class="text-sm text-purple-600" data-i18n="_privacyfirst">✓ Privacy-First</p>
                     </div>
                     <div class="bg-gradient-to-r from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
-                        <h5 class="font-medium mb-2 text-orange-800">1-Click A/B Tests</h5>
-                        <p class="text-sm text-orange-600">✓ No Dev Required</p>
+                        <h5 class="font-medium mb-2 text-orange-800" data-i18n="1click_ab_tests">1-Click A/B Tests</h5>
+                        <p class="text-sm text-orange-600" data-i18n="_no_dev_required">✓ No Dev Required</p>
                     </div>
                 </div>
             </div>
@@ -371,41 +371,41 @@
         <div id="unified-analytics-tab" class="analytics-tab-content p-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">🌟 Cross-Platform Revenue</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_crossplatform_revenue">🌟 Cross-Platform Revenue</h4>
                     <canvas id="unifiedRevenueChart" width="400" height="250"></canvas>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">📊 Platform Comparison</h4>
+                    <h4 class="text-lg font-semibold mb-4" data-i18n="_platform_comparison">📊 Platform Comparison</h4>
                     <canvas id="platformComparisonChart" width="400" height="250"></canvas>
                 </div>
             </div>
             
             <div class="mt-8">
-                <h4 class="text-lg font-semibold mb-4">🎯 Unified KPIs</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="_unified_kpis">🎯 Unified KPIs</h4>
                 <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Total Leads</h5>
-                        <p class="text-2xl font-bold text-blue-600" id="unifiedLeads">--</p>
+                        <h5 class="font-medium mb-2" data-i18n="total_leads">Total Leads</h5>
+                        <p class="text-2xl font-bold text-blue-600" id="unifiedLeads" data-i18n="">--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Conversion Rate</h5>
-                        <p class="text-2xl font-bold text-green-600" id="unifiedConversionRate">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="conversion_rate">Conversion Rate</h5>
+                        <p class="text-2xl font-bold text-green-600" id="unifiedConversionRate" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Customer LTV</h5>
-                        <p class="text-2xl font-bold text-purple-600" id="unifiedLTV">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="customer_ltv">Customer LTV</h5>
+                        <p class="text-2xl font-bold text-purple-600" id="unifiedLTV" data-i18n="">$--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">CAC</h5>
-                        <p class="text-2xl font-bold text-orange-600" id="unifiedCAC">$--</p>
+                        <h5 class="font-medium mb-2" data-i18n="cac">CAC</h5>
+                        <p class="text-2xl font-bold text-orange-600" id="unifiedCAC" data-i18n="">$--</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">Churn Rate</h5>
-                        <p class="text-2xl font-bold text-red-600" id="unifiedChurn">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="churn_rate">Churn Rate</h5>
+                        <p class="text-2xl font-bold text-red-600" id="unifiedChurn" data-i18n="">--%</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h5 class="font-medium mb-2">MRR Growth</h5>
-                        <p class="text-2xl font-bold text-indigo-600" id="unifiedMRR">--%</p>
+                        <h5 class="font-medium mb-2" data-i18n="mrr_growth">MRR Growth</h5>
+                        <p class="text-2xl font-bold text-indigo-600" id="unifiedMRR" data-i18n="">--%</p>
                     </div>
                 </div>
             </div>

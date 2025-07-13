@@ -148,8 +148,8 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="text-4xl font-bold text-gray-900">🏥 Debug Dashboard</h1>
-                <p class="text-gray-600 mt-2">Real-time system monitoring and debugging</p>
+                <h1 class="text-4xl font-bold text-gray-900" data-i18n="_debug_dashboard">🏥 Debug Dashboard</h1>
+                <p class="text-gray-600 mt-2" data-i18n="realtime_system_monitoring_and_debugging">Real-time system monitoring and debugging</p>
             </div>
             <div class="flex items-center space-x-4">
                 <div class="bg-white rounded-lg px-4 py-2 shadow">
@@ -164,14 +164,14 @@
         </div>
 
         <!-- Auto-refresh button -->
-        <button id="auto-refresh-btn" class="auto-refresh" onclick="toggleAutoRefresh()">
+        <button id="auto-refresh-btn" class="auto-refresh" onclick="toggleAutoRefresh()" data-i18n="_auto_refresh_off_">
             Auto Refresh: OFF
         </button>
 
         <!-- System Metrics -->
         <div class="debug-grid">
             <div class="metric-card">
-                <h3 class="text-lg font-semibold mb-3">🖥️ System Resources</h3>
+                <h3 class="text-lg font-semibold mb-3" data-i18n="_system_resources">🖥️ System Resources</h3>
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span>CPU Usage:</span>
@@ -193,7 +193,7 @@
             </div>
 
             <div class="metric-card">
-                <h3 class="text-lg font-semibold mb-3">📊 Health Score</h3>
+                <h3 class="text-lg font-semibold mb-3" data-i18n="_health_score">📊 Health Score</h3>
                 <div class="text-center">
                     <div class="text-4xl font-bold mb-2" id="health-score">--</div>
                     <div class="text-sm opacity-90" id="health-details">-- / -- components healthy</div>
@@ -204,7 +204,7 @@
             </div>
 
             <div class="metric-card">
-                <h3 class="text-lg font-semibold mb-3">⚡ Performance</h3>
+                <h3 class="text-lg font-semibold mb-3" data-i18n="_performance">⚡ Performance</h3>
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span>Uptime:</span>
@@ -228,14 +228,14 @@
 
         <!-- Real-time Charts -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h3 class="text-xl font-semibold mb-4">📈 Real-time Performance</h3>
+            <h3 class="text-xl font-semibold mb-4" data-i18n="_realtime_performance">📈 Real-time Performance</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="font-medium mb-2">CPU & Memory Usage</h4>
+                    <h4 class="font-medium mb-2" data-i18n="cpu_memory_usage">CPU & Memory Usage</h4>
                     <canvas id="performance-chart" class="real-time-chart"></canvas>
                 </div>
                 <div>
-                    <h4 class="font-medium mb-2">API Response Times</h4>
+                    <h4 class="font-medium mb-2" data-i18n="api_response_times">API Response Times</h4>
                     <canvas id="api-chart" class="real-time-chart"></canvas>
                 </div>
             </div>
@@ -243,7 +243,7 @@
 
         <!-- Component Status -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h3 class="text-xl font-semibold mb-4">🔧 Component Status</h3>
+            <h3 class="text-xl font-semibold mb-4" data-i18n="_component_status">🔧 Component Status</h3>
             <div id="component-status" class="debug-grid">
                 <!-- Component cards will be populated here -->
             </div>
@@ -251,35 +251,35 @@
 
         <!-- Debug Tools -->
         <div class="debug-tools">
-            <h3 class="text-xl font-semibold mb-4">🛠️ Debug Tools</h3>
+            <h3 class="text-xl font-semibold mb-4" data-i18n="_debug_tools">🛠️ Debug Tools</h3>
             <div class="flex flex-wrap gap-3 mb-4">
-                <button onclick="runHealthCheck()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button onclick="runHealthCheck()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" data-i18n="_run_health_check_">
                     🏥 Run Health Check
                 </button>
-                <button onclick="runSystemDiagnostics()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                <button onclick="runSystemDiagnostics()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" data-i18n="_system_diagnostics_">
                     🔍 System Diagnostics
                 </button>
-                <button onclick="testAPIEndpoints()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                <button onclick="testAPIEndpoints()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600" data-i18n="_test_api_endpoints_">
                     🌐 Test API Endpoints
                 </button>
-                <button onclick="checkMCPServers()" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+                <button onclick="checkMCPServers()" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600" data-i18n="_check_mcp_servers_">
                     🤖 Check MCP Servers
                 </button>
-                <button onclick="clearLogs()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                <button onclick="clearLogs()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" data-i18n="_clear_logs_">
                     🗑️ Clear Logs
                 </button>
-                <button onclick="exportDebugData()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                <button onclick="exportDebugData()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" data-i18n="_export_debug_data_">
                     📥 Export Debug Data
                 </button>
             </div>
             
             <!-- Command Terminal -->
             <div class="mb-4">
-                <h4 class="font-medium mb-2">💻 Debug Terminal</h4>
+                <h4 class="font-medium mb-2" data-i18n="_debug_terminal">💻 Debug Terminal</h4>
                 <div class="flex">
                     <input type="text" id="debug-command" placeholder="Enter debug command..." 
                            class="flex-1 px-3 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button onclick="executeDebugCommand()" class="bg-gray-800 text-white px-4 py-2 rounded-r-lg hover:bg-gray-700">
+                    <button onclick="executeDebugCommand()" class="bg-gray-800 text-white px-4 py-2 rounded-r-lg hover:bg-gray-700" data-i18n="_execute_">
                         Execute
                     </button>
                 </div>
@@ -289,21 +289,21 @@
         <!-- Error Logs -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-semibold">📋 System Logs</h3>
+                <h3 class="text-xl font-semibold" data-i18n="_system_logs">📋 System Logs</h3>
                 <div class="flex items-center space-x-4">
                     <div class="log-level-filter">
                         <input type="checkbox" id="filter-error" checked>
-                        <label for="filter-error" class="text-red-600">Errors</label>
+                        <label for="filter-error" class="text-red-600" data-i18n="errors">Errors</label>
                     </div>
                     <div class="log-level-filter">
                         <input type="checkbox" id="filter-warning" checked>
-                        <label for="filter-warning" class="text-yellow-600">Warnings</label>
+                        <label for="filter-warning" class="text-yellow-600" data-i18n="warnings">Warnings</label>
                     </div>
                     <div class="log-level-filter">
                         <input type="checkbox" id="filter-info" checked>
-                        <label for="filter-info" class="text-blue-600">Info</label>
+                        <label for="filter-info" class="text-blue-600" data-i18n="info">Info</label>
                     </div>
-                    <button onclick="refreshLogs()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                    <button onclick="refreshLogs()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600" data-i18n="_refresh_">
                         Refresh
                     </button>
                 </div>
@@ -316,8 +316,8 @@
         <!-- Terminal Output -->
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-semibold">🖥️ Terminal Output</h3>
-                <button onclick="clearTerminal()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                <h3 class="text-xl font-semibold" data-i18n="_terminal_output">🖥️ Terminal Output</h3>
+                <button onclick="clearTerminal()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600" data-i18n="_clear_">
                     Clear
                 </button>
             </div>
@@ -689,7 +689,7 @@
                 
                 statusCard.innerHTML = `
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-semibold">${statusIcon} ${component.name}</h4>
+                        <h4 class="font-semibold" data-i18n="statusicon_componentname">${statusIcon} ${component.name}</h4>
                         <span class="text-sm font-mono px-2 py-1 rounded bg-gray-100">${component.status}</span>
                     </div>
                     <div class="text-sm text-gray-600">
@@ -1051,5 +1051,6 @@
             addToTerminal('  Ctrl+L - Focus command input');
         }, 1000);
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

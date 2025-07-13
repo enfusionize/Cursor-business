@@ -1,0 +1,8 @@
+{
+  "name": "miro-realtime-dashboard",
+  "enabled": true,
+  "port": 3001,
+  "endpoints": [
+    "/api/mcp/miro-realtime-dashboard"
+  ]
+}

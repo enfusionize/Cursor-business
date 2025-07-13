@@ -1,0 +1,8 @@
+{
+  "name": "figma-framer-converter",
+  "enabled": true,
+  "port": 3000,
+  "endpoints": [
+    "/api/mcp/figma-framer-converter"
+  ]
+}

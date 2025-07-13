@@ -55,7 +55,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-gray-900">Vibe Marketing Platform</h1>
+                    <h1 class="text-2xl font-bold text-gray-900" data-i18n="vibe_marketing_platform">Vibe Marketing Platform</h1>
                     <span class="ml-4 px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800">
                         🚀 Features Dashboard
                     </span>
@@ -64,7 +64,7 @@
                     <a href="index.html" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
                         ← Back to Dashboard
                     </a>
-                    <button onclick="openDemo()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <button onclick="openDemo()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" data-i18n="_live_demo_">
                         🎯 Live Demo
                     </button>
                 </div>
@@ -75,8 +75,8 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-4">AI-Powered Marketing Automation</h2>
-            <p class="text-xl mb-8 text-blue-100">Transform your business with 25+ production-ready features, 18 interactive workflows, and enterprise-grade MCP integrations</p>
+            <h2 class="text-4xl font-bold mb-4" data-i18n="aipowered_marketing_automation">AI-Powered Marketing Automation</h2>
+            <p class="text-xl mb-8 text-blue-100" data-i18n="transform_your_business_with_25_productionready_fe">Transform your business with 25+ production-ready features, 18 interactive workflows, and enterprise-grade MCP integrations</p>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
                 <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6">
                     <div class="text-3xl font-bold">425%</div>
@@ -102,25 +102,25 @@
     <section class="py-8 bg-white border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap gap-3 justify-center">
-                <button onclick="filterFeatures('all')" class="category-filter active px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('all')" class="category-filter active px-6 py-2 rounded-lg border border-gray-300" data-i18n="_all_features_">
                     All Features
                 </button>
-                <button onclick="filterFeatures('ai-content')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('ai-content')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_ai_content_">
                     🤖 AI Content
                 </button>
-                <button onclick="filterFeatures('automation')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('automation')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_automation_">
                     ⚡ Automation
                 </button>
-                <button onclick="filterFeatures('analytics')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('analytics')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_analytics_">
                     📊 Analytics
                 </button>
-                <button onclick="filterFeatures('design')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('design')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_design_">
                     🎨 Design
                 </button>
-                <button onclick="filterFeatures('business')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('business')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_business_">
                     💼 Business
                 </button>
-                <button onclick="filterFeatures('integration')" class="category-filter px-6 py-2 rounded-lg border border-gray-300">
+                <button onclick="filterFeatures('integration')" class="category-filter px-6 py-2 rounded-lg border border-gray-300" data-i18n="_integrations_">
                     🔗 Integrations
                 </button>
             </div>
@@ -138,7 +138,7 @@
     <div id="demo-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto">
             <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-gray-900">🎯 Live Feature Demo</h3>
+                <h3 class="text-xl font-bold text-gray-900" data-i18n="_live_feature_demo">🎯 Live Feature Demo</h3>
                 <button onclick="closeDemo()" class="text-gray-400 hover:text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -390,11 +390,11 @@
                         </div>
                     </div>
                     
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">${feature.title}</h3>
-                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">${feature.description}</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2" data-i18n="featuretitle">${feature.title}</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="featuredescription">${feature.description}</p>
                     
                     <div class="mb-4">
-                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Key Benefits:</h4>
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2" data-i18n="key_benefits">Key Benefits:</h4>
                         <ul class="space-y-1">
                             ${feature.benefits.map(benefit => `
                                 <li class="text-sm text-gray-600 flex items-center">
@@ -411,7 +411,7 @@
                         `).join('')}
                     </div>
                     
-                    <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-sm font-medium">
+                    <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-sm font-medium" data-i18n="_try_live_demo_">
                         Try Live Demo →
                     </button>
                 `;
@@ -442,8 +442,8 @@
             content.innerHTML = `
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">${feature.icon}</div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">${feature.title}</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">${feature.description}</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2" data-i18n="featuretitle">${feature.title}</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="featuredescription">${feature.description}</p>
                 </div>
                 
                 <div class="demo-preview p-8 mb-6">
@@ -454,23 +454,23 @@
                             <div class="h-32 bg-gray-300 rounded mb-4"></div>
                             <div class="h-4 bg-gray-300 rounded w-2/3 mx-auto"></div>
                         </div>
-                        <p class="text-gray-500 mt-4">🚀 Live demo loading...</p>
+                        <p class="text-gray-500 mt-4" data-i18n="_live_demo_loading">🚀 Live demo loading...</p>
                     </div>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-green-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-green-800 mb-2">Expected ROI</h4>
-                        <p class="text-green-700">${feature.roi}</p>
+                        <h4 class="font-semibold text-green-800 mb-2" data-i18n="expected_roi">Expected ROI</h4>
+                        <p class="text-green-700" data-i18n="featureroi">${feature.roi}</p>
                     </div>
                     <div class="bg-blue-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-blue-800 mb-2">Difficulty Level</h4>
+                        <h4 class="font-semibold text-blue-800 mb-2" data-i18n="difficulty_level">Difficulty Level</h4>
                         <span class="difficulty-badge difficulty-${feature.difficulty}">${feature.difficulty.toUpperCase()}</span>
                     </div>
                 </div>
                 
                 <div class="bg-gray-50 p-6 rounded-lg mb-6">
-                    <h4 class="font-semibold text-gray-800 mb-3">Implementation Benefits:</h4>
+                    <h4 class="font-semibold text-gray-800 mb-3" data-i18n="implementation_benefits">Implementation Benefits:</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         ${feature.benefits.map(benefit => `
                             <div class="flex items-center">
@@ -482,10 +482,10 @@
                 </div>
                 
                 <div class="flex justify-center space-x-4">
-                    <button onclick="startImplementation('${feature.id}')" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-emerald-700">
+                    <button onclick="startImplementation('${feature.id}')" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-emerald-700" data-i18n="_start_implementation_">
                         🚀 Start Implementation
                     </button>
-                    <button onclick="scheduleConsultation('${feature.id}')" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700">
+                    <button onclick="scheduleConsultation('${feature.id}')" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700" data-i18n="_schedule_consultation_">
                         📅 Schedule Consultation
                     </button>
                 </div>
@@ -506,7 +506,7 @@
             const demoContent = {
                 'claude-workflow': `
                     <div class="bg-white p-6 rounded-lg border-2 border-blue-200">
-                        <h5 class="font-semibold mb-3">🧠 Claude AI Workflow Demo</h5>
+                        <h5 class="font-semibold mb-3" data-i18n="_claude_ai_workflow_demo">🧠 Claude AI Workflow Demo</h5>
                         <div class="space-y-3">
                             <div class="bg-blue-50 p-3 rounded">Input: "Analyze our Q3 sales data and create a strategic report"</div>
                             <div class="text-center">↓ AI Processing ↓</div>
@@ -516,7 +516,7 @@
                 `,
                 'figma-framer': `
                     <div class="bg-white p-6 rounded-lg border-2 border-purple-200">
-                        <h5 class="font-semibold mb-3">🎨 Figma to Framer Demo</h5>
+                        <h5 class="font-semibold mb-3" data-i18n="_figma_to_framer_demo">🎨 Figma to Framer Demo</h5>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-gray-100 p-4 rounded text-center">
                                 <div class="h-20 bg-blue-200 rounded mb-2"></div>
@@ -531,8 +531,8 @@
                 `,
                 'default': `
                     <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
-                        <h5 class="font-semibold mb-3">✨ Feature Demo</h5>
-                        <p class="text-gray-600">This feature provides powerful automation capabilities that can transform your business operations.</p>
+                        <h5 class="font-semibold mb-3" data-i18n="_feature_demo">✨ Feature Demo</h5>
+                        <p class="text-gray-600" data-i18n="this_feature_provides_powerful_automation_capabili">This feature provides powerful automation capabilities that can transform your business operations.</p>
                         <div class="mt-4 p-3 bg-blue-50 rounded">
                             <small class="text-blue-700">💡 Contact our team for a personalized demo of this feature</small>
                         </div>
@@ -574,5 +574,6 @@
             }
         });
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

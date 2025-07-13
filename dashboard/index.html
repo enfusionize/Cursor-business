@@ -205,13 +205,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-gray-900">MCP Business Operations</h1>
+                    <h1 class="text-2xl font-bold text-gray-900" data-i18n="mcp_business_operations">MCP Business Operations</h1>
                     <span id="connection-status" class="ml-4 px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">
                         🟢 Connected
                     </span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button id="refresh-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <button id="refresh-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" data-i18n="_refresh_">
                         🔄 Refresh
                     </button>
                     <div class="text-sm text-gray-600">
@@ -234,8 +234,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">MCP Servers</p>
-                        <p id="mcp-count" class="text-2xl font-semibold text-gray-900">--</p>
+                        <p class="text-sm font-medium text-gray-600" data-i18n="mcp_servers">MCP Servers</p>
+                        <p id="mcp-count" class="text-2xl font-semibold text-gray-900" data-i18n="">--</p>
                     </div>
                 </div>
             </div>
@@ -248,8 +248,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Active Workflows</p>
-                        <p id="workflow-count" class="text-2xl font-semibold text-gray-900">--</p>
+                        <p class="text-sm font-medium text-gray-600" data-i18n="active_workflows">Active Workflows</p>
+                        <p id="workflow-count" class="text-2xl font-semibold text-gray-900" data-i18n="">--</p>
                     </div>
                 </div>
             </div>
@@ -262,8 +262,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Automation Queue</p>
-                        <p id="queue-count" class="text-2xl font-semibold text-gray-900">--</p>
+                        <p class="text-sm font-medium text-gray-600" data-i18n="automation_queue">Automation Queue</p>
+                        <p id="queue-count" class="text-2xl font-semibold text-gray-900" data-i18n="">--</p>
                     </div>
                 </div>
             </div>
@@ -276,8 +276,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Connected Clients</p>
-                        <p id="client-count" class="text-2xl font-semibold text-gray-900">--</p>
+                        <p class="text-sm font-medium text-gray-600" data-i18n="connected_clients">Connected Clients</p>
+                        <p id="client-count" class="text-2xl font-semibold text-gray-900" data-i18n="">--</p>
                     </div>
                 </div>
             </div>
@@ -295,7 +295,7 @@
                                 <span class="tooltip-trigger">🤖</span>
                                 <div class="tooltip-content">
                                     <div class="tooltip-title">MCP Launcher</div>
-                                    <p>Control center for all Model Context Protocol operations. Each button launches a specific automation workflow.</p>
+                                    <p data-i18n="control_center_for_all_model_context_protocol_oper">Control center for all Model Context Protocol operations. Each button launches a specific automation workflow.</p>
                                     <div class="tooltip-tips">
                                         <div class="tooltip-tip">Start with Setup if this is your first time</div>
                                         <div class="tooltip-tip">Validate checks all configurations</div>
@@ -308,28 +308,28 @@
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="runLauncherAction('setup')" class="launcher-btn p-3 text-sm bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-blue-700">
+                            <button onclick="runLauncherAction('setup')" class="launcher-btn p-3 text-sm bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-blue-700" data-i18n="_setup_">
                                 🛠️ Setup
                             </button>
-                            <button onclick="runLauncherAction('validate')" class="launcher-btn p-3 text-sm bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-700">
+                            <button onclick="runLauncherAction('validate')" class="launcher-btn p-3 text-sm bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-700" data-i18n="_validate_">
                                 ✅ Validate
                             </button>
-                            <button onclick="runLauncherAction('dev')" class="launcher-btn p-3 text-sm bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg text-purple-700">
+                            <button onclick="runLauncherAction('dev')" class="launcher-btn p-3 text-sm bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg text-purple-700" data-i18n="_dev_mode_">
                                 💻 Dev Mode
                             </button>
-                            <button onclick="runLauncherAction('docker')" class="launcher-btn p-3 text-sm bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg text-indigo-700">
+                            <button onclick="runLauncherAction('docker')" class="launcher-btn p-3 text-sm bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg text-indigo-700" data-i18n="_docker_">
                                 🐳 Docker
                             </button>
-                            <button onclick="runLauncherAction('claude')" class="launcher-btn p-3 text-sm bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg text-orange-700">
+                            <button onclick="runLauncherAction('claude')" class="launcher-btn p-3 text-sm bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg text-orange-700" data-i18n="_claude_">
                                 ⚡ Claude
                             </button>
-                            <button onclick="runLauncherAction('ai-testing')" class="launcher-btn p-3 text-sm bg-pink-50 hover:bg-pink-100 border border-pink-200 rounded-lg text-pink-700">
+                            <button onclick="runLauncherAction('ai-testing')" class="launcher-btn p-3 text-sm bg-pink-50 hover:bg-pink-100 border border-pink-200 rounded-lg text-pink-700" data-i18n="_ai_test_">
                                 🤖 AI Test
                             </button>
-                            <button onclick="runLauncherAction('clickup')" class="launcher-btn p-3 text-sm bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg text-yellow-700">
+                            <button onclick="runLauncherAction('clickup')" class="launcher-btn p-3 text-sm bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg text-yellow-700" data-i18n="_clickup_">
                                 📋 ClickUp
                             </button>
-                            <button onclick="runLauncherAction('string-automation')" class="launcher-btn p-3 text-sm bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-red-700">
+                            <button onclick="runLauncherAction('string-automation')" class="launcher-btn p-3 text-sm bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-red-700" data-i18n="_auto_">
                                 🔮 Auto
                             </button>
                         </div>
@@ -341,7 +341,7 @@
                                     <span class="tooltip-trigger">🧠</span>
                                     <div class="tooltip-content">
                                         <div class="tooltip-title">Natural Language Automation</div>
-                                        <p>Describe what you want to automate in plain English. AI will analyze your request and create workflows using available MCP servers.</p>
+                                        <p data-i18n="describe_what_you_want_to_automate_in_plain_englis">Describe what you want to automate in plain English. AI will analyze your request and create workflows using available MCP servers.</p>
                                         <div class="tooltip-tips">
                                             <div class="tooltip-tip">Be specific: "Monitor competitor pricing daily"</div>
                                             <div class="tooltip-tip">Include outcomes: "and send alerts to Slack"</div>
@@ -354,7 +354,7 @@
                             <textarea id="automation-input" placeholder="Describe what you want to automate..." 
                                     class="w-full p-3 border border-gray-300 rounded-lg resize-none" rows="3"></textarea>
                             <button onclick="createAutomation()" 
-                                    class="mt-3 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700">
+                                    class="mt-3 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700" data-i18n="_create_automation_">
                                 🚀 Create Automation
                             </button>
                         </div>
@@ -369,7 +369,7 @@
                                 <span class="tooltip-trigger">🔧</span>
                                 <div class="tooltip-content">
                                     <div class="tooltip-title">MCP Servers</div>
-                                    <p>Model Context Protocol servers provide specialized AI capabilities. Each server handles specific tasks like web scraping, research, or design automation.</p>
+                                    <p data-i18n="model_context_protocol_servers_provide_specialized">Model Context Protocol servers provide specialized AI capabilities. Each server handles specific tasks like web scraping, research, or design automation.</p>
                                     <div class="tooltip-tips">
                                         <div class="tooltip-tip">Green status = Server running and ready</div>
                                         <div class="tooltip-tip">Click Start/Stop to control individual servers</div>
@@ -393,7 +393,7 @@
                 <!-- Live Documents -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">📚 Live Documents</h3>
+                        <h3 class="text-lg font-medium text-gray-900" data-i18n="_live_documents">📚 Live Documents</h3>
                     </div>
                     <div class="p-6">
                         <div id="documents-list" class="space-y-2 max-h-96 overflow-y-auto">
@@ -405,7 +405,7 @@
                 <!-- Executable Scripts -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">⚡ Executable Scripts</h3>
+                        <h3 class="text-lg font-medium text-gray-900" data-i18n="_executable_scripts">⚡ Executable Scripts</h3>
                     </div>
                     <div class="p-6">
                         <div id="scripts-list" class="space-y-2 max-h-96 overflow-y-auto">
@@ -425,7 +425,7 @@
                                 <span class="tooltip-trigger">📊</span>
                                 <div class="tooltip-content">
                                     <div class="tooltip-title">System Performance</div>
-                                    <p>Real-time monitoring of CPU, memory, and disk usage. Keep an eye on these metrics to ensure optimal performance of your automations.</p>
+                                    <p data-i18n="realtime_monitoring_of_cpu_memory_and_disk_usage_k">Real-time monitoring of CPU, memory, and disk usage. Keep an eye on these metrics to ensure optimal performance of your automations.</p>
                                     <div class="tooltip-tips">
                                         <div class="tooltip-tip">CPU over 80% may slow down automations</div>
                                         <div class="tooltip-tip">Memory usage affects concurrent workflows</div>
@@ -474,7 +474,7 @@
                 <!-- Activity Feed -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">⚡ Live Activity</h3>
+                        <h3 class="text-lg font-medium text-gray-900" data-i18n="_live_activity">⚡ Live Activity</h3>
                     </div>
                     <div class="p-6">
                         <div id="activity-feed" class="space-y-3 max-h-80 overflow-y-auto">
@@ -488,7 +488,7 @@
 
     <!-- Smart Help System -->
     <div class="smart-help">
-        <button class="help-button" onclick="toggleSmartHelp()" title="AI Assistant">
+        <button class="help-button" onclick="toggleSmartHelp()" title="AI Assistant" data-i18n="_">
             🤖
         </button>
     </div>
@@ -501,7 +501,7 @@
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 id="modal-title" class="text-lg font-medium text-gray-900">Document Viewer</h3>
+                    <h3 id="modal-title" class="text-lg font-medium text-gray-900" data-i18n="document_viewer">Document Viewer</h3>
                     <button onclick="closeDocumentModal()" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -653,7 +653,7 @@
                     <div class="flex items-center space-x-2">
                         <span class="text-sm text-gray-600">${statusText}</span>
                         <button onclick="toggleMCPServer('${name}', ${server.running})" 
-                                class="px-2 py-1 text-xs rounded ${server.running ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}">
+                                class="px-2 py-1 text-xs rounded ${server.running ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}" data-i18n="_serverrunning_stop_start_">
                             ${server.running ? 'Stop' : 'Start'}
                         </button>
                     </div>
@@ -715,7 +715,7 @@
                         <span class="text-sm font-medium text-gray-900 truncate">${script.name}</span>
                     </div>
                     <button onclick="executeScript('${script.path}')" 
-                            class="px-2 py-1 text-xs bg-green-100 text-green-700 hover:bg-green-200 rounded">
+                            class="px-2 py-1 text-xs bg-green-100 text-green-700 hover:bg-green-200 rounded" data-i18n="_run_">
                         Run
                     </button>
                 `;
@@ -876,8 +876,8 @@
             activityEl.innerHTML = `
                 <span class="pulse-dot">•</span>
                 <div class="flex-1">
-                    <p class="text-sm">${message}</p>
-                    <p class="text-xs text-gray-500">${new Date().toLocaleTimeString()}</p>
+                    <p class="text-sm" data-i18n="message">${message}</p>
+                    <p class="text-xs text-gray-500" data-i18n="new_datetolocaletimestring">${new Date().toLocaleTimeString()}</p>
                 </div>
             `;
             
@@ -1083,5 +1083,6 @@
             console.log('🚀 Vibe Marketing Dashboard initialized with AI features');
         });
     </script>
+<script src="scripts/i18n-integration.js"></script>
 </body>
 </html>

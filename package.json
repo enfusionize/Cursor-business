@@ -113,7 +113,8 @@
     "ai-phase2": "node scripts/ai-agent-blueprint-deployer.js --phase=phase2",
     "ai-phase3": "node scripts/ai-agent-blueprint-deployer.js --phase=phase3",
     "ai-monitor": "node scripts/ai-agent-blueprint-deployer.js --monitor",
-    "ai-report": "node scripts/ai-agent-blueprint-deployer.js --report"
+    "ai-report": "node scripts/ai-agent-blueprint-deployer.js --report",
+    "test": "echo 'Running tests...' && npm run validate-setup && npm run health-check"
   },
   "dependencies": {
     "@types/node": "^20.0.0",
