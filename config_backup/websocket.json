@@ -1,0 +1,46 @@
+{
+  "websocket": {
+    "enabled": true,
+    "port": 8080,
+    "secure": false,
+    "cors_origins": ["http://localhost:3001", "http://localhost:3002", "https://vibe-marketing.com"]
+  },
+  "connection": {
+    "max_connections": 1000,
+    "heartbeat_interval": 30000,
+    "timeout": 60000,
+    "reconnect_attempts": 3
+  },
+  "channels": {
+    "system_health": {
+      "enabled": true,
+      "subscribers": ["admin", "super_admin"]
+    },
+    "analytics_updates": {
+      "enabled": true,
+      "subscribers": ["admin", "super_admin", "moderator"]
+    },
+    "user_activity": {
+      "enabled": true,
+      "subscribers": ["admin", "super_admin"]
+    },
+    "notifications": {
+      "enabled": true,
+      "subscribers": ["*"]
+    }
+  },
+  "security": {
+    "authentication_required": true,
+    "token_validation": true,
+    "rate_limiting": {
+      "messages_per_minute": 100,
+      "connections_per_ip": 10
+    }
+  },
+  "logging": {
+    "connection_logs": true,
+    "message_logs": false,
+    "error_logs": true,
+    "retention_days": 30
+  }
+}

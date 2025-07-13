@@ -1,0 +1,42 @@
+{
+  "admin_panel": {
+    "enabled": true,
+    "port": 3002,
+    "secure": true,
+    "session_timeout": 3600
+  },
+  "authentication": {
+    "method": "jwt",
+    "secret": "ADMIN_JWT_SECRET",
+    "expiry": "24h",
+    "refresh_enabled": true
+  },
+  "users": {
+    "max_users": 100,
+    "roles": ["super_admin", "admin", "moderator", "user"],
+    "default_role": "user"
+  },
+  "permissions": {
+    "super_admin": ["*"],
+    "admin": ["user_management", "system_config", "analytics_view"],
+    "moderator": ["user_view", "analytics_view"],
+    "user": ["dashboard_view"]
+  },
+  "security": {
+    "rate_limiting": {
+      "enabled": true,
+      "max_requests": 100,
+      "window": "15m"
+    },
+    "ip_whitelist": [],
+    "two_factor": {
+      "enabled": false,
+      "method": "totp"
+    }
+  },
+  "logging": {
+    "audit_log": true,
+    "retention_days": 90,
+    "log_level": "info"
+  }
+}
