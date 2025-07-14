@@ -64,6 +64,7 @@
 - Updated dashboard component: test-reports/miro-dashboard-test-report.md
 - Modified docs/SOP_CHANGELOG.md
 - Modified docs/sop-version.json
+- Modified docs/sop-version.json
 
 ### Added
 - Initial comprehensive SOP for Full-Stack Cursor Integration
@@ -292,6 +293,7 @@
 - Added validation-results.json
 - Added vercel.json
 - Added docs/sop-backups/sop-v1.6.0-1752429188609.md
+- Added docs/sop-backups/sop-v1.7.0-1752429290170.md
 
 ### Infrastructure
 - Core platform components documentation
@@ -363,6 +365,14 @@
 
 ### Added
 - Added GITHUB_MERGE_SUCCESS_REPORT.md
+
+---
+
+
+## Version 1.8.0 - 2025-07-13
+
+### Changed
+- Modified docs/SOP_CHANGELOG.md
 
 ---
 
