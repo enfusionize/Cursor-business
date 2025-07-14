@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enfusionize™ | Coming Soon</title>
+    <!-- Tailwind CDN (play-cdn for quick prototyping) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "#e6fbff",
+                100: "#c0f1ff",
+                200: "#99e7ff",
+                300: "#5ad7ff",
+                400: "#1ac7ff",
+                500: "#00b1eb",
+                600: "#0088ba",
+                700: "#006089",
+                800: "#003758",
+                900: "#001f33",
+              },
+            },
+            boxShadow: {
+              neon: "0 0 10px rgba(0, 255, 255, .6), 0 0 25px rgba(0, 255, 255, .35)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        @apply bg-black text-white leading-relaxed antialiased select-none;
+      }
+      .glow {
+        text-shadow: 0 0 8px #00cfff, 0 0 22px #00cfff55;
+      }
+      .hero-bg {
+        /* Replace with your hero graphic */
+        background-image: url("./assets/hero-galaxy.webp");
+        background-size: cover;
+        background-position: center;
+      }
+      .circuit-bg {
+        background-image: url("./assets/circuit-grid.webp");
+        background-size: cover;
+        background-position: top;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col text-gray-200">
+    <!-- NAV -->
+    <nav class="fixed inset-x-0 top-0 z-50 bg-black/80 backdrop-blur lg:px-14 px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <img src="./assets/logo-digital-dojo.svg" alt="Digital Dojo logo" class="h-8 w-auto" />
+      </a>
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium tracking-wide text-gray-400 uppercase">
+        <span class="cursor-not-allowed hover:text-brand-400">Home</span>
+        <span class="cursor-not-allowed hover:text-brand-400">Services</span>
+        <span class="cursor-not-allowed hover:text-brand-400">Contact</span>
+      </div>
+      <button class="rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-black shadow hover:bg-brand-400 active:scale-95 transition">Join Wait‑List</button>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero-bg pt-32 pb-24 flex items-center justify-center px-6 text-center">
+      <div class="max-w-4xl space-y-8">
+        <h1 class="glow text-4xl md:text-6xl font-extrabold">Your <span class="text-brand-400">AI Research Partner</span><br class="hidden md:block" />for Profitable Business Ideas</h1>
+        <p class="mx-auto max-w-2xl md:text-xl text-gray-300">Uncover, validate, and launch ventures with machine‑precision insight. <span class="text-brand-400 font-medium">Enfusionize™</span> empowers founders to seize game‑changing opportunities—faster than ever before.</p>
+        <button class="mt-6 rounded-full bg-brand-500 px-8 py-3 font-bold text-black shadow hover:bg-brand-400 active:scale-95 transition">Get on the Early‑Access List</button>
+      </div>
+    </header>
+
+    <!-- TRUST BADGE / CLIENT LOGOS -->
+    <section class="py-10 bg-black/90 backdrop-brightness-125">
+      <div class="mx-auto max-w-5xl flex flex-wrap items-center justify-center gap-8 opacity-80">
+        <!-- Replace with real sponsor logos -->
+        <img src="./assets/logos/logo1.svg" class="h-6" alt="logo" />
+        <img src="./assets/logos/logo2.svg" class="h-6" alt="logo" />
+        <img src="./assets/logos/logo3.svg" class="h-6" alt="logo" />
+        <img src="./assets/logos/logo4.svg" class="h-6" alt="logo" />
+        <img src="./assets/logos/logo5.svg" class="h-6" alt="logo" />
+      </div>
+    </section>
+
+    <!-- GLOBE + COPY -->
+    <section class="circuit-bg relative overflow-hidden py-24 px-6">
+      <div class="mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+        <img src="./assets/globe.webp" alt="Futuristic globe" class="mx-auto w-64 md:w-full" />
+        <div class="space-y-8">
+          <h2 class="text-3xl md:text-4xl font-bold glow">360° Market Intelligence—Instant & Actionable</h2>
+          <p>Harness billions of data points to pinpoint lucrative gaps, benchmark competitors, and model revenue potential—served in plain language dashboards you can act on today.</p>
+          <ul class="space-y-3 text-sm md:text-base list-disc list-inside">
+            <li><span class="text-brand-400 font-semibold">500+</span> Industries profiled</li>
+            <li><span class="text-brand-400 font-semibold">600+</span> Curated datasets</li>
+            <li><span class="text-brand-400 font-semibold">40+</span> AI models working in concert</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENFUSIONIZE™ REPORT CTA -->
+    <section class="py-28 px-6 text-center bg-black">
+      <h2 class="text-3xl md:text-4xl font-bold glow mb-6">Experience Next‑Level Digital Transformation</h2>
+      <p class="mx-auto max-w-3xl text-gray-300 md:text-lg">From AI‑powered landing pages to real‑time analytics and CRM automations—our team builds the infrastructure that turns insight into exponential growth.</p>
+      <img src="./assets/report-mockup.webp" alt="Enfusionize Report" class="mx-auto mt-12 w-48 md:w-56 drop-shadow-2xl" />
+      <button class="mt-8 rounded-full bg-brand-500 px-8 py-3 font-bold text-black shadow hover:bg-brand-400 active:scale-95 transition">Download Sample Report</button>
+    </section>
+
+    <!-- ATOM MODEL / VALUE PROP GRID -->
+    <section class="relative bg-gradient-to-b from-black via-gray-900 to-gray-950 py-24 px-6 text-center">
+      <div class="mx-auto max-w-5xl">
+        <img src="./assets/atom-model.webp" alt="AI Atom" class="mx-auto w-72 md:w-96" />
+        <div class="mt-10 grid md:grid-cols-2 gap-10 text-left">
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-brand-400">AI‑Driven Research & Validation</h3>
+            <p>Multi‑model analysis de‑risks decisions and uncovers hidden patterns competitors miss.</p>
+          </div>
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-brand-400">End‑to‑End Growth Architecture</h3>
+            <p>We deploy the funnels, dashboards, and automations so your best ideas reach escape velocity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMPLE PROCESS STEPS -->
+    <section class="py-24 px-6 bg-black text-center">
+      <h2 class="glow text-3xl md:text-4xl font-bold mb-12">A Simple Process for Immediate Impact</h2>
+      <div class="mx-auto max-w-5xl grid md:grid-cols-3 gap-12">
+        <div class="space-y-4">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 font-bold text-black">1</div>
+          <h3 class="font-semibold">Discover</h3>
+          <p class="text-sm text-gray-300">AI scouts the market, surfacing validated high‑yield opportunities.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 font-bold text-black">2</div>
+          <h3 class="font-semibold">Design</h3>
+          <p class="text-sm text-gray-300">We craft conversion‑ready assets, funnels, and growth experiments.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 font-bold text-black">3</div>
+          <h3 class="font-semibold">Deploy</h3>
+          <p class="text-sm text-gray-300">Launch, iterate, and scale—powered by continuous AI optimization.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black/95 py-10 text-center text-gray-500 text-sm">
+      <p>© <span id="year"></span> Enfusionize™. All rights reserved.</p>
+      <p class="mt-1">
+        Follow updates:
+        <a href="#" class="text-brand-400 hover:underline">Twitter</a> ·
+        <a href="#" class="text-brand-400 hover:underline">LinkedIn</a>
+      </p>
+      <p class="mt-2 text-xs">Privacy Policy · Terms (Coming Soon)</p>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+      document.querySelector("#signup")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Thanks for joining the early‑access list! Check your inbox for confirmation.");
+      });
+    </script>
+  </body>
+</html>
