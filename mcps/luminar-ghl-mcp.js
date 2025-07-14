@@ -684,7 +684,25 @@ class LuminarGHLMCP extends EventEmitter {
         });
 
         // Store failure for manual review
-        await this.storeFailed Webhook(webhook, error);
+        await this.storeFailedWebhook(webhook, error);
+    }
+
+    async storeFailedWebhook(webhook, error) {
+        const failedWebhook = {
+            id: webhook.id,
+            payload: webhook.payload,
+            attempts: webhook.attempts,
+            error: error.message,
+            timestamp: new Date(),
+            status: 'failed'
+        };
+        
+        // Store in failed webhooks collection for manual review
+        // This would typically be stored in a database
+        console.log('Storing failed webhook:', failedWebhook);
+        
+        // Emit event for external handling
+        this.emit('webhook-failed', failedWebhook);
     }
 
     startHealthMonitoring() {

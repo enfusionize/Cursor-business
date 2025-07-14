@@ -181,11 +181,14 @@ class SetupValidator {
   }
 
   validateCursorConfig() {
+    const homeDir = process.env.HOME || process.env.USERPROFILE || '/tmp';
+    const appDataDir = process.env.APPDATA || homeDir;
+    
     const possiblePaths = [
-      path.join(process.env.HOME || process.env.USERPROFILE, '.cursor', 'settings.json'),
-      path.join(process.env.HOME || process.env.USERPROFILE, 'Library', 'Application Support', 'Cursor', 'User', 'settings.json'),
-      path.join(process.env.APPDATA, 'Cursor', 'User', 'settings.json'),
-      path.join(process.env.HOME || process.env.USERPROFILE, '.config', 'Cursor', 'User', 'settings.json')
+      path.join(homeDir, '.cursor', 'settings.json'),
+      path.join(homeDir, 'Library', 'Application Support', 'Cursor', 'User', 'settings.json'),
+      path.join(appDataDir, 'Cursor', 'User', 'settings.json'),
+      path.join(homeDir, '.config', 'Cursor', 'User', 'settings.json')
     ];
 
     for (const configPath of possiblePaths) {

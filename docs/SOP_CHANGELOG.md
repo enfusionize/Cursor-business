@@ -65,6 +65,7 @@
 - Modified docs/SOP_CHANGELOG.md
 - Modified docs/sop-version.json
 - Modified docs/sop-version.json
+- Modified docs/sop-version.json
 
 ### Added
 - Initial comprehensive SOP for Full-Stack Cursor Integration
@@ -294,6 +295,7 @@
 - Added vercel.json
 - Added docs/sop-backups/sop-v1.6.0-1752429188609.md
 - Added docs/sop-backups/sop-v1.7.0-1752429290170.md
+- Added docs/sop-backups/sop-v1.8.0-1752432184819.md
 
 ### Infrastructure
 - Core platform components documentation
@@ -370,6 +372,14 @@
 
 
 ## Version 1.8.0 - 2025-07-13
+
+### Changed
+- Modified docs/SOP_CHANGELOG.md
+
+---
+
+
+## Version 1.9.0 - 2025-07-14
 
 ### Changed
 - Modified docs/SOP_CHANGELOG.md
