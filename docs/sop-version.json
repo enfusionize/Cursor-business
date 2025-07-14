@@ -1,6 +1,6 @@
 {
-  "version": "1.10.0",
-  "lastUpdated": "2025-07-14T03:26:44.467Z",
+  "version": "2.0.0",
+  "lastUpdated": "2025-07-14T03:43:35.773Z",
   "changes": [
     {
       "timestamp": "2025-07-13T17:34:47.953Z",
@@ -2645,6 +2645,204 @@
       "type": "changed",
       "files": [
         "docs/sop-version.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.729Z",
+      "description": "Removed SOP_INTEGRATION_FINDINGS_REPORT_backup.md",
+      "type": "removed",
+      "files": [
+        "SOP_INTEGRATION_FINDINGS_REPORT_backup.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.731Z",
+      "description": "Added SYSTEM_DEBUG_DIAGNOSTIC_REPORT.md",
+      "type": "added",
+      "files": [
+        "SYSTEM_DEBUG_DIAGNOSTIC_REPORT.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.733Z",
+      "description": "Removed config_backup/accessibility.json",
+      "type": "removed",
+      "files": [
+        "config_backup/accessibility.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.735Z",
+      "description": "Removed config_backup/admin.json",
+      "type": "removed",
+      "files": [
+        "config_backup/admin.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.737Z",
+      "description": "Removed config_backup/analytics.json",
+      "type": "removed",
+      "files": [
+        "config_backup/analytics.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.739Z",
+      "description": "Removed config_backup/demo.json",
+      "type": "removed",
+      "files": [
+        "config_backup/demo.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.741Z",
+      "description": "Removed config_backup/health.json",
+      "type": "removed",
+      "files": [
+        "config_backup/health.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.743Z",
+      "description": "Removed config_backup/load-balancer.json",
+      "type": "removed",
+      "files": [
+        "config_backup/load-balancer.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.745Z",
+      "description": "Removed config_backup/logging.json",
+      "type": "removed",
+      "files": [
+        "config_backup/logging.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.747Z",
+      "description": "Removed config_backup/maintenance.json",
+      "type": "removed",
+      "files": [
+        "config_backup/maintenance.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.749Z",
+      "description": "Removed config_backup/monitoring.json",
+      "type": "removed",
+      "files": [
+        "config_backup/monitoring.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.751Z",
+      "description": "Removed config_backup/onboarding.json",
+      "type": "removed",
+      "files": [
+        "config_backup/onboarding.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.752Z",
+      "description": "Removed config_backup/websocket.json",
+      "type": "removed",
+      "files": [
+        "config_backup/websocket.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.754Z",
+      "description": "Modified docs/FULL_STACK_CURSOR_INTEGRATION_SOP.md",
+      "type": "changed",
+      "files": [
+        "docs/FULL_STACK_CURSOR_INTEGRATION_SOP.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.756Z",
+      "description": "Modified docs/SOP_CHANGELOG.md",
+      "type": "changed",
+      "files": [
+        "docs/SOP_CHANGELOG.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.758Z",
+      "description": "Added docs/sop-backups/sop-v1.9.0-1752463604466.md",
+      "type": "added",
+      "files": [
+        "docs/sop-backups/sop-v1.9.0-1752463604466.md"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.760Z",
+      "description": "Modified docs/sop-version.json",
+      "type": "changed",
+      "files": [
+        "docs/sop-version.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.762Z",
+      "description": "Enhanced MCP integration in integration-report_backup.json",
+      "type": "added",
+      "files": [
+        "integration-report_backup.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.763Z",
+      "description": "Enhanced MCP integration in mcps/luminar-ghl-mcp.js",
+      "type": "added",
+      "files": [
+        "mcps/luminar-ghl-mcp.js"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.765Z",
+      "description": "Modified package-lock.json",
+      "type": "changed",
+      "files": [
+        "package-lock.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.767Z",
+      "description": "Modified package.json",
+      "type": "changed",
+      "files": [
+        "package.json"
+      ],
+      "author": "Auto-Detection"
+    },
+    {
+      "timestamp": "2025-07-14T03:43:35.769Z",
+      "description": "Modified scripts/validate-setup.js",
+      "type": "changed",
+      "files": [
+        "scripts/validate-setup.js"
       ],
       "author": "Auto-Detection"
     }
