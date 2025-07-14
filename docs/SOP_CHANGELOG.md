@@ -73,6 +73,7 @@
 - Modified package.json
 - Modified scripts/validate-setup.js
 - Modified docs/sop-version.json
+- Modified docs/sop-version.json
 
 ### Added
 - Initial comprehensive SOP for Full-Stack Cursor Integration
@@ -308,6 +309,7 @@
 - Enhanced MCP integration in integration-report_backup.json
 - Enhanced MCP integration in mcps/luminar-ghl-mcp.js
 - Added docs/sop-backups/sop-v1.10.0-1752464615772.md
+- Added docs/sop-backups/sop-v2.0.0-1752464640954.md
 
 ### Infrastructure
 - Core platform components documentation
@@ -419,6 +421,14 @@
 
 
 ## Version 2.0.0 - 2025-07-14
+
+### Changed
+- Modified docs/SOP_CHANGELOG.md
+
+---
+
+
+## Version 2.1.0 - 2025-07-14
 
 ### Changed
 - Modified docs/SOP_CHANGELOG.md
